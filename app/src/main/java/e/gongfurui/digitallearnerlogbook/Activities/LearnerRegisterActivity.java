@@ -216,6 +216,7 @@ public class LearnerRegisterActivity extends AppCompatActivity implements Select
                 final String emailTo = String.valueOf(email);
                 //Generate the random verify code
                 verifyCode = (int) ((Math.random() * 9 + 1) * 100000);
+                Toast.makeText(this,"Sending..... the verify code", Toast.LENGTH_LONG).show();
                 Thread thread = new Thread() {
                     @Override
                     public void run() {

@@ -19,6 +19,7 @@ public class InstructorHomePageActivityV1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructor_home_page_v1);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String instructorJson=getIntent().getStringExtra("instructor");
         instructor=new Gson().fromJson(instructorJson, Instructor.class);
         init();

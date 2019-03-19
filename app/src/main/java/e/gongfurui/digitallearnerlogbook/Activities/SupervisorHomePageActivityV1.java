@@ -20,6 +20,7 @@ public class SupervisorHomePageActivityV1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_supervisor_home_page_v1);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String supervisorJson = getIntent().getStringExtra("supervisor");
         supervisor = new Gson().fromJson(supervisorJson, Supervisor.class);
         init();

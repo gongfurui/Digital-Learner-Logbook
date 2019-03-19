@@ -19,6 +19,7 @@ public class LearnerHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learner_home);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String learnerJson=getIntent().getStringExtra("learner");
         learner=new Gson().fromJson(learnerJson, Learner.class);
         initViews();

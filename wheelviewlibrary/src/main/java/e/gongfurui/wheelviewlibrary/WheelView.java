@@ -55,7 +55,7 @@ public class WheelView extends View {
   /**
    * Top and bottom shadows colors
    */
-    /*/ Modified by wulianghuan 2014-11-25
+    /*/ Modified by furui gong 2019-3-19
     private int[] SHADOWS_COLORS = new int[] { 0xFF111111,
 			0x00AAAAAA, 0x00AAAAAA };
 	//*/

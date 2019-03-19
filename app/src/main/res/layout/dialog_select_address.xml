@@ -1,0 +1,138 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:background="#E9E9E9"
+	android:orientation="vertical"
+	android:paddingTop="12dip" >
+
+	<RelativeLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingTop="5dip" >
+		<Button
+			android:id="@+id/btn_confirm"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:text="Confirm"
+			android:paddingLeft="16dp"
+			android:paddingRight="16dp"
+			android:background="@null"
+			android:layout_alignParentRight="true"
+			android:textColor="@color/colorBlack_Three" />
+
+		<Button
+			android:id="@+id/btn_cancel"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:gravity="center"
+			android:paddingLeft="16dp"
+			android:paddingRight="16dp"
+			android:background="@null"
+			android:text="Cancel"
+			android:textColor="@color/colorBlack_Three"  />
+	</RelativeLayout>
+
+	<android.support.constraint.ConstraintLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content">
+
+		<TextView
+			android:id="@+id/textView7"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginLeft="8dp"
+			android:layout_marginTop="8dp"
+			android:layout_marginEnd="8dp"
+			android:layout_marginRight="8dp"
+			android:layout_marginBottom="8dp"
+			android:text="Year"
+			android:textColor="@color/colorAccent"
+			android:textSize="18sp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.105"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintVertical_bias="0.0" />
+
+		<TextView
+			android:id="@+id/textView5"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginLeft="8dp"
+			android:layout_marginTop="8dp"
+			android:layout_marginEnd="8dp"
+			android:layout_marginRight="8dp"
+			android:layout_marginBottom="8dp"
+			android:text="Month"
+			android:textColor="@color/colorAccent"
+			android:textSize="18sp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent" />
+
+		<TextView
+			android:id="@+id/textView"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="8dp"
+			android:layout_marginLeft="8dp"
+			android:layout_marginTop="8dp"
+			android:layout_marginEnd="8dp"
+			android:layout_marginRight="8dp"
+			android:layout_marginBottom="8dp"
+			android:text="Day"
+			android:textColor="@color/colorAccent"
+			android:textSize="18sp"
+			app:layout_constraintBottom_toBottomOf="parent"
+			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.865"
+			app:layout_constraintStart_toStartOf="parent"
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintVertical_bias="0.0" />
+	</android.support.constraint.ConstraintLayout>
+
+	<LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="10dip"
+		android:orientation="horizontal" >
+
+		<e.gongfurui.wheelviewlibrary.WheelView
+			android:id="@+id/id_province"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1" >
+		</e.gongfurui.wheelviewlibrary.WheelView>
+
+		<e.gongfurui.wheelviewlibrary.WheelView
+			android:id="@+id/id_city"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1" >
+		</e.gongfurui.wheelviewlibrary.WheelView>
+
+		<e.gongfurui.wheelviewlibrary.WheelView
+			android:id="@+id/id_district"
+			android:layout_width="0dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1" >
+		</e.gongfurui.wheelviewlibrary.WheelView>
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/view_none"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_weight="1"
+		android:orientation="vertical">
+	</LinearLayout>
+
+
+</LinearLayout>

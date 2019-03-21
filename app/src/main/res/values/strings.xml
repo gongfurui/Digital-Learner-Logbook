@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Digital Learner LogBook</string>
     <string name="title_activity_register">RegisterActivity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
+    <string name="tab_menu_alert">Information</string>
+    <string name="tab_menu_profile">Instructor</string>
+    <string name="tab_menu_pay">Competency</string>
+    <string name="tab_menu_setting">Progress</string>
+
 </resources>

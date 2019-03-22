@@ -20,9 +20,8 @@ import e.gongfurui.digitallearnerlogbook.Roles.Role;
 import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
 import e.gongfurui.wheelviewlibrary.listener.SelectInterface;
 
-public class SupervisorRegisterActivity extends AppCompatActivity implements SelectInterface {
-    private EditText et_s_name, et_s_dob, et_s_email, et_s_licenceID, et_s_psw, et_s_verifyCode;
-    private SelectDateDialog dateDialog;
+public class SupervisorRegisterActivity extends AppCompatActivity {
+    private EditText et_s_name, et_s_email, et_s_psw, et_s_verifyCode;
     private boolean existAccount = false;
     private int verifyCode;
     private String email;
@@ -39,22 +38,12 @@ public class SupervisorRegisterActivity extends AppCompatActivity implements Sel
      * Initial the parameter involved in this class
      * */
     private void init(){
-        et_s_dob = findViewById(R.id.et_s_dob);
         et_s_email = findViewById(R.id.et_s_email);
-        et_s_licenceID = findViewById(R.id.et_s_licenseID);
         et_s_name = findViewById(R.id.et_s_name);
         et_s_psw = findViewById(R.id.et_s_psw);
         et_s_verifyCode = findViewById(R.id.et_s_verifyCode);
     }
 
-
-    /**
-     * Popup the date dialog
-     */
-    public void dobSPressed(View view) {
-        dateDialog = new SelectDateDialog(this);
-        dateDialog.showDateDialog(this);
-    }
 
     /**
      * The actions after pressing the get code button
@@ -104,52 +93,36 @@ public class SupervisorRegisterActivity extends AppCompatActivity implements Sel
      * */
     public void submitSupervisorPressed(View view) {
         /*Check all mandatory part of the field that has been filled*/
-        if(et_s_name.getText().toString().isEmpty()||et_s_dob.getText().toString().isEmpty()||
-                et_s_licenceID.getText().toString().isEmpty()||et_s_email.getText().toString().isEmpty()||
+        if(et_s_name.getText().toString().isEmpty()||et_s_email.getText().toString().isEmpty()||
                 et_s_verifyCode.getText().toString().isEmpty()||et_s_psw.getText().toString().isEmpty()){
             Toast.makeText(this,"You should fill all field!", Toast.LENGTH_LONG).show();
         }
         else {
             String name = et_s_name.getText().toString();
-            String dob = et_s_dob.getText().toString();
-            int licenceID = Integer.parseInt(et_s_licenceID.getText().toString());
             String psw = et_s_psw.getText().toString();
-            boolean isLicence = SQLQueryHelper.searchLicenceTable(this, "SELECT driver_id FROM licence" +
-                    " WHERE driver_id = '" + licenceID + "' and type = 'full'");
-            /*Check if the licence is valid*/
-            if(!isLicence){
-                Toast.makeText(this, "The driver id is invalid", Toast.LENGTH_LONG).show();
-            }
-            else {
-                /*Check if the learner has validated the email before*/
-                if (!existAccount) {
-                    Toast.makeText(this, "You haven't validate your email",
+            /*Check if the learner has validated the email before*/
+            if (!existAccount) {
+                Toast.makeText(this, "You haven't validate your email",
+                        Toast.LENGTH_LONG).show();
+            } else {
+                /*Check if the verify code is correct*/
+                if(verifyCode != Integer.parseInt(et_s_verifyCode.getText().toString())) {
+                    Toast.makeText(this, "The verify code is not correct! Please check it!",
                             Toast.LENGTH_LONG).show();
-                } else {
-                    /*Check if the verify code is correct*/
-                    if(verifyCode != Integer.parseInt(et_s_verifyCode.getText().toString())) {
-                        Toast.makeText(this, "The verify code is not correct! Please check it!",
-                                Toast.LENGTH_LONG).show();
-                    }
-                    else {
-                        Supervisor supervisor = new Supervisor(new Role(licenceID, name, email, psw, dob));
-                        SQLQueryHelper.insertDatabase(this, "INSERT into supervisor " +
-                                "(id, email, name, psw, date_of_birth)" +
-                                " VALUES (" + supervisor.driver_id + ", '" + supervisor.email +
-                                "', '" + supervisor.name + "', '" + supervisor.psw + "', '" + supervisor.date_of_birth + "')");
+                }
+                else {
+                    Supervisor supervisor = new Supervisor(new Role(name, email, psw));
+                    SQLQueryHelper.insertDatabase(this, "INSERT into supervisor " +
+                            "(email, name, psw)" +
+                            " VALUES ('" + supervisor.email +
+                            "', '" + supervisor.name + "', '" + supervisor.psw + "')");
 
-                        Intent intent = new Intent(this, SupervisorHomePageActivityV1.class);
-                        intent.putExtra("supervisor", new Gson().toJson(supervisor));
-                        startActivity(intent);
-                    }
+                    Intent intent = new Intent(this, SupervisorHomePageActivityV1.class);
+                    intent.putExtra("supervisor", new Gson().toJson(supervisor));
+                    startActivity(intent);
                 }
             }
         }
     }
 
-
-    @Override
-    public void selectedResult(String result) {
-        et_s_dob.setText(result);
-    }
 }

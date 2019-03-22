@@ -13,7 +13,7 @@ public class InstructorHomePageActivityV1 extends AppCompatActivity {
 
     Instructor instructor;
 
-    TextView tv_instructorName, tv_instructorID, tv_instructorDob, tv_instructorEmail, tv_instructorADI;
+    TextView tv_instructorName, tv_instructorEmail, tv_instructorADI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +30,9 @@ public class InstructorHomePageActivityV1 extends AppCompatActivity {
      * */
     public void init(){
         tv_instructorName = findViewById(R.id.tv_instructorName);
-        tv_instructorID = findViewById(R.id.tv_instructorDriverID);
-        tv_instructorDob = findViewById(R.id.tv_instructorDob);
         tv_instructorEmail = findViewById(R.id.tv_instructorEmail);
         tv_instructorADI = findViewById(R.id.tv_instructorADI);
         tv_instructorName.setText(instructor.name);
-        tv_instructorDob.setText(instructor.date_of_birth);
-        tv_instructorID.setText(String.valueOf(instructor.driver_id));
         tv_instructorEmail.setText(instructor.email);
         tv_instructorADI.setText(String.valueOf(instructor.ADI));
     }

@@ -23,15 +23,15 @@ import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
 import e.gongfurui.wheelviewlibrary.listener.SelectInterface;
 
 public class LearnerRegisterActivity extends AppCompatActivity implements SelectInterface {
-    private EditText et_l_name, et_l_dob, et_l_email, et_l_licenceID, et_l_adi, et_l_superID,
+    private EditText et_l_name, et_l_dob, et_l_email, et_l_licenceID, et_l_superEmail,
             et_l_psw, et_l_verifyCode;
     private SelectDateDialog dateDialog;
-    private boolean haveNominated = false;
     private boolean existAccount = false;
     private boolean haveAdded = false;
     private ArrayList<Boolean> courseProgressList = new ArrayList<>();
     private ArrayList<String> courseCommentList = new ArrayList<>();
-    private int verifyCode, adi, superID;
+    private int verifyCode;
+    private String superEmail;
     private String email;
 
 
@@ -55,9 +55,8 @@ public class LearnerRegisterActivity extends AppCompatActivity implements Select
         et_l_dob = findViewById(R.id.et_l_dob);
         et_l_email = findViewById(R.id.et_l_email);
         et_l_licenceID = findViewById(R.id.et_l_licenseID);
-        et_l_superID = findViewById(R.id.et_l_superID);
+        et_l_superEmail = findViewById(R.id.et_l_superEmail);
         et_l_name = findViewById(R.id.et_l_name);
-        et_l_adi = findViewById(R.id.et_l_ADI);
         et_l_psw = findViewById(R.id.et_l_psw);
         et_l_verifyCode = findViewById(R.id.et_l_verifyCode);
     }
@@ -71,44 +70,19 @@ public class LearnerRegisterActivity extends AppCompatActivity implements Select
         dateDialog.showDateDialog(this);
     }
 
-    /**
-     * The actions after pressing the nominate button
-     * */
-    public void nominatePressed(View view) {
-        if(!haveNominated) {
-            if(!et_l_adi.getText().toString().isEmpty()){
-                adi = Integer.parseInt(et_l_adi.getText().toString());
-            }
-            Instructor instructor = SQLQueryHelper.searchInstructorTable(this, "SELECT * FROM instructor" +
-                    " WHERE ADI = '" + adi + "'");
-            if (instructor == null) {
-                Toast.makeText(this, "We can't find the instructor you nominate please" +
-                        " check!", Toast.LENGTH_LONG).show();
-            } else {
-                haveNominated = true;
-                Toast.makeText(this, "Congratulation! You have nominated the " +
-                        "instructor: " + instructor.name + " successfully!", Toast.LENGTH_LONG).show();
-            }
-        }
-        /*If the learner has nominated an instructor, he cannot nominate again*/
-        else {
-            Toast.makeText(this, "You have nominated an instructor. Please don't again",
-                    Toast.LENGTH_LONG).show();
-        }
-    }
 
     /**
      * The actions after pressing the add button
      * */
     public void addPressed(View view) {
         if(!haveAdded) {
-            if(!et_l_superID.getText().toString().isEmpty()) {
-                superID = Integer.parseInt(et_l_superID.getText().toString());
+            if(!et_l_superEmail.getText().toString().isEmpty()) {
+                superEmail = et_l_superEmail.getText().toString();
             }
             Supervisor supervisor = SQLQueryHelper.searchSupervisorTable(this,
-                    "SELECT * FROM supervisor WHERE id = '" + superID + "'");
+                    "SELECT * FROM supervisor WHERE email = '" + superEmail + "'");
             if (supervisor == null) {
-                Toast.makeText(this, "We can't find the supervisor you nominate please" +
+                Toast.makeText(this, "We can't find the supervisor you add please" +
                         " check!", Toast.LENGTH_LONG).show();
             } else {
                 haveAdded = true;
@@ -129,7 +103,7 @@ public class LearnerRegisterActivity extends AppCompatActivity implements Select
     public void submitLearnerPressed(View view) {
         /*Check all mandatory part of the field that has been filled*/
         if(et_l_name.getText().toString().isEmpty()||et_l_dob.getText().toString().isEmpty()||
-                et_l_licenceID.getText().toString().isEmpty()||et_l_adi.getText().toString().isEmpty()||
+                et_l_licenceID.getText().toString().isEmpty()||et_l_superEmail.getText().toString().isEmpty()||
                 et_l_email.getText().toString().isEmpty()||et_l_verifyCode.getText().toString().isEmpty()||
                 et_l_psw.getText().toString().isEmpty()){
             Toast.makeText(this,"You should fill all field!", Toast.LENGTH_LONG).show();
@@ -151,8 +125,8 @@ public class LearnerRegisterActivity extends AppCompatActivity implements Select
                     Toast.makeText(this, "You haven't validate your email",
                             Toast.LENGTH_LONG).show();
                 } else {
-                    /*Check if the learner has nominated an instructor*/
-                    if (!haveNominated) {
+                    /*Check if the learner has added a supervisor*/
+                    if (!haveAdded) {
                         Toast.makeText(this, "Please nominate a instructor to start the " +
                                 "learning process", Toast.LENGTH_LONG).show();
                     } else {
@@ -162,21 +136,15 @@ public class LearnerRegisterActivity extends AppCompatActivity implements Select
                                     Toast.LENGTH_LONG).show();
                         }
                         else {
-                            Learner learner = new Learner(new Role(licenceID, name, email, psw, dob),
-                                    superID, adi, 0, courseProgressList, courseCommentList);
+                            Learner learner = new Learner(new Role(name, email, psw),
+                                    licenceID, dob,0, courseProgressList, courseCommentList);
                             SQLQueryHelper.insertDatabase(this, "INSERT into learner " +
-                                    "(id, email, name, psw, ADI, super_id, date_of_birth)" +
+                                    "(id, email, name, psw, date_of_birth)" +
                                     " VALUES ("+learner.driver_id+", '"+learner.email+"', '"+learner.name+
-                                    "', '"+learner.psw+"', "+learner.adi+", "+learner.super_id+", '"+
-                                    learner.date_of_birth+"')");
+                                    "', '"+learner.psw+"', '"+ learner.date_of_birth+"')");
                             /**!!!!!potential problem!!!!!*/
-                            SQLQueryHelper.insertDatabase(this, "INSERT into instructor_learner (ADI, learner_id)" +
-                                    " VALUES ("+learner.adi+", "+learner.driver_id+")");
-                            if(learner.super_id != 0){
-                                /**!!!!!potential problem!!!!!*/
-                                SQLQueryHelper.insertDatabase(this, "INSERT into supervisor_learner (driver_id, learner_id)" +
-                                        " VALUES ("+learner.super_id+", "+learner.driver_id+")");
-                            }
+                            SQLQueryHelper.insertDatabase(this, "INSERT into supervisor_learner (email, learner_id)" +
+                                    " VALUES ('"+superEmail+"', "+learner.driver_id+")");
                             Intent intent= new Intent(this, LearnerHomeActivity.class);
                             intent.putExtra("learner", new Gson().toJson(learner));
                             startActivity(intent);

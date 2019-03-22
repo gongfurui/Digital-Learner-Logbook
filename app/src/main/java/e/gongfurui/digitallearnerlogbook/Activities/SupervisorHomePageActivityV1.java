@@ -14,7 +14,7 @@ public class SupervisorHomePageActivityV1 extends AppCompatActivity {
 
     Supervisor supervisor;
 
-    TextView tv_supervisorName, tv_supervisorID, tv_supervisorDob, tv_supervisorEmail;
+    TextView tv_supervisorName, tv_supervisorEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,12 +31,8 @@ public class SupervisorHomePageActivityV1 extends AppCompatActivity {
      * */
     public void init(){
         tv_supervisorName = findViewById(R.id.tv_supervisorName);
-        tv_supervisorID = findViewById(R.id.tv_supervisorDriverID);
-        tv_supervisorDob = findViewById(R.id.tv_supervisorDob);
         tv_supervisorEmail = findViewById(R.id.tv_supervisorEmail);
         tv_supervisorName.setText(supervisor.name);
-        tv_supervisorDob.setText(supervisor.date_of_birth);
-        tv_supervisorID.setText(String.valueOf(supervisor.driver_id));
         tv_supervisorEmail.setText(supervisor.email);
     }
 }

@@ -74,11 +74,10 @@ public class SQLQueryHelper {
         // Return a Cursor object：由数据库查询返回的结果集对象
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
         String id;
-        String ADI;
         String name;
         String email;
         String psw;
-        String date_of_birth, super_id, time;
+        String date_of_birth, time;
 
         ArrayList<Boolean> courseProgressList = new ArrayList<>();
         ArrayList<String> courseCommentList = new ArrayList<>();
@@ -86,21 +85,17 @@ public class SQLQueryHelper {
         //Move the cursor to the next line and decide whether it has the next data
         while (cursor.moveToNext()) {
             id = cursor.getString(cursor.getColumnIndex("id"));
-            ADI = cursor.getString(cursor.getColumnIndex("ADI"));
             name = cursor.getString(cursor.getColumnIndex("name"));
             email = cursor.getString(cursor.getColumnIndex("email"));
             psw = cursor.getString(cursor.getColumnIndex("psw"));
             date_of_birth = cursor.getString(cursor.getColumnIndex("date_of_birth"));
-            super_id = cursor.getString(cursor.getColumnIndex("super_id"));
             time = cursor.getString(cursor.getColumnIndex("time"));
             for(int i = 1; i <= 23; i++){
                 courseProgressList.add(cursor.getString(cursor.getColumnIndex("c" + i)).equals("0") ? false : true);
                 courseCommentList.add(cursor.getString(cursor.getColumnIndex("c" + i+"c")));
             }
-            learner = new Learner(new Role(Integer.parseInt(id),name, email, psw, date_of_birth),
-                    Integer.parseInt(super_id), Integer.parseInt(ADI), Integer.parseInt(time), courseProgressList,
-                    courseCommentList);
-
+            learner = new Learner(new Role(name, email, psw), Integer.parseInt(id), date_of_birth,
+                    Integer.parseInt(time), courseProgressList, courseCommentList);
         }
         //Close db
         sqliteDatabase.close();
@@ -120,32 +115,27 @@ public class SQLQueryHelper {
         // Return a Cursor object：由数据库查询返回的结果集对象
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
         String id;
-        String ADI;
         String name;
         String email;
         String psw;
-        String date_of_birth, super_id, time;
-
+        String date_of_birth, time;
         ArrayList<Boolean> courseProgressList = new ArrayList<>();
         ArrayList<String> courseCommentList = new ArrayList<>();
         HashMap<Integer, Learner> learnerMap = null;
         //Move the cursor to the next line and decide whether it has the next data
         while (cursor.moveToNext()) {
             id = cursor.getString(cursor.getColumnIndex("id"));
-            ADI = cursor.getString(cursor.getColumnIndex("ADI"));
             name = cursor.getString(cursor.getColumnIndex("name"));
             email = cursor.getString(cursor.getColumnIndex("email"));
             psw = cursor.getString(cursor.getColumnIndex("psw"));
             date_of_birth = cursor.getString(cursor.getColumnIndex("date_of_birth"));
-            super_id = cursor.getString(cursor.getColumnIndex("super_id"));
             time = cursor.getString(cursor.getColumnIndex("time"));
             for(int i = 1; i <= 23; i++){
                 courseProgressList.add(cursor.getString(cursor.getColumnIndex("c" + i)).equals("0") ? false : true);
                 courseCommentList.add(cursor.getString(cursor.getColumnIndex("c" + i+"c")));
             }
-            Learner learner = new Learner(new Role(Integer.parseInt(id),name, email, psw, date_of_birth),
-                    Integer.parseInt(super_id), Integer.parseInt(ADI), Integer.parseInt(time), courseProgressList,
-                    courseCommentList);
+            Learner learner = new Learner(new Role(name, email, psw), Integer.parseInt(id),
+                    date_of_birth, Integer.parseInt(time), courseProgressList, courseCommentList);
             learnerMap.put(learner.driver_id, learner);
         }
         //Close db
@@ -165,22 +155,18 @@ public class SQLQueryHelper {
         // 调用SQLiteDatabase对象的query方法进行查询
         // Return a Cursor object：由数据库查询返回的结果集对象
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
-        String id;
         String ADI;
         String name;
         String email;
         String psw;
-        String date_of_birth;
         Instructor instructor = null;
         //Move the cursor to the next line and decide whether it has the next data
         while (cursor.moveToNext()) {
-            id = cursor.getString(cursor.getColumnIndex("id"));
             ADI = cursor.getString(cursor.getColumnIndex("ADI"));
             name = cursor.getString(cursor.getColumnIndex("name"));
             email = cursor.getString(cursor.getColumnIndex("email"));
             psw = cursor.getString(cursor.getColumnIndex("psw"));
-            date_of_birth = cursor.getString(cursor.getColumnIndex("date_of_birth"));
-            instructor = new Instructor(new Role(Integer.parseInt(id),name, email, psw, date_of_birth),
+            instructor = new Instructor(new Role(name, email, psw),
                     Integer.parseInt(ADI));
         }
         //Close db
@@ -200,20 +186,16 @@ public class SQLQueryHelper {
         // 调用SQLiteDatabase对象的query方法进行查询
         // Return a Cursor object：由数据库查询返回的结果集对象
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
-        String id;
         String name;
         String email;
         String psw;
-        String date_of_birth;
         Supervisor supervisor = null;
         //Move the cursor to the next line and decide whether it has the next data
         while (cursor.moveToNext()) {
-            id = cursor.getString(cursor.getColumnIndex("id"));
             name = cursor.getString(cursor.getColumnIndex("name"));
             email = cursor.getString(cursor.getColumnIndex("email"));
             psw = cursor.getString(cursor.getColumnIndex("psw"));
-            date_of_birth = cursor.getString(cursor.getColumnIndex("date_of_birth"));
-            supervisor = new Supervisor(new Role(Integer.parseInt(id),name, email, psw, date_of_birth));
+            supervisor = new Supervisor(new Role(name, email, psw));
         }
         //Close db
         sqliteDatabase.close();
@@ -240,6 +222,29 @@ public class SQLQueryHelper {
         //Close db
         sqliteDatabase.close();
         if(id == 0) return false;
+        else return true;
+    }
+
+    /**
+     * Search throw the ADIList table
+     * */
+    static public boolean searchADIListTable(Context context, String query){
+        System.out.println("Search the database");
+        // Create DatabaseHelper Object
+        MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
+        // 调用getWritableDatabase()方法创建或打开一个可以读的数据库
+        SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
+        // 调用SQLiteDatabase对象的query方法进行查询
+        // Return a Cursor object：由数据库查询返回的结果集对象
+        Cursor cursor = sqliteDatabase.rawQuery(query,null);
+        int adi = 0;
+        //Move the cursor to the next line and decide whether it has the next data
+        while (cursor.moveToNext()) {
+            adi = Integer.parseInt(cursor.getString(cursor.getColumnIndex("adi")));
+        }
+        //Close db
+        sqliteDatabase.close();
+        if(adi == 0) return false;
         else return true;
     }
 }

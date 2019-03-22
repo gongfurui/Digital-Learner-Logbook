@@ -20,10 +20,9 @@ import e.gongfurui.digitallearnerlogbook.Roles.Role;
 import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
 import e.gongfurui.wheelviewlibrary.listener.SelectInterface;
 
-public class InstructorRegisterActivity extends AppCompatActivity implements SelectInterface  {
+public class InstructorRegisterActivity extends AppCompatActivity {
 
-    private EditText et_i_name, et_i_dob, et_i_email, et_i_licenceID, et_i_adi, et_i_psw, et_i_verifyCode;
-    private SelectDateDialog dateDialog;
+    private EditText et_i_name, et_i_email, et_i_adi, et_i_psw, et_i_verifyCode;
     private boolean existAccount = false;
     private int verifyCode;
     private String email;
@@ -40,22 +39,13 @@ public class InstructorRegisterActivity extends AppCompatActivity implements Sel
      * Initial the parameter involved in this class
      * */
     private void init(){
-        et_i_dob = findViewById(R.id.et_i_dob);
         et_i_email = findViewById(R.id.et_i_email);
-        et_i_licenceID = findViewById(R.id.et_i_licenseID);
         et_i_name = findViewById(R.id.et_i_name);
         et_i_adi = findViewById(R.id.et_i_ADI);
         et_i_psw = findViewById(R.id.et_i_psw);
         et_i_verifyCode = findViewById(R.id.et_i_verifyCode);
     }
 
-    /**
-     * Popup the date dialog
-     */
-    public void dobIPressed(View view) {
-        dateDialog = new SelectDateDialog(this);
-        dateDialog.showDateDialog(this);
-    }
 
     /**
      * The actions after pressing the get code button
@@ -105,22 +95,19 @@ public class InstructorRegisterActivity extends AppCompatActivity implements Sel
      * */
     public void submitInstructorPressed(View view) {
         /*Check all mandatory part of the field that has been filled*/
-        if(et_i_name.getText().toString().isEmpty()||et_i_dob.getText().toString().isEmpty()||
-                et_i_licenceID.getText().toString().isEmpty()||et_i_adi.getText().toString().isEmpty()||
+        if(et_i_name.getText().toString().isEmpty()||et_i_adi.getText().toString().isEmpty()||
                 et_i_email.getText().toString().isEmpty()||et_i_verifyCode.getText().toString().isEmpty()||
                 et_i_psw.getText().toString().isEmpty()){
             Toast.makeText(this,"You should fill all field!", Toast.LENGTH_LONG).show();
         }
         else {
             String name = et_i_name.getText().toString();
-            String dob = et_i_dob.getText().toString();
-            int licenceID = Integer.parseInt(et_i_licenceID.getText().toString());
             String psw = et_i_psw.getText().toString();
             int adi = Integer.parseInt(et_i_adi.getText().toString());
-            boolean isLicence = SQLQueryHelper.searchLicenceTable(this, "SELECT driver_id FROM licence" +
-                    " WHERE driver_id = '" + licenceID + "' and type = 'full'");
+            boolean isADI = SQLQueryHelper.searchADIListTable(this, "SELECT adi FROM ADIList" +
+                    " WHERE adi = " + adi );
             /*Check if the licence is valid*/
-            if(!isLicence){
+            if(!isADI){
                 Toast.makeText(this, "The driver id is invalid", Toast.LENGTH_LONG).show();
             }
             else {
@@ -130,16 +117,14 @@ public class InstructorRegisterActivity extends AppCompatActivity implements Sel
                             Toast.LENGTH_LONG).show();
                 } else {
                     /*Check if the verify code is correct*/
-                    if(verifyCode != Integer.parseInt(et_i_verifyCode.getText().toString())) {
+                    if (verifyCode != Integer.parseInt(et_i_verifyCode.getText().toString())) {
                         Toast.makeText(this, "The verify code is not correct! Please check it!",
                                 Toast.LENGTH_LONG).show();
-                    }
-                    else {
-                        Instructor instructor = new Instructor(new Role(licenceID, name, email, psw, dob), adi);
-                        SQLQueryHelper.insertDatabase(this, "INSERT into instructor " +
-                                "(id, ADI, email, name, psw, date_of_birth)" +
-                                " VALUES (" + instructor.driver_id + ", " + instructor.ADI + ", '" + instructor.email +
-                                "', '" + instructor.name + "', '" + instructor.psw + "', '" + instructor.date_of_birth + "')");
+                    } else {
+                        Instructor instructor = new Instructor(new Role(name, email, psw), adi);
+                        SQLQueryHelper.insertDatabase(this, "INSERT into instructor " + "(ADI, email, name, psw)" +
+                                " VALUES (" + instructor.ADI + ", '" + instructor.email +
+                                "', '" + instructor.name + "', '" + instructor.psw + "')");
 
                         Intent intent = new Intent(this, InstructorHomePageActivityV1.class);
                         intent.putExtra("instructor", new Gson().toJson(instructor));
@@ -149,12 +134,4 @@ public class InstructorRegisterActivity extends AppCompatActivity implements Sel
             }
         }
     }
-
-
-
-    @Override
-    public void selectedResult(String result) {
-        et_i_dob.setText(result);
-    }
-
 }

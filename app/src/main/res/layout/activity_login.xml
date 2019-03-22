@@ -7,7 +7,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Activities.LoginActivity">
-    <!--输入框-->
 
     <ImageView
         android:id="@+id/imageView2"
@@ -26,7 +25,7 @@
         android:layout_marginRight="35dp"
         android:drawablePadding="10dp"
         android:gravity="center_vertical"
-        android:hint="Enter email/ID"
+        android:hint="Enter email"
         android:paddingLeft="8dp"
         android:singleLine="true"
         android:textColor="#000000"

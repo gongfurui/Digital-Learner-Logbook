@@ -44,6 +44,12 @@
         <activity
             android:name=".Activities.LearnerRegisterActivity"
             android:parentActivityName=".Activities.SelectRoleActivity" />
+        <activity
+            android:name=".Activities.CompetencyActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".Activities.StudyActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

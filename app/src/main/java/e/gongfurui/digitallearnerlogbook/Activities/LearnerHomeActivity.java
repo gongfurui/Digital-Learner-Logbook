@@ -10,11 +10,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-
 import e.gongfurui.digitallearnerlogbook.Adapters.MyFragmentPagerAdapter;
 import e.gongfurui.digitallearnerlogbook.R;
-import e.gongfurui.digitallearnerlogbook.Roles.Learner;
 
 public class LearnerHomeActivity extends AppCompatActivity   implements RadioGroup.OnCheckedChangeListener,
         ViewPager.OnPageChangeListener {
@@ -45,10 +42,10 @@ public class LearnerHomeActivity extends AppCompatActivity   implements RadioGro
         setContentView(R.layout.activity_learner_home);
         learnerID=getIntent().getIntExtra("learnerID", 0);
         mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
-        bindViews();
+        initViews();
     }
 
-    private void bindViews() {
+    private void initViews() {
         txt_topbar = findViewById(R.id.txt_topbar);
         rg_tab_bar = findViewById(R.id.rg_tab_bar);
         rb_channel = findViewById(R.id.rb_channel);
@@ -116,7 +113,7 @@ public class LearnerHomeActivity extends AppCompatActivity   implements RadioGro
     @Override
     public void onPageSelected(int position) {
         if(position == 0) txt_topbar.setText("Information");
-        else if(position == 1) txt_topbar.setText("1");
+        else if(position == 1) txt_topbar.setText("Competency");
         else if(position == 2) txt_topbar.setText("2");
         else if(position == 3) txt_topbar.setText("Progress");
     }

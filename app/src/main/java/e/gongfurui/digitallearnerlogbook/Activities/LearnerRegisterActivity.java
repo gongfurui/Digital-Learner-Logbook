@@ -8,8 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import java.util.ArrayList;
 
 import e.gongfurui.digitallearnerlogbook.Dialog.SelectDateDialog;
@@ -41,7 +39,7 @@ public class LearnerRegisterActivity extends AppCompatActivity implements Select
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learner_register);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        init();
+        initViews();
         for(int i = 0; i <= 22; i++){
             courseProgressList.add(false);
             courseCommentList.add("");
@@ -51,7 +49,7 @@ public class LearnerRegisterActivity extends AppCompatActivity implements Select
     /**
      * Initial the parameter involved in this class
      * */
-    private void init(){
+    private void initViews(){
         et_l_dob = findViewById(R.id.et_l_dob);
         et_l_email = findViewById(R.id.et_l_email);
         et_l_licenceID = findViewById(R.id.et_l_licenseID);

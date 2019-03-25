@@ -6,7 +6,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import e.gongfurui.digitallearnerlogbook.Activities.LearnerHomeActivity;
 import e.gongfurui.digitallearnerlogbook.LearnerHomeFragments.InformationFragment;
-import e.gongfurui.digitallearnerlogbook.LearnerHomeFragments.MyFragment2;
+import e.gongfurui.digitallearnerlogbook.LearnerHomeFragments.CompetencyFragment;
 import e.gongfurui.digitallearnerlogbook.LearnerHomeFragments.MyFragment3;
 import e.gongfurui.digitallearnerlogbook.LearnerHomeFragments.ProgressFragment;
 
@@ -14,7 +14,7 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private final int PAGER_COUNT = 4;
     public InformationFragment informationFg;
-    public MyFragment2 myFragment2;
+    public CompetencyFragment competencyFragment;
     public MyFragment3 myFragment3;
     public ProgressFragment progressFg;
 
@@ -24,11 +24,11 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
     public MyFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
         informationFg = InformationFragment.newInstance(LearnerHomeActivity.learnerID);
-        myFragment2 = new MyFragment2();
+        competencyFragment = CompetencyFragment.newInstance(LearnerHomeActivity.learnerID);
         myFragment3 = new MyFragment3();
         progressFg = ProgressFragment.newInstance(LearnerHomeActivity.learnerID);
         fragments[0] = informationFg;
-        fragments[1] = myFragment2;
+        fragments[1] = competencyFragment;
         fragments[2] = myFragment3;
         fragments[3] = progressFg;
     }

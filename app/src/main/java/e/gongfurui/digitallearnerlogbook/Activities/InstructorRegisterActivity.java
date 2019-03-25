@@ -8,9 +8,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
-import e.gongfurui.digitallearnerlogbook.Dialog.SelectDateDialog;
 import e.gongfurui.digitallearnerlogbook.Helpers.EmailUtil;
 import e.gongfurui.digitallearnerlogbook.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbook.R;
@@ -18,7 +15,6 @@ import e.gongfurui.digitallearnerlogbook.Roles.Instructor;
 import e.gongfurui.digitallearnerlogbook.Roles.Learner;
 import e.gongfurui.digitallearnerlogbook.Roles.Role;
 import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
-import e.gongfurui.wheelviewlibrary.listener.SelectInterface;
 
 public class InstructorRegisterActivity extends AppCompatActivity {
 
@@ -32,13 +28,13 @@ public class InstructorRegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructor_register);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        init();
+        initViews();
     }
 
     /**
-     * Initial the parameter involved in this class
+     * Initial the UI parameter involved in this class
      * */
-    private void init(){
+    private void initViews(){
         et_i_email = findViewById(R.id.et_i_email);
         et_i_name = findViewById(R.id.et_i_name);
         et_i_adi = findViewById(R.id.et_i_ADI);

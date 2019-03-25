@@ -28,14 +28,14 @@ public class ForgetPswActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_psw);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        init();
+        initViews();
 
     }
 
     /**
      * Initial the parameter involved in this class
      * */
-    private void init(){
+    private void initViews(){
         et_email = findViewById(R.id.et_mail);
         et_verify_code = findViewById(R.id.et_l_verifyCode);
         et_new_psw = findViewById(R.id.et_new_psw);

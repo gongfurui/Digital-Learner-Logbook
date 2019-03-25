@@ -7,8 +7,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-
 import e.gongfurui.digitallearnerlogbook.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbook.Roles.Instructor;
 import e.gongfurui.digitallearnerlogbook.Roles.Learner;
@@ -26,14 +24,14 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        init();
+        initViews();
 
     }
 
     /**
      * Initial the parameter involved in this class
      * */
-    private void init(){
+    private void initViews(){
         et_user_name = findViewById(R.id.et_user_name);
         et_psw = findViewById(R.id.et_psw);
     }

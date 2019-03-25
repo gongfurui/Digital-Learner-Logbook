@@ -251,7 +251,7 @@ public class SQLQueryHelper {
     /**
      * Search throw the courseFeedback table to get the instructor name who certify the progress
      * */
-    static public ArrayList<String> getNameListFromCourseFeedbackTable(Context context, String query){
+    static public HashMap<Integer, String> getNameListFromCourseFeedbackTable(Context context, String query){
         System.out.println("Search the database");
         // Create DatabaseHelper Object
         MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
@@ -260,15 +260,42 @@ public class SQLQueryHelper {
         // 调用SQLiteDatabase对象的query方法进行查询
         // Return a Cursor object：由数据库查询返回的结果集对象
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
-        ArrayList<String> nameList = new ArrayList<>();
+        HashMap<Integer, String> nameMap = new HashMap<>();
         //Move the cursor to the next line and decide whether it has the next data
         while (cursor.moveToNext()) {
+            int courseID = 0;
             String instructorName = "";
+
+            courseID  = Integer.parseInt(cursor.getString(cursor.getColumnIndex("course_id")));
             instructorName = cursor.getString(cursor.getColumnIndex("instructor_name"));
-            nameList.add(instructorName);
+
+            nameMap.put(courseID, instructorName);
+
         }
         //Close db
         sqliteDatabase.close();
-        return nameList;
+        return nameMap;
+    }
+
+    /**
+     * Search throw the instructor table to get the instructor email
+     * */
+    static public String searchInstructorEmailTable(Context context, String query){
+        System.out.println("Search the database");
+        // Create DatabaseHelper Object
+        MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
+        // 调用getWritableDatabase()方法创建或打开一个可以读的数据库
+        SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
+        // 调用SQLiteDatabase对象的query方法进行查询
+        // Return a Cursor object：由数据库查询返回的结果集对象
+        Cursor cursor = sqliteDatabase.rawQuery(query,null);
+        String email = "";
+        //Move the cursor to the next line and decide whether it has the next data
+        while (cursor.moveToNext()) {
+            email = cursor.getString(cursor.getColumnIndex("email"));
+        }
+        //Close db
+        sqliteDatabase.close();
+        return email;
     }
 }

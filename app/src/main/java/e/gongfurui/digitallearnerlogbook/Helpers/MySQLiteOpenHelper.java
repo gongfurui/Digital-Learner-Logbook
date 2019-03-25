@@ -113,10 +113,11 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 "primary key (ADI, learner_id))";*/
 
         String sql_courseFeedback = "create table courseFeedback(" +
-                "course_id int primary key," +
+                "course_id int," +
                 "learner_id int," +
-                "instructor_name" +
-                "feedback varchar(200) DEFAULT '')";
+                "instructor_name varchar(200)," +
+                "feedback varchar(200) DEFAULT ''," +
+                "primary key(course_id, learner_id))";
 
         String sql_supervisor_learner = "create table supervisor_learner(" +
                 "email varchar(200), " +

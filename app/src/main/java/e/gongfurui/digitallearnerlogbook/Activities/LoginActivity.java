@@ -58,21 +58,21 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, LearnerHomeActivity.class);
             Toast.makeText(this, "Successfully login as a learner", Toast.LENGTH_LONG).show();
             /*pass the learner data to the next Activity*/
-            intent.putExtra("learner", new Gson().toJson(learner));
+            intent.putExtra("learnerID", learner.driver_id);
             startActivity(intent);
         }
         //If the user is an instructor, jump to the instructor homepage
         else if(instructor != null){
             Intent intent = new Intent(this, InstructorHomePageActivityV1.class);
             Toast.makeText(this, "Successfully login as a instructor", Toast.LENGTH_LONG).show();
-            intent.putExtra("instructor", new Gson().toJson(instructor));
+            intent.putExtra("instructorADI", instructor.ADI);
             startActivity(intent);
         }
         //If the user is a supervisor, jump to the supervisor homepage
         else if(supervisor != null){
             Intent intent = new Intent(this, SupervisorHomePageActivityV1.class);
             Toast.makeText(this, "Successfully login as a supervisor", Toast.LENGTH_LONG).show();
-            intent.putExtra("supervisor", new Gson().toJson(supervisor));
+            intent.putExtra("supervisorMail", supervisor.email);
             startActivity(intent);
         }
         /*If none of the three roles be found, pop the message show the users that there is no account */

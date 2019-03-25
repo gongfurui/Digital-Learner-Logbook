@@ -127,7 +127,7 @@ public class InstructorRegisterActivity extends AppCompatActivity {
                                 "', '" + instructor.name + "', '" + instructor.psw + "')");
 
                         Intent intent = new Intent(this, InstructorHomePageActivityV1.class);
-                        intent.putExtra("instructor", new Gson().toJson(instructor));
+                        intent.putExtra("instructorADI", instructor.ADI);
                         startActivity(intent);
                     }
                 }

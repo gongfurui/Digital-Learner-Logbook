@@ -95,7 +95,7 @@ public class SQLQueryHelper {
                 courseCommentList.add(cursor.getString(cursor.getColumnIndex("c" + i+"c")));
             }
             learner = new Learner(new Role(name, email, psw), Integer.parseInt(id), date_of_birth,
-                    Integer.parseInt(time), courseProgressList, courseCommentList);
+                    Double.parseDouble(time), courseProgressList, courseCommentList);
         }
         //Close db
         sqliteDatabase.close();
@@ -246,5 +246,29 @@ public class SQLQueryHelper {
         sqliteDatabase.close();
         if(adi == 0) return false;
         else return true;
+    }
+
+    /**
+     * Search throw the courseFeedback table to get the instructor name who certify the progress
+     * */
+    static public ArrayList<String> getNameListFromCourseFeedbackTable(Context context, String query){
+        System.out.println("Search the database");
+        // Create DatabaseHelper Object
+        MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
+        // 调用getWritableDatabase()方法创建或打开一个可以读的数据库
+        SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
+        // 调用SQLiteDatabase对象的query方法进行查询
+        // Return a Cursor object：由数据库查询返回的结果集对象
+        Cursor cursor = sqliteDatabase.rawQuery(query,null);
+        ArrayList<String> nameList = new ArrayList<>();
+        //Move the cursor to the next line and decide whether it has the next data
+        while (cursor.moveToNext()) {
+            String instructorName = "";
+            instructorName = cursor.getString(cursor.getColumnIndex("instructor_name"));
+            nameList.add(instructorName);
+        }
+        //Close db
+        sqliteDatabase.close();
+        return nameList;
     }
 }

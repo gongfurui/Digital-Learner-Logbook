@@ -9,21 +9,22 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import e.gongfurui.digitallearnerlogbook.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbook.R;
 import e.gongfurui.digitallearnerlogbook.Roles.Learner;
 
 public class InformationFragment extends Fragment {
 
-    private static final String ARG_PARAM1 = "learner";
-    String learnerJson;
+    private static final String ARG_PARAM1 = "learnerID";
+    int learnerID;
     TextView tv_learnerName, tv_learnerID, tv_learnerDob, tv_learnerEmail;
     Learner learner;
 
 
-    public static InformationFragment newInstance(String json) {
+    public static InformationFragment newInstance(int id) {
         InformationFragment fragment = new InformationFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, json);
+        args.putInt(ARG_PARAM1, id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -32,8 +33,10 @@ public class InformationFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            learnerJson = getArguments().getString(ARG_PARAM1);
-            learner=new Gson().fromJson(learnerJson, Learner.class);
+            learnerID = getArguments().getInt(ARG_PARAM1);
+            learner = SQLQueryHelper.searchLearnerTable(this.getContext(),
+                    "SELECT * FROM learner" +
+                            " WHERE id = "+ learnerID);
         }
     }
 

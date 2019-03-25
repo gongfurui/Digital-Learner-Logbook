@@ -118,7 +118,7 @@ public class SupervisorRegisterActivity extends AppCompatActivity {
                             "', '" + supervisor.name + "', '" + supervisor.psw + "')");
 
                     Intent intent = new Intent(this, SupervisorHomePageActivityV1.class);
-                    intent.putExtra("supervisor", new Gson().toJson(supervisor));
+                    intent.putExtra("supervisorMail", supervisor.email);
                     startActivity(intent);
                 }
             }

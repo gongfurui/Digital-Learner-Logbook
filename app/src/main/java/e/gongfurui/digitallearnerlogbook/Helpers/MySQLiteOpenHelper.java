@@ -47,7 +47,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 "psw varchar, " +
                 "super_email varchar(200), " +
                 "date_of_birth TEXT," +
-                "time int DEFAULT 0, " +
+                "time REAL DEFAULT 0.0, " +
                 "c1 int DEFAULT 0, " +
                 "c1c varchar(200) DEFAULT '', " +
                 "c2 int DEFAULT 0, " +
@@ -112,6 +112,12 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 "feedback varchar(200) DEFAULT ''," +
                 "primary key (ADI, learner_id))";*/
 
+        String sql_courseFeedback = "create table courseFeedback(" +
+                "course_id int primary key," +
+                "learner_id int," +
+                "instructor_name" +
+                "feedback varchar(200) DEFAULT '')";
+
         String sql_supervisor_learner = "create table supervisor_learner(" +
                 "email varchar(200), " +
                 "learner_id int, "+
@@ -129,6 +135,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL(sql_supervisor_learner);
         db.execSQL(sql_licence);
         db.execSQL(sql_adiList);
+        db.execSQL(sql_courseFeedback);
 
       }
 

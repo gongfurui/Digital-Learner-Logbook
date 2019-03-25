@@ -146,7 +146,7 @@ public class LearnerRegisterActivity extends AppCompatActivity implements Select
                             SQLQueryHelper.insertDatabase(this, "INSERT into supervisor_learner (email, learner_id)" +
                                     " VALUES ('"+superEmail+"', "+learner.driver_id+")");
                             Intent intent= new Intent(this, LearnerHomeActivity.class);
-                            intent.putExtra("learner", new Gson().toJson(learner));
+                            intent.putExtra("learnerID", learner.driver_id);
                             startActivity(intent);
                         }
                     }

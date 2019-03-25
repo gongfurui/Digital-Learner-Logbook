@@ -36,14 +36,14 @@ public class LearnerHomeActivity extends AppCompatActivity   implements RadioGro
     public static final int PAGE_THREE = 2;
     public static final int PAGE_FOUR = 3;
 
-    public static String learnerJson;
+    public static int learnerID;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learner_home);
-        learnerJson=getIntent().getStringExtra("learner");
+        learnerID=getIntent().getIntExtra("learnerID", 0);
         mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
         bindViews();
     }

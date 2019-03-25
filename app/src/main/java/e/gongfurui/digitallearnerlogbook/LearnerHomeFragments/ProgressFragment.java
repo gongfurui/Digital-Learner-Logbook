@@ -10,23 +10,24 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 
+import e.gongfurui.digitallearnerlogbook.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbook.R;
 import e.gongfurui.digitallearnerlogbook.Roles.Learner;
 
 public class ProgressFragment extends Fragment{
 
-    private static final String ARG_PARAM1 = "learner";
-    String learnerJson;
+    private static final String ARG_PARAM1 = "learnerID";
+    int learnerID;
     Learner learner;
     ProgressBar timeBar, courseBar;
     TextView tv_timeProgress, tv_courseProgress;
     int finishedCourse;
 
 
-    public static ProgressFragment newInstance(String json) {
+    public static ProgressFragment newInstance(int id) {
         ProgressFragment fragment = new ProgressFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, json);
+        args.putInt(ARG_PARAM1, id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -35,8 +36,10 @@ public class ProgressFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            learnerJson = getArguments().getString(ARG_PARAM1);
-            learner=new Gson().fromJson(learnerJson, Learner.class);
+            learnerID = getArguments().getInt(ARG_PARAM1);
+            learner = SQLQueryHelper.searchLearnerTable(this.getContext(),
+                    "SELECT * FROM learner" +
+                            " WHERE id = "+ learnerID);
         }
         for (Boolean b: learner.courseProgressList) {
             if(b) finishedCourse++;
@@ -50,7 +53,7 @@ public class ProgressFragment extends Fragment{
         tv_timeProgress = view.findViewById(R.id.tv_timeProgress);
         courseBar = view.findViewById(R.id.courseBar);
         tv_courseProgress = view.findViewById(R.id.tv_courseProgress);
-        timeBar.setProgress(learner.time);
+        timeBar.setProgress((int) (learner.time*100));
         tv_timeProgress.setText(learner.time + "/120 hours");
         courseBar.setProgress(finishedCourse);
         tv_courseProgress.setText(finishedCourse + "/23 competencies");

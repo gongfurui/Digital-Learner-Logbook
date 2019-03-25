@@ -23,10 +23,10 @@ public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
     public MyFragmentPagerAdapter(FragmentManager fm) {
         super(fm);
-        informationFg = InformationFragment.newInstance(LearnerHomeActivity.learnerJson);
+        informationFg = InformationFragment.newInstance(LearnerHomeActivity.learnerID);
         myFragment2 = new MyFragment2();
         myFragment3 = new MyFragment3();
-        progressFg = ProgressFragment.newInstance(LearnerHomeActivity.learnerJson);
+        progressFg = ProgressFragment.newInstance(LearnerHomeActivity.learnerID);
         fragments[0] = informationFg;
         fragments[1] = myFragment2;
         fragments[2] = myFragment3;

@@ -65,7 +65,8 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
     @Override
     public void run() {
         //sec++;
-        min++;
+        //min++;
+        hour++;
         if(sec == 60) {
             min++;
             sec = 0;
@@ -123,12 +124,15 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
                                 Toast.LENGTH_LONG).show();
                     } else {
                         double certified_time = learner.time + total_time;//this the updated time after certification
+                        if(certified_time >= 120){
+                            certified_time = 120;
+                        }
                         SQLQueryHelper.insertDatabase(StudyActivity.this,
                                 "INSERT into courseFeedback " +
                                         "(course_id, learner_id, instructor_name, feedback)" +
                                         " VALUES ("+competency.cID+","+learner.driver_id+"," +
                                         " '"+instructor.name+"', '"+et_feedback.getText().toString()+"')");
-                        /*Update the */
+                        /*Update the student progress, and course comment list*/
                         SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE learner SET time =" +
                                 certified_time + " WHERE id = " + learner.driver_id);
                         SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE learner SET c"+competency.cID+" =" +

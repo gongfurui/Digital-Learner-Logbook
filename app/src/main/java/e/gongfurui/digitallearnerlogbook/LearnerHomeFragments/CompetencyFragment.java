@@ -76,6 +76,9 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
         return view;
     }
 
+    /**
+     * Add the competency into the competency list
+     * */
     public void addToList(){
         mData.add(new Competency(1, "1 VEHICLE CONTROLS" ,
                 "Locate, identify and describe the function and operation of all" +
@@ -111,16 +114,96 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
                         " demonstrate engine start procedure unaided by the instructor.\n" +
                         "The student will, when instructed to start the vehicle",
                 commentMap.get(3), learner.courseProgressList.get(2), nameMap.get(3)));
+        mData.add(new Competency(4, "4 MOVING OFF PROCEDURE" ,
+                "",
+                "",
+                "",
+                commentMap.get(4), learner.courseProgressList.get(3), nameMap.get(4)));
+        mData.add(new Competency(5, "5 GEAR CHANGING" ,
+                "",
+                "",
+                "",
+                commentMap.get(5), learner.courseProgressList.get(4), nameMap.get(5)));
+        mData.add(new Competency(6, "6 STEERING CONTROL" ,
+                "",
+                "",
+                "",
+                commentMap.get(6), learner.courseProgressList.get(5), nameMap.get(6)));
+        mData.add(new Competency(7, "7 TURNS, LEFT AND RIGHT" ,
+                "",
+                "",
+                "",
+                commentMap.get(7), learner.courseProgressList.get(6), nameMap.get(7)));
+        mData.add(new Competency(8, "8 SPEED CONTROL" ,
+                "",
+                "",
+                "",
+                commentMap.get(8), learner.courseProgressList.get(7), nameMap.get(8)));
+        mData.add(new Competency(9, "9 SLOWING PROCEDURE" ,
+                "",
+                "",
+                "",
+                commentMap.get(9), learner.courseProgressList.get(8), nameMap.get(9)));
+        mData.add(new Competency(10, "10 STOPPING PROCEDURE" ,
+                "",
+                "",
+                "",
+                commentMap.get(10), learner.courseProgressList.get(9), nameMap.get(10)));
+        mData.add(new Competency(11, "11 HILL STARTS" ,
+                "",
+                "",
+                "",
+                commentMap.get(11), learner.courseProgressList.get(10), nameMap.get(11)));
+        mData.add(new Competency(12, "12 GIVE WAT RULES" ,
+                "",
+                "",
+                "",
+                commentMap.get(12), learner.courseProgressList.get(11), nameMap.get(12)));
+        mData.add(new Competency(13, "13 STEERING CONTROL" ,
+                "",
+                "",
+                "",
+                commentMap.get(13), learner.courseProgressList.get(12), nameMap.get(13)));
+        mData.add(new Competency(14, "14 TURNS, LEFT AND RIGHT" ,
+                "",
+                "",
+                "",
+                commentMap.get(14), learner.courseProgressList.get(13), nameMap.get(14)));
+        mData.add(new Competency(15, "15 REVERSE PARALLEL PARKING" ,
+                "",
+                "",
+                "",
+                commentMap.get(15), learner.courseProgressList.get(14), nameMap.get(15)));
+        mData.add(new Competency(16, "16 U TURNS" ,
+                "",
+                "",
+                "",
+                commentMap.get(16), learner.courseProgressList.get(15), nameMap.get(16)));
+        mData.add(new Competency(17, "17 TURNING AROUND IN THE ROAD, EG THREE POINT TURN" ,
+                "",
+                "",
+                "",
+                commentMap.get(17), learner.courseProgressList.get(16), nameMap.get(17)));
+        mData.add(new Competency(24, "REVIEW AND CHECK SKILLS (C1-C17)" ,
+                "",
+                "",
+                "",
+                "", false, ""));
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(position != 0){
-            Intent intent = new Intent(this.mContext, CompetencyActivity.class);
-            intent.putExtra("competency", new Gson().toJson(mData.get(position-1)));
-            intent.putExtra("learner", new Gson().toJson(learner));
-            startActivity(intent);
+            if(position == 18){
+
+            }
+            else {
+                Intent intent = new Intent(this.mContext, CompetencyActivity.class);
+                intent.putExtra("competency", new Gson().toJson(mData.get(position - 1)));
+                intent.putExtra("learner", new Gson().toJson(learner));
+                startActivity(intent);
+            }
         }
     }
 }

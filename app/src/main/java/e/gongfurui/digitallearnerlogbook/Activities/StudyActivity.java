@@ -135,10 +135,10 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
                                 1 + " WHERE id = " + learner.driver_id);
                         SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE learner SET c"+competency.cID+"c = '" +
                                 et_feedback.getText().toString() + "' WHERE id = " + learner.driver_id);
-                        alert.dismiss();
                         Intent intent = new Intent(StudyActivity.this, LearnerHomeActivity.class);
                         intent.putExtra("learnerID", learner.driver_id);
                         startActivity(intent);
+                        alert.dismiss();
                     }
                 }
             }

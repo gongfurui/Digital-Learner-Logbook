@@ -105,19 +105,40 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
                         "Student in driver's seat.",
                 "The student will on at least (2) occasions during a single lesson," +
                         " demonstrate the following checks and adjustments unaided by the instructor:\n" +
-                        "The student will, when asked,'Are you ready to drive?:'",
+                        "The student will, when asked,'Are you ready to drive?:'\n" +
+                        "- Check the vehicle is parked and secured (park brake applied).\n" +
+                        "- Check the seat and head restraints are correctly adjusted.\n" +
+                        "- Check the internal and external mirrors are properly adjusted for appropriate rear visibility.\n" +
+                        "- Check sear belts are secured for all occupants.\n- Check the steering wheel is adjusted correctly.\n" +
+                        "- Check all doors are secured.",
                 commentMap.get(2), learner.courseProgressList.get(1), nameMap.get(2)));
         mData.add(new Competency(3, "3 STARTING UP PROCEDURE" ,
                 "Demonstrate engine start procedure",
                 "Typical driving situations",
                 "The student will, on at least four occasions during a single lesson," +
                         " demonstrate engine start procedure unaided by the instructor.\n" +
-                        "The student will, when instructed to start the vehicle",
+                        "The student will, when instructed to start the vehicle:\n" +
+                        "- Ensure park brake is applied.\n- Ensure gear lever is in neutral (park for automatic).\n" +
+                        "- Demonstrate use of the Inhibitor Switch (for automatic transmission vehicles only).\n" +
+                        "Switch on ignition.\n- Set accelerator and choke to recommended positions (where applicable).\n" +
+                        "- Monitor all gauges.\n- Monitor warning lights and buzzers.\n- Start the vehicle.\n" +
+                        "- Re-check gauges.\n- Re-check warning lights.",
                 commentMap.get(3), learner.courseProgressList.get(2), nameMap.get(3)));
         mData.add(new Competency(4, "4 MOVING OFF PROCEDURE" ,
-                "",
-                "",
-                "",
+                "Demonstrate moving off from a stationary position safety, efficiently" +
+                        " and while maintaining full control of vehicle.",
+                "- Vehicle parked adjacent to kerb in a low level traffic area, preferably" +
+                        "free of parked cars, with engine running and park brake on.\n" +
+                        "- Stationary, from an intersection hold line.",
+                "The student will on at least (8) occasions during a single lesson, demonstrate moving off" +
+                        "correctly unaided by the instructor - 4 times from a parked position and 4 times from an" +
+                        "intersection hold line.\nThe student will, when instructed to move off:\n- Depress cluth (manual).\n" +
+                        "- Select correct gear.\n- Check braking is applied (auto or manual).\n- Check Mirrors\n" +
+                        "- Indicate.\n- Apply appropriate engine revs (acceleration)\n- Release clutch to friction point (manual).\n" +
+                        "- Check all mirrors.\n- Check blind spot (head check where applicable).\n" +
+                        "- Release park brake (where necessary).\n- Gently release clutch (where applicable).\n" +
+                        "- Headcheck as vehicle begins to move.\n- Not roll backward.\n - Accelerate smoothly.\n" +
+                        "- Cancel indicator.\n- Recheck mirrors.\n- Not unnecessarily obstruct traffic.",
                 commentMap.get(4), learner.courseProgressList.get(3), nameMap.get(4)));
         mData.add(new Competency(5, "5 GEAR CHANGING" ,
                 "",

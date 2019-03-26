@@ -32,6 +32,7 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
     private CompetencyAdapter mAdapter = null;
     private ListView list_competency;
     private HashMap<Integer, String> nameMap = new HashMap<>();
+    private HashMap<Integer, String> commentMap = new HashMap<>();
 
 
     public static CompetencyFragment newInstance(int id) {
@@ -50,6 +51,12 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
             learner = SQLQueryHelper.searchLearnerTable(this.getContext(),
                     "SELECT * FROM learner" +
                             " WHERE id = "+ learnerID);
+            nameMap = SQLQueryHelper.getNameListFromCourseFeedbackTable(this.getContext(),
+                    "SELECT course_id, instructor_name FROM courseFeedback" +
+                            " WHERE learner_id = "+ learner.driver_id);
+            commentMap = SQLQueryHelper.getCommentListFromCourseFeedbackTable(this.getContext(),
+                    "SELECT course_id, feedback FROM courseFeedback" +
+                            " WHERE learner_id = "+ learner.driver_id);
         }
     }
 
@@ -70,9 +77,6 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
     }
 
     public void addToList(){
-        nameMap = SQLQueryHelper.getNameListFromCourseFeedbackTable(this.getContext(),
-                "SELECT course_id, instructor_name FROM courseFeedback" +
-                        " WHERE learner_id = "+ learner.driver_id);
         mData.add(new Competency(1, "1 VEHICLE CONTROLS" ,
                 "Locate, identify and describe the function and operation of all" +
                         " controls, gauges and warning lights.",
@@ -88,7 +92,7 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
                         "- Heating system.\n- Demisting system(front and rear).\n- All lighting controls(including high/low beam control).\n" +
                         "- All door controls.\n- Other controls as applicable to the assessment vehicle.Eg cruise control, " +
                         "bonnet release, central locking, electric mirror operation and/or special modifications.",
-                "", learner.courseProgressList.get(0), nameMap.get(1)));
+                commentMap.get(1), learner.courseProgressList.get(0), nameMap.get(1)));
         mData.add(new Competency(2, "2 CABIN DRILL" ,
                 "Adjustments required to ensure safe, effective and comfortable operation" +
                         "of the vehicle",
@@ -99,14 +103,14 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
                 "The student will on at least (2) occasions during a single lesson," +
                         " demonstrate the following checks and adjustments unaided by the instructor:\n" +
                         "The student will, when asked,'Are you ready to drive?:'",
-                "", learner.courseProgressList.get(1), nameMap.get(2)));
+                commentMap.get(2), learner.courseProgressList.get(1), nameMap.get(2)));
         mData.add(new Competency(3, "3 STARTING UP PROCEDURE" ,
                 "Demonstrate engine start procedure",
                 "Typical driving situations",
                 "The student will, on at least four occasions during a single lesson," +
                         " demonstrate engine start procedure unaided by the instructor.\n" +
                         "The student will, when instructed to start the vehicle",
-                "", learner.courseProgressList.get(2), nameMap.get(3)));
+                commentMap.get(3), learner.courseProgressList.get(2), nameMap.get(3)));
     }
 
 

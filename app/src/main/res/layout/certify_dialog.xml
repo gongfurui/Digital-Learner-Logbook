@@ -35,5 +35,13 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Enter the verify code"
-        android:inputType="number" />
+        android:inputType="numberPassword" />
+
+    <EditText
+        android:id="@+id/et_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Leave any feedbacks (Area needs to improve)"
+        android:inputType="text" />
 </LinearLayout>

@@ -2,6 +2,7 @@ package e.gongfurui.digitallearnerlogbook.Activities;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -31,7 +32,7 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
     int verifyCode;
     private Handler timer;
     private TextView tv_timeCovered;
-    private EditText et_ADI, et_verify;
+    private EditText et_ADI, et_verify, et_feedback;
     private String learnerJson, competencyJson;
     private Learner learner;
     private Instructor instructor;
@@ -54,13 +55,17 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
         initViews();
     }
 
+    /**
+     * Initial the UI parameter involved in this class
+     * */
     private void initViews(){
         tv_timeCovered = findViewById(R.id.tv_timeCovered);
     }
 
     @Override
     public void run() {
-        sec++;
+        //sec++;
+        min++;
         if(sec == 60) {
             min++;
             sec = 0;
@@ -93,12 +98,12 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
         timer.removeCallbacks(this);// stop the timer
         double total_time1 = sec / 3600 + min / 60 + hour;
         BigDecimal bd=new BigDecimal(total_time1);
-        double total_time = bd.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
-        double certified_time = learner.time + total_time;//this the updated time after certification
+        final double total_time = bd.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
+
         showDialog(this);
         et_ADI = alert.getWindow().findViewById(R.id.et_ADI);
         et_verify = alert.getWindow().findViewById(R.id.et_verify);
-
+        et_feedback = alert.getWindow().findViewById(R.id.et_feedback);
         alert.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -117,7 +122,23 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
                                 "The verify code is wrong. Please check!",
                                 Toast.LENGTH_LONG).show();
                     } else {
+                        double certified_time = learner.time + total_time;//this the updated time after certification
+                        SQLQueryHelper.insertDatabase(StudyActivity.this,
+                                "INSERT into courseFeedback " +
+                                        "(course_id, learner_id, instructor_name, feedback)" +
+                                        " VALUES ("+competency.cID+","+learner.driver_id+"," +
+                                        " '"+instructor.name+"', '"+et_feedback.getText().toString()+"')");
+                        /*Update the */
+                        SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE learner SET time =" +
+                                certified_time + " WHERE id = " + learner.driver_id);
+                        SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE learner SET c"+competency.cID+" =" +
+                                1 + " WHERE id = " + learner.driver_id);
+                        SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE learner SET c"+competency.cID+"c = '" +
+                                et_feedback.getText().toString() + "' WHERE id = " + learner.driver_id);
                         alert.dismiss();
+                        Intent intent = new Intent(StudyActivity.this, LearnerHomeActivity.class);
+                        intent.putExtra("learnerID", learner.driver_id);
+                        startActivity(intent);
                     }
                 }
             }

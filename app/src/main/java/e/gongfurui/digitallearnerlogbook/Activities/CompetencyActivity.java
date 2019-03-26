@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.gson.Gson;
@@ -57,8 +58,14 @@ public class CompetencyActivity extends AppCompatActivity {
     }
 
     public void learningPressed(View view) {
-        Intent intent = new Intent(this, StudyActivity.class);
-        intent.putExtra("learner", new Gson().toJson(learner));
-        startActivity(intent);
+        if(competency.isFinished){
+            Toast.makeText(this,"You have finished this competency. Please move to next course", Toast.LENGTH_LONG).show();
+        }
+        else {
+            Intent intent = new Intent(this, StudyActivity.class);
+            intent.putExtra("learner", new Gson().toJson(learner));
+            intent.putExtra("competency", new Gson().toJson(competency));
+            startActivity(intent);
+        }
     }
 }

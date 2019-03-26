@@ -255,10 +255,8 @@ public class SQLQueryHelper {
         System.out.println("Search the database");
         // Create DatabaseHelper Object
         MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
-        // 调用getWritableDatabase()方法创建或打开一个可以读的数据库
         SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
-        // 调用SQLiteDatabase对象的query方法进行查询
-        // Return a Cursor object：由数据库查询返回的结果集对象
+        // Return a Cursor object：
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
         HashMap<Integer, String> nameMap = new HashMap<>();
         //Move the cursor to the next line and decide whether it has the next data
@@ -276,6 +274,34 @@ public class SQLQueryHelper {
         sqliteDatabase.close();
         return nameMap;
     }
+
+    /**
+     * Search throw the courseFeedback table to get the feedback list from the instructor
+     * */
+    static public HashMap<Integer, String>  getCommentListFromCourseFeedbackTable(Context context, String query){
+        System.out.println("Search the database");
+        // Create DatabaseHelper Object
+        MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
+        SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
+        // Return a Cursor object：
+        Cursor cursor = sqliteDatabase.rawQuery(query,null);
+        HashMap<Integer, String> commentMap = new HashMap<>();
+        //Move the cursor to the next line and decide whether it has the next data
+        while (cursor.moveToNext()) {
+            int courseID = 0;
+            String feedback = "";
+
+            courseID  = Integer.parseInt(cursor.getString(cursor.getColumnIndex("course_id")));
+            feedback = cursor.getString(cursor.getColumnIndex("feedback"));
+
+            commentMap.put(courseID, feedback);
+
+        }
+        //Close db
+        sqliteDatabase.close();
+        return commentMap;
+    }
+
 
     /**
      * Search throw the instructor table to get the instructor email

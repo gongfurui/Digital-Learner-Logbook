@@ -1,9 +1,13 @@
 package e.gongfurui.digitallearnerlogbook.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -13,19 +17,33 @@ import e.gongfurui.digitallearnerlogbook.Roles.Learner;
 import e.gongfurui.digitallearnerlogbook.R;
 import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity{
 
-    EditText et_user_name, et_psw;
+    private EditText et_user_name, et_psw;
+    private CheckBox cb_remember;
     Learner learner;
     Instructor instructor;
     Supervisor supervisor;
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private final String ACCOUNTKEY = "MyAccount";
+    private final String CHECKKEY = "MyCheck";
+    private boolean isAutoStore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        //get the sharedPreferences instance
+        sharedPreferences = getPreferences(Activity.MODE_PRIVATE);
+        //get the sharedPreferences editor
+        editor = sharedPreferences.edit();
         initViews();
-
+        isAutoStore = sharedPreferences.getBoolean(CHECKKEY, false);
+        if(isAutoStore){
+            cb_remember.setChecked(true);
+            et_user_name.setText(sharedPreferences.getString(ACCOUNTKEY, ""));
+        }
     }
 
     /**
@@ -34,6 +52,17 @@ public class LoginActivity extends AppCompatActivity {
     private void initViews(){
         et_user_name = findViewById(R.id.et_user_name);
         et_psw = findViewById(R.id.et_psw);
+        cb_remember = findViewById(R.id.cb_remember);
+        /**
+         * Listen the checkbox status.
+         * If it is checked, store the account
+         * */
+        cb_remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked) isAutoStore = false;
+                else isAutoStore = true;
+            }
+        });
     }
 
     /**
@@ -57,6 +86,14 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "Successfully login as a learner", Toast.LENGTH_LONG).show();
             /*pass the learner data to the next Activity*/
             intent.putExtra("learnerID", learner.driver_id);
+            if(isAutoStore) {
+                editor.putString(ACCOUNTKEY, account);
+            }
+            else {
+                editor.putString(ACCOUNTKEY, "");
+            }
+            editor.putBoolean(CHECKKEY, isAutoStore);
+            editor.commit();
             startActivity(intent);
         }
         //If the user is an instructor, jump to the instructor homepage
@@ -64,6 +101,14 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, InstructorHomePageActivityV1.class);
             Toast.makeText(this, "Successfully login as a instructor", Toast.LENGTH_LONG).show();
             intent.putExtra("instructorADI", instructor.ADI);
+            if(isAutoStore) {
+                editor.putString(ACCOUNTKEY, account);
+            }
+            else {
+                editor.putString(ACCOUNTKEY, "");
+            }
+            editor.putBoolean(CHECKKEY, isAutoStore);
+            editor.commit();
             startActivity(intent);
         }
         //If the user is a supervisor, jump to the supervisor homepage
@@ -71,6 +116,14 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SupervisorHomePageActivityV1.class);
             Toast.makeText(this, "Successfully login as a supervisor", Toast.LENGTH_LONG).show();
             intent.putExtra("supervisorMail", supervisor.email);
+            if(isAutoStore) {
+                editor.putString(ACCOUNTKEY, account);
+            }
+            else {
+                editor.putString(ACCOUNTKEY, "");
+            }
+            editor.putBoolean(CHECKKEY, isAutoStore);
+            editor.commit();
             startActivity(intent);
         }
         /*If none of the three roles be found, pop the message show the users that there is no account */
@@ -174,4 +227,6 @@ public class LoginActivity extends AppCompatActivity {
         SQLQueryHelper.insertDatabase(this , "INSERT into ADIList (adi)" +
                 " VALUES (234)");
     }
+
+
 }

@@ -44,7 +44,7 @@ public class CompetencyAdapter extends BaseAdapter {
         convertView = LayoutInflater.from(mContext).inflate(R.layout.list_competency,parent,false);
         TextView tv_cTitle = convertView.findViewById(R.id.tv_cTitle);
         tv_cTitle.setText(mData.get(position).title);
-        if(position == 18){
+        if(position == 17){
             tv_cTitle.setTextColor(Color.RED);
         }
         ImageView iv_cProgress = convertView.findViewById(R.id.iv_cProgress);

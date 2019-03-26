@@ -210,13 +210,48 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
                 "",
                 "",
                 "", false, ""));
+        mData.add(new Competency(18, "18 LANE CHANGING, MERGING< ENTERING FREEWAYS< FORM ONE LANE" ,
+                "",
+                "",
+                "",
+                commentMap.get(18), learner.courseProgressList.get(17), nameMap.get(18)));
+        mData.add(new Competency(19, "19 OVERTAKING" ,
+                "",
+                "",
+                "",
+                commentMap.get(19), learner.courseProgressList.get(18), nameMap.get(19)));
+        mData.add(new Competency(20, "20 OBSERVATION SKILL, VISUAL SEARCHING AND SCANNING, HAZARD RECOGNITION" ,
+                "",
+                "",
+                "",
+                commentMap.get(20), learner.courseProgressList.get(19), nameMap.get(20)));
+        mData.add(new Competency(21, "21 COMPLIANCE WITH THE SYSTEM OF VEHICLE CONTROL" ,
+                "",
+                "",
+                "",
+                commentMap.get(21), learner.courseProgressList.get(20), nameMap.get(21)));
+        mData.add(new Competency(22, "22 VULNERABLE ROAD USERS" ,
+                "",
+                "",
+                "",
+                commentMap.get(22), learner.courseProgressList.get(21), nameMap.get(22)));
+        mData.add(new Competency(25, "REVIEW AND CHECK SKILLS (C1-22)",
+                "",
+                "",
+                "",
+                "", false, ""));
+        mData.add(new Competency(23, "23 FINAL DRIVE ON BUSY ROADS AND UNFAMILIAR ROADS",
+                "",
+                "",
+                "",
+                commentMap.get(23), learner.courseProgressList.get(22), nameMap.get(23)));
     }
 
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(position != 0){
-            if(position == 18){
+            if(position == 18 || position == 24 || position == 25){
 
             }
             else {

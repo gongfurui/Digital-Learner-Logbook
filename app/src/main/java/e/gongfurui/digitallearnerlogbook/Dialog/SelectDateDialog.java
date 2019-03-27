@@ -53,19 +53,19 @@ public class SelectDateDialog implements OnWheelChangedListener {
         dialog.show();
 
         Window window = dialog.getWindow();
-        // 设置布局
+        // set layout
         window.setContentView(R.layout.dialog_select_address);
-        // 设置宽高
+        // Set height and width
         window.getDecorView().setPadding(0, 0, 0, 0);
 
         window.setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-        // 设置弹出的动画效果
+        // Set popup animation
         window.setWindowAnimations(R.style.mystyle);
         window.setGravity(Gravity.BOTTOM);
 
         Calendar c = Calendar.getInstance();
         int curYear = c.get(Calendar.YEAR);
-        int curMonth = c.get(Calendar.MONTH) + 1;//通过Calendar算出的月数要+1
+        int curMonth = c.get(Calendar.MONTH) + 1;//Throgh Calendar counts the month requires to +1
         int curDate = c.get(Calendar.DATE);
         year = (WheelView) window.findViewById(R.id.id_province);
         initYear(context);
@@ -82,10 +82,9 @@ public class SelectDateDialog implements OnWheelChangedListener {
         month.setVisibleItems(9);
         day.setVisibleItems(9);
 
-        //设置滚轮滑动监听
+        //set scroll listener
         setDateUpListener();
 
-        // 设置监听
         Button ok = window.findViewById(R.id.btn_confirm);
         Button cancel = window.findViewById(R.id.btn_cancel);
         ok.setOnClickListener(new OnClickListener() {
@@ -133,7 +132,7 @@ public class SelectDateDialog implements OnWheelChangedListener {
 
 
     /**
-     * 初始化年
+     * Initial year
      */
     private void initYear(Context context) {
         NumericWheelAdapter numericWheelAdapter = new NumericWheelAdapter(context,
@@ -144,7 +143,7 @@ public class SelectDateDialog implements OnWheelChangedListener {
     }
 
     /**
-     * 初始化月
+     * Initial month
      */
     private void initMonth(Context context) {
         NumericWheelAdapter numericWheelAdapter = new NumericWheelAdapter(context, 1, 12, "%02d");
@@ -154,12 +153,12 @@ public class SelectDateDialog implements OnWheelChangedListener {
     }
 
     /**
-     * 初始化天
+     * Initial days
      */
     private void initDay(int arg1, int arg2, Context context) {
-        //设置适配器
+        //Set adapter
         NumericWheelAdapter numericWheelAdapter = new NumericWheelAdapter(context, 1, getDay(arg1, arg2), "%02d");
-        //创建标签
+        //Establish label
         numericWheelAdapter.setLabel(" ");
         day.setViewAdapter(numericWheelAdapter);
         day.setCyclic(true);
@@ -200,7 +199,6 @@ public class SelectDateDialog implements OnWheelChangedListener {
         if (wheel == year || wheel == month) {
             int yearNum = year.getCurrentItem() + START_YEAR;
             int monthNum = month.getCurrentItem() + 1;
-            //如果当期滑动的是年并且当前月份不等于2时结束监听避免重复创建对象
             if (wheel == year && monthNum != 2) {
                 return;
             }

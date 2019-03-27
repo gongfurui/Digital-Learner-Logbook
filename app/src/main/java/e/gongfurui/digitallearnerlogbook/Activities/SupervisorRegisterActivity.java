@@ -31,7 +31,7 @@ public class SupervisorRegisterActivity extends AppCompatActivity {
     }
 
     /**
-     * Initial the parameter involved in this class
+     * Initial the UI parameter involved in this activity
      * */
     private void initViews(){
         et_s_email = findViewById(R.id.et_s_email);

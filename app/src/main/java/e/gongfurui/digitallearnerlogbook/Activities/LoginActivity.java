@@ -28,7 +28,7 @@ public class LoginActivity extends AppCompatActivity{
     private SharedPreferences.Editor editor;
     private final String ACCOUNTKEY = "MyAccount";
     private final String CHECKKEY = "MyCheck";
-    private boolean isAutoStore;
+    private boolean isAutoStore;// the parameter decides whether we store the account after logout
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity{
     }
 
     /**
-     * Initial the parameter involved in this class
+     * Initial the UI parameter involved in this activity
      * */
     private void initViews(){
         et_user_name = findViewById(R.id.et_user_name);
@@ -141,6 +141,7 @@ public class LoginActivity extends AppCompatActivity{
         Intent intent = new Intent(this, ForgetPswActivity.class);
         startActivity(intent);
     }
+
     /**
      * Because we don't have the manage system to store the online database,
      * we use the SQLite to initial the database we expected to interact with through the app.

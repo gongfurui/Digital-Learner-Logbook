@@ -27,7 +27,7 @@ public class LearnerHomeActivity extends AppCompatActivity   implements RadioGro
 
     private MyFragmentPagerAdapter mAdapter;
 
-    //几个代表页面的常量
+    //Parameters stands for the pages
     public static final int PAGE_ONE = 0;
     public static final int PAGE_TWO = 1;
     public static final int PAGE_THREE = 2;
@@ -45,6 +45,9 @@ public class LearnerHomeActivity extends AppCompatActivity   implements RadioGro
         initViews();
     }
 
+    /**
+     * Initial the UI parameter involved in this activity
+     * */
     private void initViews() {
         txt_topbar = findViewById(R.id.txt_topbar);
         rg_tab_bar = findViewById(R.id.rg_tab_bar);
@@ -105,7 +108,6 @@ public class LearnerHomeActivity extends AppCompatActivity   implements RadioGro
     }
 
 
-    //重写ViewPager页面切换的处理方法
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
     }
@@ -120,7 +122,10 @@ public class LearnerHomeActivity extends AppCompatActivity   implements RadioGro
 
     @Override
     public void onPageScrollStateChanged(int state) {
-        //state的状态有三个，0表示什么都没做，1正在滑动，2滑动完毕
+        //3 state，
+        // 0 stands for nothing，
+        // 1 stands for sliding，
+        // 2 stands for slided.
         if (state == 2) {
             switch (vpager.getCurrentItem()) {
                 case PAGE_ONE:

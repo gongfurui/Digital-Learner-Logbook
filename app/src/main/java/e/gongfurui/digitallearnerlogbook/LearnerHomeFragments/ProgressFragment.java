@@ -49,15 +49,23 @@ public class ProgressFragment extends Fragment{
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fg_progress, container, false);
-        timeBar = view.findViewById(R.id.timeBar);
-        tv_timeProgress = view.findViewById(R.id.tv_timeProgress);
-        courseBar = view.findViewById(R.id.courseBar);
-        tv_courseProgress = view.findViewById(R.id.tv_courseProgress);
+        initViews(view);
         timeBar.setProgress((int) (learner.time*100));
         tv_timeProgress.setText(learner.time + "/120 hours");
         courseBar.setProgress(finishedCourse);
         tv_courseProgress.setText(finishedCourse + "/23 competencies");
         return view;
+    }
+
+
+    /**
+     * Initial the UI parameter involved in this fragment
+     * */
+    public void initViews(View view){
+        timeBar = view.findViewById(R.id.timeBar);
+        tv_timeProgress = view.findViewById(R.id.tv_timeProgress);
+        courseBar = view.findViewById(R.id.courseBar);
+        tv_courseProgress = view.findViewById(R.id.tv_courseProgress);
     }
 
 

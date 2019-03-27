@@ -33,7 +33,7 @@ public class ForgetPswActivity extends AppCompatActivity {
     }
 
     /**
-     * Initial the parameter involved in this class
+     * Initial the UI parameter involved in this activity
      * */
     private void initViews(){
         et_email = findViewById(R.id.et_mail);

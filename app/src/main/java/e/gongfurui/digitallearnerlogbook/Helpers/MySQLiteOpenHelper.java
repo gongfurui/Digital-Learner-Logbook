@@ -18,10 +18,10 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         super(context, name, factory, version);
       }
       /**
-       * context:object
-       * name: db name
-       * param:factory
-       * version: current db ver
+       * @param context context from the activty
+       * @param name db name
+       * @param version current version of db
+       * @return
        * */
       public MySQLiteOpenHelper(Context context, String name, int version)
       {
@@ -35,11 +35,13 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
       }
 
       /**
-       * Create the database
+       * Create the tables in the database we will use in the digital learner logbook
        * */
       @Override
       public void onCreate(SQLiteDatabase db) {
         System.out.println("Creating database:");
+
+        /*The table for the learner*/
         String sql_learner = "create table learner(" +
                 "id int primary key NOT NULL, " +
                 "email varchar(200), " +
@@ -95,12 +97,14 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 "c23 int DEFAULT 0," +
                 "c23c varchar(200) DEFAULT '')";
 
+        /*The table for the instructor*/
         String sql_instructor = "create table instructor(" +
                 "ADI int primary key, "+
                 "email varchar(200), " +
                 "name varchar(200), " +
                 "psw varchar)";
 
+        /*The table for the supervisor*/
         String sql_supervisor = "create table supervisor(" +
                 "email varchar(200) primary key, " +
                 "name varchar(200), " +
@@ -112,6 +116,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 "feedback varchar(200) DEFAULT ''," +
                 "primary key (ADI, learner_id))";*/
 
+        /*The table for the course feedback, which includes the relationship between learner and instructor*/
         String sql_courseFeedback = "create table courseFeedback(" +
                 "course_id int," +
                 "learner_id int," +
@@ -119,17 +124,22 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 "feedback varchar(200) DEFAULT ''," +
                 "primary key(course_id, learner_id))";
 
+        /*The table for building the relationship between learner and instructor*/
         String sql_supervisor_learner = "create table supervisor_learner(" +
                 "email varchar(200), " +
                 "learner_id int, "+
                 "primary key (email, learner_id))";
 
+        /*the table for the current licence holder, including the types of learner and full*/
         String sql_licence = "create table licence(" +
                 "driver_id int primary key, " +
                 "type varchar(40))";
 
+
+        /*table for the current instructor list who has got the qualification to become an instructor*/
         String sql_adiList = "create table ADIList (adi int primary key)";
 
+        /*execute the sql query to establish the schema of the database*/
         db.execSQL(sql_learner);
         db.execSQL(sql_instructor);
         db.execSQL(sql_supervisor);

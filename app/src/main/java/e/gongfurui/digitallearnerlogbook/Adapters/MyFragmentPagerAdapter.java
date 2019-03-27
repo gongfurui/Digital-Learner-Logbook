@@ -12,7 +12,7 @@ import e.gongfurui.digitallearnerlogbook.LearnerHomeFragments.ProgressFragment;
 
 public class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
-    private final int PAGER_COUNT = 4;
+    private final int PAGER_COUNT = 4;//Maximum pages in the PagerAdapter
     public InformationFragment informationFg;
     public CompetencyFragment competencyFragment;
     public MyFragment3 myFragment3;

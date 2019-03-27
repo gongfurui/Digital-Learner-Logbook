@@ -47,7 +47,7 @@ public class LearnerRegisterActivity extends AppCompatActivity implements Select
     }
 
     /**
-     * Initial the parameter involved in this class
+     * Initial the UI parameter involved in this activity
      * */
     private void initViews(){
         et_l_dob = findViewById(R.id.et_l_dob);

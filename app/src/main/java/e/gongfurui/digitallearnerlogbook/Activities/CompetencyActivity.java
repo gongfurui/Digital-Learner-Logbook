@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.Toolbar;
 
 import com.google.gson.Gson;
 
@@ -41,7 +40,7 @@ public class CompetencyActivity extends AppCompatActivity {
     }
 
     /**
-     * Initial the UI parameter involved in this class
+     * Initial the UI parameter involved in this activity
      * */
     public void initView(){
         tv_title = findViewById(R.id.tv_title);

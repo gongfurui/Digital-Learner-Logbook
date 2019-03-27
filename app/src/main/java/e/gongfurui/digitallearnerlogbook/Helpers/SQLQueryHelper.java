@@ -13,7 +13,12 @@ import e.gongfurui.digitallearnerlogbook.Roles.Learner;
 import e.gongfurui.digitallearnerlogbook.Roles.Role;
 import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
 
+
+/**
+ * This class is to store the list functions associated with managing database
+ * */
 public class SQLQueryHelper {
+
     /**
      * Delete SQLite database
      * */
@@ -21,9 +26,9 @@ public class SQLQueryHelper {
         System.out.println("Delete the database");
         MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,
                 dbname,2);
-        // 调用getReadableDatabase()方法创建或打开一个可以读的数据库
+        // Get a readable database
         SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
-        //删除名为test.db数据库
+        //Delete db
         context.deleteDatabase(dbname);
     }
 
@@ -33,11 +38,10 @@ public class SQLQueryHelper {
      * */
     static public void insertDatabase(Context context, String query){
         System.out.println("Insert data");
-        // 创建SQLiteOpenHelper子类对象
+        // Create a DatabaseHelper object
         MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
-        // 调用getWritableDatabase()方法创建或打开一个可以读的数据库
+        // Get a writable database
         SQLiteDatabase  sqliteDatabase = dbHelper.getWritableDatabase();
-        // 调用insert()方法将数据插入到数据库当中
         sqliteDatabase.execSQL(query);
         //close database
         sqliteDatabase.close();
@@ -48,15 +52,14 @@ public class SQLQueryHelper {
      * */
     static public void updateDatabase(Context context, String query){
         System.out.println("Update data");
-
-        // 创建一个DatabaseHelper对象
-        // 将数据库的版本升级为2
-        // 传入版本号为2，大于旧版本（1），所以会调用onUpgrade()升级数据库
+        // Create a DatabaseHelper object
+        // Update the current version 2
+        // Upgrade db
         MySQLiteOpenHelper dbHelper2 = new MySQLiteOpenHelper(context,"test_carson", 2);
-        // 调用getWritableDatabase()得到一个可写的SQLiteDatabase对象
+        // Get a writable database
         SQLiteDatabase sqliteDatabase2 = dbHelper2.getWritableDatabase();
         sqliteDatabase2.execSQL(query);
-        //关闭数据库
+        // Close db
         sqliteDatabase2.close();
     }
 
@@ -68,10 +71,9 @@ public class SQLQueryHelper {
         System.out.println("Search the database");
         // Create DatabaseHelper Object
         MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
-        // 调用getWritableDatabase()方法创建或打开一个可以读的数据库
+        // Open a readable database
         SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
-        // 调用SQLiteDatabase对象的query方法进行查询
-        // Return a Cursor object：由数据库查询返回的结果集对象
+        // Return a Cursor object
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
         String id;
         String name;
@@ -109,10 +111,9 @@ public class SQLQueryHelper {
         System.out.println("Search the database");
         // Create DatabaseHelper Object
         MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
-        // 调用getWritableDatabase()方法创建或打开一个可以读的数据库
+        // Open a readable database
         SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
-        // 调用SQLiteDatabase对象的query方法进行查询
-        // Return a Cursor object：由数据库查询返回的结果集对象
+        // Return a Cursor object
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
         String id;
         String name;
@@ -209,10 +210,7 @@ public class SQLQueryHelper {
         System.out.println("Search the database");
         // Create DatabaseHelper Object
         MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
-        // 调用getWritableDatabase()方法创建或打开一个可以读的数据库
         SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
-        // 调用SQLiteDatabase对象的query方法进行查询
-        // Return a Cursor object：由数据库查询返回的结果集对象
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
         int id = 0;
         //Move the cursor to the next line and decide whether it has the next data
@@ -232,10 +230,7 @@ public class SQLQueryHelper {
         System.out.println("Search the database");
         // Create DatabaseHelper Object
         MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
-        // 调用getWritableDatabase()方法创建或打开一个可以读的数据库
         SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
-        // 调用SQLiteDatabase对象的query方法进行查询
-        // Return a Cursor object：由数据库查询返回的结果集对象
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
         int adi = 0;
         //Move the cursor to the next line and decide whether it has the next data
@@ -310,10 +305,7 @@ public class SQLQueryHelper {
         System.out.println("Search the database");
         // Create DatabaseHelper Object
         MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
-        // 调用getWritableDatabase()方法创建或打开一个可以读的数据库
         SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
-        // 调用SQLiteDatabase对象的query方法进行查询
-        // Return a Cursor object：由数据库查询返回的结果集对象
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
         String email = "";
         //Move the cursor to the next line and decide whether it has the next data

@@ -47,6 +47,7 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            /*Retrieve the required data from the SQLite database*/
             learnerID = getArguments().getInt(ARG_PARAM1);
             learner = SQLQueryHelper.searchLearnerTable(this.getContext(),
                     "SELECT * FROM learner" +
@@ -77,7 +78,7 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
     }
 
     /**
-     * Add the competency into the competency list
+     * Add the competency details into the competency list
      * */
     public void addToList(){
         mData.add(new Competency(1, "1 VEHICLE CONTROLS" ,
@@ -248,6 +249,9 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
     }
 
 
+    /**
+     * Jump to the each competency activity after clicking the competency on the list
+     * */
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(position != 0){

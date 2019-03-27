@@ -27,7 +27,7 @@ public class InstructorHomePageActivityV1 extends AppCompatActivity {
     }
 
     /**
-     * Initial the parameter involved in this class
+     * Initial the UI parameter involved in this activity
      * */
     public void initView(){
         tv_instructorName = findViewById(R.id.tv_instructorName);

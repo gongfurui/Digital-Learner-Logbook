@@ -27,7 +27,7 @@ public class SupervisorHomePageActivityV1 extends AppCompatActivity {
     }
 
     /**
-     * Initial the parameter involved in this class
+     * Initial the UI parameter involved in this activity
      * */
     public void initView(){
         tv_supervisorName = findViewById(R.id.tv_supervisorName);

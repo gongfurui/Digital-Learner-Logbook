@@ -56,7 +56,7 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
     }
 
     /**
-     * Initial the UI parameter involved in this class
+     * Initial the UI parameter involved in this activity
      * */
     private void initViews(){
         tv_timeCovered = findViewById(R.id.tv_timeCovered);
@@ -79,6 +79,10 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
         timer.postDelayed(this,1000);
     }
 
+
+    /**
+     * Establish the AlertDialog
+     * */
     public void showDialog(Context mContext) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View view = inflater.inflate(R.layout.certify_dialog, null);

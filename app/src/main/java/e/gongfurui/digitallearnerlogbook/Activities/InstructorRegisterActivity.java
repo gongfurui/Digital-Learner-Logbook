@@ -32,7 +32,7 @@ public class InstructorRegisterActivity extends AppCompatActivity {
     }
 
     /**
-     * Initial the UI parameter involved in this class
+     * Initial the UI parameter involved in this activity
      * */
     private void initViews(){
         et_i_email = findViewById(R.id.et_i_email);
@@ -65,8 +65,7 @@ public class InstructorRegisterActivity extends AppCompatActivity {
                         Toast.LENGTH_LONG).show();
             } else {
                 final String emailTo = String.valueOf(email);
-                //Generate the random verify code
-                verifyCode = (int) ((Math.random() * 9 + 1) * 100000);
+                verifyCode = (int) ((Math.random() * 9 + 1) * 100000);//Generate the random verify code
                 Toast.makeText(this,"Sending..... the verify code", Toast.LENGTH_LONG).show();
                 Thread thread = new Thread() {
                     @Override

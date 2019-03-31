@@ -152,7 +152,7 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
             }
         });
         /**
-         * The action involved with functions for sending the verify code based on the
+         * The action involved with functions for sending the verify code based on the ADI number
          * */
         alert.getWindow().findViewById(R.id.btn_verify).setOnClickListener(new View.OnClickListener() {
             @Override

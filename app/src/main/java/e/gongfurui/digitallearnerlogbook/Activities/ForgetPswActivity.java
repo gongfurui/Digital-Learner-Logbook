@@ -16,9 +16,12 @@ import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
 
 public class ForgetPswActivity extends AppCompatActivity {
 
-    EditText et_email, et_verify_code, et_new_psw, et_confirm_psw;
-    String emailTo;
-    int verifyCode;
+    private EditText etEmail;
+    private EditText etVerifyCode;
+    private EditText etNewPsw;
+    private EditText etConfirmPsw;
+    private String emailTo;
+    private int verifyCode;
     Learner learner;
     Instructor instructor;
     Supervisor supervisor;
@@ -27,7 +30,9 @@ public class ForgetPswActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forget_psw);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         initViews();
 
     }
@@ -36,17 +41,17 @@ public class ForgetPswActivity extends AppCompatActivity {
      * Initial the UI parameter involved in this activity
      * */
     private void initViews(){
-        et_email = findViewById(R.id.et_mail);
-        et_verify_code = findViewById(R.id.et_l_verifyCode);
-        et_new_psw = findViewById(R.id.et_new_psw);
-        et_confirm_psw = findViewById(R.id.et_confirm_psw);
+        etEmail = findViewById(R.id.et_mail);
+        etVerifyCode = findViewById(R.id.et_l_verifyCode);
+        etNewPsw = findViewById(R.id.et_new_psw);
+        etConfirmPsw = findViewById(R.id.et_confirm_psw);
     }
 
     /**
      * The reaction after pressing the button to get verify code
      * */
     public void verifyCodePressed(View view) {
-        emailTo = String.valueOf(et_email.getText());
+        emailTo = String.valueOf(etEmail.getText());
         //Generate the random verify code
         verifyCode = (int)((Math.random()*9+1)*100000);
         Toast.makeText(ForgetPswActivity.this,"Sending..... the verify code", Toast.LENGTH_LONG).show();
@@ -68,30 +73,31 @@ public class ForgetPswActivity extends AppCompatActivity {
 
     /**
      * The reaction after pressing the button to change the password
+     * @param view the view from the ForgetPswActivity
      * */
     public void changePswPressed(View view) {
-        if(!String.valueOf(et_verify_code.getText()).equals(String.valueOf(verifyCode)) ){
+        if(!String.valueOf(etVerifyCode.getText()).equals(String.valueOf(verifyCode)) ){
             Toast.makeText(ForgetPswActivity.this,
                     "The verify code is not correct! Please check it!",
                     Toast.LENGTH_LONG).show();
         }
         else{
-            if(String.valueOf(et_new_psw.getText()).isEmpty() || String.valueOf(et_confirm_psw.getText()).isEmpty()){
+            if(String.valueOf(etNewPsw.getText()).isEmpty() || String.valueOf(etConfirmPsw.getText()).isEmpty()){
                 Toast.makeText(ForgetPswActivity.this,"You should fill all field!", Toast.LENGTH_LONG).show();
             }
-            else if(String.valueOf(et_new_psw.getText()).equals(String.valueOf(et_confirm_psw.getText()))){
+            else if(String.valueOf(etNewPsw.getText()).equals(String.valueOf(etConfirmPsw.getText()))){
                 learner = SQLQueryHelper.searchLearnerTable(this, "SELECT * FROM learner" +
-                        " WHERE email = '"+ String.valueOf(et_email.getText()) + "'");
+                        " WHERE email = '"+ String.valueOf(etEmail.getText()) + "'");
                 instructor = SQLQueryHelper.searchInstructorTable(this, "SELECT * FROM instructor" +
-                        " WHERE email = '"+ String.valueOf(et_email.getText()) + "'");
+                        " WHERE email = '"+ String.valueOf(etEmail.getText()) + "'");
                 supervisor = SQLQueryHelper.searchSupervisorTable(this, "SELECT * FROM supervisor" +
-                        " WHERE email = '"+ String.valueOf(et_email.getText()) + "'");
+                        " WHERE email = '"+ String.valueOf(etEmail.getText()) + "'");
                 Intent intent = new Intent(this, LoginActivity.class);
                 if(learner != null){
                     SQLQueryHelper.updateDatabase(this, "UPDATE learner SET psw ='" +
-                            String.valueOf(et_confirm_psw.getText()) +
+                            String.valueOf(etConfirmPsw.getText()) +
                             "' WHERE email = '" +
-                            String.valueOf(et_email.getText()) + "'");
+                            String.valueOf(etEmail.getText()) + "'");
                     Toast.makeText(ForgetPswActivity.this,
                             "Password changed successfully!",
                             Toast.LENGTH_LONG).show();
@@ -99,9 +105,9 @@ public class ForgetPswActivity extends AppCompatActivity {
                 }
                 else if(instructor != null){
                     SQLQueryHelper.updateDatabase(this, "UPDATE instructor SET psw ='" +
-                            String.valueOf(et_confirm_psw.getText()) +
+                            String.valueOf(etConfirmPsw.getText()) +
                             "' WHERE email = '" +
-                            String.valueOf(et_email.getText()) + "'");
+                            String.valueOf(etEmail.getText()) + "'");
                     Toast.makeText(ForgetPswActivity.this,
                             "Password changed successfully!",
                             Toast.LENGTH_LONG).show();
@@ -109,9 +115,9 @@ public class ForgetPswActivity extends AppCompatActivity {
                 }
                 else if(supervisor != null){
                     SQLQueryHelper.updateDatabase(this, "UPDATE supervisor SET psw ='" +
-                            String.valueOf(et_confirm_psw.getText()) +
+                            String.valueOf(etConfirmPsw.getText()) +
                             "' WHERE email = '" +
-                            String.valueOf(et_email.getText()) + "'");
+                            String.valueOf(etEmail.getText()) + "'");
                     Toast.makeText(ForgetPswActivity.this,
                             "Password changed successfully!",
                             Toast.LENGTH_LONG).show();

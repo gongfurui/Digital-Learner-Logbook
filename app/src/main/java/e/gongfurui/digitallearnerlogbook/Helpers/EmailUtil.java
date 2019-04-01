@@ -33,7 +33,8 @@ public class EmailUtil {
      * @param emailTo the email address of receiving
      * @param subject email title
      * @param content email content
-     * @return*/
+     * @return void
+     * */
 
     public void sendEmail(String emailTo,String subject,String content){
       Properties props = new Properties();

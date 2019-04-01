@@ -115,7 +115,7 @@ public class SupervisorRegisterActivity extends AppCompatActivity {
                             " VALUES ('" + supervisor.email +
                             "', '" + supervisor.name + "', '" + supervisor.psw + "')");
 
-                    Intent intent = new Intent(this, SupervisorHomePageActivityV1.class);
+                    Intent intent = new Intent(this, SupervisorHomeActivity.class);
                     intent.putExtra("supervisorMail", supervisor.email);
                     startActivity(intent);
                 }

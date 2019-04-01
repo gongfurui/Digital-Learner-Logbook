@@ -67,7 +67,7 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
         mContext = CompetencyFragment.this.getContext();
         list_competency = view.findViewById(R.id.list_competency);
         final LayoutInflater inflater1 = LayoutInflater.from(this.getContext());
-        View headView = inflater1.inflate(R.layout.list_header, null, false);
+        View headView = inflater1.inflate(R.layout.list_competency_header, null, false);
         mData = new LinkedList<>();
         addToList();
         mAdapter = new CompetencyAdapter((LinkedList<Competency>) mData, mContext);

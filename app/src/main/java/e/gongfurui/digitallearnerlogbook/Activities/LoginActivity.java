@@ -113,7 +113,7 @@ public class LoginActivity extends AppCompatActivity{
         }
         //If the user is a supervisor, jump to the supervisor homepage
         else if(supervisor != null){
-            Intent intent = new Intent(this, SupervisorHomePageActivityV1.class);
+            Intent intent = new Intent(this, SupervisorHomeActivity.class);
             Toast.makeText(this, "Successfully login as a supervisor", Toast.LENGTH_LONG).show();
             intent.putExtra("supervisorMail", supervisor.email);
             if(isAutoStore) {

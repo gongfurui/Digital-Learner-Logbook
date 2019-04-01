@@ -40,25 +40,25 @@
             android:id="@+id/rb_channel"
             style="@style/tab_menu_item"
             android:drawableTop="@drawable/tab_menu_channel"
-            android:text="@string/tab_menu_alert" />
+            android:text="@string/tab_learner_information" />
 
         <RadioButton
             android:id="@+id/rb_message"
             style="@style/tab_menu_item"
             android:drawableTop="@drawable/tab_menu_message"
-            android:text="@string/tab_menu_profile" />
+            android:text="@string/tab_learner_competency" />
 
         <RadioButton
             android:id="@+id/rb_better"
             style="@style/tab_menu_item"
             android:drawableTop="@drawable/tab_menu_better"
-            android:text="@string/tab_menu_pay" />
+            android:text="@string/tab_learner_practice" />
 
         <RadioButton
             android:id="@+id/rb_setting"
             style="@style/tab_menu_item"
             android:drawableTop="@drawable/tab_menu_setting"
-            android:text="@string/tab_menu_setting" />
+            android:text="@string/tab_learner_progress" />
 
     </RadioGroup>
 

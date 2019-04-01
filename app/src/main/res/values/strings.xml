@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">Digital Learner LogBook</string>
     <string name="title_activity_register">RegisterActivity</string>
-    <string name="tab_menu_alert">Information</string>
-    <string name="tab_menu_profile">Competency</string>
-    <string name="tab_menu_pay">Practice</string>
-    <string name="tab_menu_setting">Progress</string>
+    <string name="tab_learner_information">Information</string>
+    <string name="tab_learner_competency">Competency</string>
+    <string name="tab_learner_practice">Practice</string>
+    <string name="tab_learner_progress">Progress</string>
+    <string name="tab_supervisor_information">Information</string>
+    <string name="tab_supervisor_learnerList">Learners</string>
 
 </resources>

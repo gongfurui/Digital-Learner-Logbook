@@ -57,7 +57,7 @@ public class CompetencyActivity extends AppCompatActivity {
         tvPerformance.setText(competency.performance);
         tvCondition.setText(competency.conditions);
         tvRequirements.setText(competency.requirements);
-        etFeedback.setText(competency.comment);
+        etFeedback.setText(learner.courseCommentList.get(competency.cID - 1));
     }
 
     public void learningPressed(View view) {

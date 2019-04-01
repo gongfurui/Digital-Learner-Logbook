@@ -1,7 +1,6 @@
 package e.gongfurui.digitallearnerlogbook.Activities;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,8 +9,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +32,12 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
     int verifyCode;
     private Handler timer;
     private TextView tv_timeCovered;
-    private EditText et_ADI, et_verify, et_feedback;
+    private EditText etADI;
+    private EditText etVerify;
+    private EditText etFeedback;
+    private Switch switchIApprove;
     String learnerJson, competencyJson;
+    private boolean isApproved;
     private Learner learner;
     private Instructor instructor;
     private Competency competency;
@@ -106,44 +110,65 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
         final double total_time = bd.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
 
         showDialog(this);
-        et_ADI = alert.getWindow().findViewById(R.id.et_ADI);
-        et_verify = alert.getWindow().findViewById(R.id.et_verify);
-        et_feedback = alert.getWindow().findViewById(R.id.et_feedback);
+        etADI = alert.getWindow().findViewById(R.id.et_ADI);
+        etVerify = alert.getWindow().findViewById(R.id.et_verify);
+        etFeedback = alert.getWindow().findViewById(R.id.et_feedback);
+        switchIApprove = alert.getWindow().findViewById(R.id.switch_insApprove);
+
+        switchIApprove.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    isApproved = true;
+                } else {
+                    isApproved = false;
+                }
+                System.out.println("Result is: " + isApproved);
+            }
+        });
+
         alert.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 //check whether the user put the verify code
-                if(et_verify.getText().toString().isEmpty()) {
+                if(etVerify.getText().toString().isEmpty()) {
                     Toast.makeText(StudyActivity.this,
                             "The verify code is empty. Please check!",
                             Toast.LENGTH_LONG).show();
                 }
                 else {
                     //check whether the verify code is correct
-                    if (verifyCode != Integer.parseInt(et_verify.getText().toString())) {
+                    if (verifyCode != Integer.parseInt(etVerify.getText().toString())) {
                         Toast.makeText(StudyActivity.this,
                                 "The verify code is wrong. Please check!",
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        double certified_time = learner.time + total_time;//this the updated time after certification
+                        //this the updated time after certification
+                        double certified_time = learner.time + total_time;
                         if(certified_time >= 120){
                             certified_time = 120;
                         }
-                        SQLQueryHelper.insertDatabase(StudyActivity.this,
-                                "INSERT into courseFeedback " +
-                                        "(course_id, learner_id, instructor_name, feedback)" +
-                                        " VALUES ("+competency.cID+","+learner.driver_id+"," +
-                                        " '"+instructor.name+"', '"+et_feedback.getText().toString()+"')");
                         /*Update the student progress, and course comment list*/
-                        SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE learner SET time =" +
-                                certified_time + " WHERE id = " + learner.driver_id);
-                        SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE learner SET c"+competency.cID+" =" +
-                                1 + " WHERE id = " + learner.driver_id);
-                        SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE learner SET c"+competency.cID+"c = '" +
-                                et_feedback.getText().toString() + "' WHERE id = " + learner.driver_id);
-                        Intent intent = new Intent(StudyActivity.this, LearnerHomeActivity.class);
+                        SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE " +
+                                "learner SET time =" + certified_time + " WHERE id = " +
+                                learner.driver_id);
+                        if(isApproved) {
+                            SQLQueryHelper.insertDatabase(StudyActivity.this,
+                                    "INSERT into courseFeedback " +
+                                            "(course_id, learner_id, instructor_name, feedback)" +
+                                            " VALUES ("+competency.cID+","+learner.driver_id+"," +
+                                            " '"+instructor.name+"', '"+ etFeedback.getText().toString()+"')");
+                            SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE " +
+                                    "learner SET c" + competency.cID + " =" + 1 + " WHERE id = " +
+                                    learner.driver_id);
+                        }
+                        SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE " +
+                                "learner SET c" + competency.cID + "c = '" +
+                                etFeedback.getText().toString() + "' WHERE id = " +
+                                learner.driver_id);
+                        Intent intent = new Intent(StudyActivity.this,
+                                LearnerHomeActivity.class);
                         intent.putExtra("learnerID", learner.driver_id);
                         startActivity(intent);
                         alert.dismiss();
@@ -157,7 +182,7 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
             @Override
             public void onClick(View v) {
                 int ADI = 0;
-                if(!et_ADI.getText().toString().isEmpty()) ADI = Integer.parseInt(et_ADI.getText().toString());
+                if(!etADI.getText().toString().isEmpty()) ADI = Integer.parseInt(etADI.getText().toString());
                 instructor = SQLQueryHelper.searchInstructorTable(StudyActivity.this, "SELECT * FROM instructor" +
                         " WHERE ADI = "+ ADI);
                 String emailTo = "";

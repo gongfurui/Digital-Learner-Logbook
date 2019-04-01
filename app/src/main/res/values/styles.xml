@@ -6,7 +6,7 @@
         <item name="coordinatorLayoutStyle">@style/Widget.Support.CoordinatorLayout</item>
         <item name="colorPrimary">@color/colorAccessCanberra</item>
         <item name="colorPrimaryDark">@color/colorAccessCanberraDark</item>
-        <item name="colorAccent">@android:color/background_dark</item>
+        <item name="colorAccent">@color/colorAccent</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

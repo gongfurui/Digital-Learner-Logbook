@@ -27,14 +27,16 @@ public class InstructorRegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructor_register);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         initViews();
     }
 
     /**
      * Initial the UI parameter involved in this activity
      * */
-    private void initViews(){
+    private void initViews() {
         et_i_email = findViewById(R.id.et_i_email);
         et_i_name = findViewById(R.id.et_i_name);
         et_i_adi = findViewById(R.id.et_i_ADI);

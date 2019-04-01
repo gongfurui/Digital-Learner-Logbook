@@ -41,7 +41,8 @@ public class CompetencyAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        convertView = LayoutInflater.from(mContext).inflate(R.layout.list_competency,parent,false);
+        convertView = LayoutInflater.from(mContext).inflate(R.layout.list_competency,parent,
+                false);
         TextView tv_cTitle = convertView.findViewById(R.id.tv_cTitle);
         tv_cTitle.setText(mData.get(position).title);
         if(position == 17 || position == 23 || position == 24){

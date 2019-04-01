@@ -53,8 +53,9 @@ public class InformationFragment extends Fragment {
 
     /**
      * Initial the UI parameter involved in this fragment
+     * @param view  the view from the information fragment
      * */
-    public void initView(View view){
+    public void initView(View view) {
         tv_learnerName = view.findViewById(R.id.tv_learnerName);
         tv_learnerID = view.findViewById(R.id.tv_learnerDriverID);
         tv_learnerDob = view.findViewById(R.id.tv_learnerDob);

@@ -38,7 +38,9 @@ public class LearnerRegisterActivity extends AppCompatActivity implements Select
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learner_register);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         initViews();
         for(int i = 0; i <= 22; i++){
             courseProgressList.add(false);

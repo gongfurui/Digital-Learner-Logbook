@@ -36,7 +36,7 @@ public class EmailUtil {
      * @return void
      * */
 
-    public void sendEmail(String emailTo,String subject,String content){
+    public void sendEmail(String emailTo,String subject,String content) {
       Properties props = new Properties();
       props.put("mail.smtp.host", MAIL_SMTP_HOST);
       props.put("mail.smtp.port", MAIL_SMTP_PORT);//use port 587

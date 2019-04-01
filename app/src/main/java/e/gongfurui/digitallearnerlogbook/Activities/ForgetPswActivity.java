@@ -40,7 +40,7 @@ public class ForgetPswActivity extends AppCompatActivity {
     /**
      * Initial the UI parameter involved in this activity
      * */
-    private void initViews(){
+    private void initViews() {
         etEmail = findViewById(R.id.et_mail);
         etVerifyCode = findViewById(R.id.et_l_verifyCode);
         etNewPsw = findViewById(R.id.et_new_psw);
@@ -49,11 +49,12 @@ public class ForgetPswActivity extends AppCompatActivity {
 
     /**
      * The reaction after pressing the button to get verify code
+     * @param view the view from the ForgetPswActivity
      * */
     public void verifyCodePressed(View view) {
         emailTo = String.valueOf(etEmail.getText());
         //Generate the random verify code
-        verifyCode = (int)((Math.random()*9+1)*100000);
+        verifyCode = (int)((Math.random() * 9 + 1) * 100000);
         Toast.makeText(ForgetPswActivity.this,"Sending..... the verify code", Toast.LENGTH_LONG).show();
         Thread thread = new Thread(){
             @Override

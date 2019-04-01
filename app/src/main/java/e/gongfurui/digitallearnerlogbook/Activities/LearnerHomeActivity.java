@@ -18,7 +18,7 @@ public class LearnerHomeActivity extends AppCompatActivity   implements RadioGro
 
     //UI Objects
     private TextView txt_topbar;
-    private RadioGroup rg_tab_bar;
+    RadioGroup rg_tab_bar;
     private RadioButton rb_channel;
     private RadioButton rb_message;
     private RadioButton rb_better;

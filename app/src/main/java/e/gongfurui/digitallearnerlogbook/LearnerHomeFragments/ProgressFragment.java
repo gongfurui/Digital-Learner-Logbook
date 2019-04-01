@@ -60,8 +60,9 @@ public class ProgressFragment extends Fragment{
 
     /**
      * Initial the UI parameter involved in this fragment
+     * @param view  the view from the information fragment
      * */
-    public void initViews(View view){
+    public void initViews(View view) {
         timeBar = view.findViewById(R.id.timeBar);
         tv_timeProgress = view.findViewById(R.id.tv_timeProgress);
         courseBar = view.findViewById(R.id.courseBar);

@@ -29,8 +29,8 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
     Learner learner;
     private List<Competency> mData = null;
     private Context mContext;
-    private CompetencyAdapter mAdapter = null;
-    private ListView list_competency;
+    CompetencyAdapter mAdapter = null;
+    ListView list_competency;
     private HashMap<Integer, String> nameMap = new HashMap<>();
     private HashMap<Integer, String> commentMap = new HashMap<>();
 
@@ -80,7 +80,7 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
     /**
      * Add the competency details into the competency list
      * */
-    public void addToList(){
+    public void addToList() {
         mData.add(new Competency(1, "1 VEHICLE CONTROLS" ,
                 "Locate, identify and describe the function and operation of all" +
                         " controls, gauges and warning lights.",
@@ -249,9 +249,7 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
     }
 
 
-    /**
-     * Jump to the each competency activity after clicking the competency on the list
-     * */
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(position != 0){

@@ -19,12 +19,12 @@ import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
 
 public class LoginActivity extends AppCompatActivity{
 
-    private EditText et_user_name, et_psw;
-    private CheckBox cb_remember;
+    private EditText etUserName, etPsw;
+    private CheckBox cbRemember;
     Learner learner;
     Instructor instructor;
     Supervisor supervisor;
-    private SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private final String ACCOUNTKEY = "MyAccount";
     private final String CHECKKEY = "MyCheck";
@@ -40,27 +40,27 @@ public class LoginActivity extends AppCompatActivity{
         editor = sharedPreferences.edit();
         initViews();
         isAutoStore = sharedPreferences.getBoolean(CHECKKEY, false);
-        if(isAutoStore){
-            cb_remember.setChecked(true);
-            et_user_name.setText(sharedPreferences.getString(ACCOUNTKEY, ""));
+        if (isAutoStore) {
+            cbRemember.setChecked(true);
+            etUserName.setText(sharedPreferences.getString(ACCOUNTKEY, ""));
         }
     }
 
     /**
      * Initial the UI parameter involved in this activity
      * */
-    private void initViews(){
-        et_user_name = findViewById(R.id.et_user_name);
-        et_psw = findViewById(R.id.et_psw);
-        cb_remember = findViewById(R.id.cb_remember);
-        /**
-         * Listen the checkbox status.
-         * If it is checked, store the account
-         * */
-        cb_remember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+    private void initViews() {
+        etUserName = findViewById(R.id.et_user_name);
+        etPsw = findViewById(R.id.et_psw);
+        cbRemember = findViewById(R.id.cb_remember);
+        //Listen the checkbox status. If it is checked, store the account
+        cbRemember.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (!isChecked) isAutoStore = false;
-                else isAutoStore = true;
+                if (isChecked) {
+                    isAutoStore = true;
+                } else {
+                    isAutoStore = false;
+                }
             }
         });
     }
@@ -69,8 +69,8 @@ public class LoginActivity extends AppCompatActivity{
      * Action when the login button pressed
      * */
     public void loginPressed(View view) {
-        String account = String.valueOf(et_user_name.getText());
-        String password = String.valueOf(et_psw.getText());
+        String account = String.valueOf(etUserName.getText());
+        String password = String.valueOf(etPsw.getText());
         /*Search the db tables of each role: learner, instructor, supervisor*/
         learner = SQLQueryHelper.searchLearnerTable(this,
                 "SELECT * FROM learner" +
@@ -162,7 +162,7 @@ public class LoginActivity extends AppCompatActivity{
     /**
      *Initialize the data in the licence table in DB
      * */
-    private void initialLicenceDB(){
+    private void initialLicenceDB() {
         /*SQLQueryHelper.insertDatabase(this , "INSERT into licence (driver_id, type)" +
                 " VALUES (6284816, 'full')");
         SQLQueryHelper.insertDatabase(this , "INSERT into licence (driver_id, type)" +
@@ -180,7 +180,7 @@ public class LoginActivity extends AppCompatActivity{
     /**
      *Initialize the data in the learner table in DB
      * */
-    private void initialLearnerDB(){
+    private void initialLearnerDB() {
         SQLQueryHelper.insertDatabase(this, "INSERT into learner (id, email, name, psw, date_of_birth)" +
                 " VALUES (1234567, 'gongfurui0452424857@gmail.com', 'Furui Gong', 'gfr199510', '1995-10-17')");
     }
@@ -188,7 +188,7 @@ public class LoginActivity extends AppCompatActivity{
     /**
      *Initialize the data in the instructor table in DB
      * */
-    private void initialInstructorDB(){
+    private void initialInstructorDB() {
         SQLQueryHelper.insertDatabase(this, "INSERT into instructor (ADI, email, name, psw)" +
                 " VALUES (123, 'u6284816@anu.edu.au', 'Frank Free', 'gfr199510')");
     }
@@ -196,15 +196,13 @@ public class LoginActivity extends AppCompatActivity{
     /**
      *Initialize the data in the supervisor table in DB
      * */
-    private void initialSupervisorDB(){
+    private void initialSupervisorDB() {
         SQLQueryHelper.insertDatabase(this, "INSERT into supervisor (email, name, psw)" +
                 " VALUES ('13810997948@163.com', 'Yanwen Gong', 'gfr199510')");
     }
 
-    /**
-     *Initialize the data in the instructor_learner table in DB
-     * */
-    /*private void initialInstructor_LearnerDB(){
+    /*
+    private void initialInstructor_LearnerDB(){
         SQLQueryHelper.insertDatabase(this, "INSERT into instructor_learner (ADI, learner_id)" +
                 " VALUES (123, 1234567)");
     }*/
@@ -212,7 +210,7 @@ public class LoginActivity extends AppCompatActivity{
     /**
      *Initialize the data in the supervisor_learner table in DB
      * */
-    private void initialSupervisor_LearnerDB(){
+    private void initialSupervisor_LearnerDB() {
         SQLQueryHelper.insertDatabase(this, "INSERT into supervisor_learner (email, learner_id)" +
                 " VALUES ('13810997948@163.com', 1234567)");
     }
@@ -220,7 +218,7 @@ public class LoginActivity extends AppCompatActivity{
     /**
      *Initialize the data in the ADIList table in DB
      * */
-    private void initialADIDB(){
+    private void initialADIDB() {
         SQLQueryHelper.insertDatabase(this , "INSERT into ADIList (adi)" +
                 " VALUES (123)");
         SQLQueryHelper.insertDatabase(this , "INSERT into ADIList (adi)" +

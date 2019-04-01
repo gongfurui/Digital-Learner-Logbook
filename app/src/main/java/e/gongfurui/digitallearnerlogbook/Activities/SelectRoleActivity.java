@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import e.gongfurui.digitallearnerlogbook.R;
-import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
 
 public class SelectRoleActivity extends AppCompatActivity {
 
@@ -14,7 +13,9 @@ public class SelectRoleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_role);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     /**

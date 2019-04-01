@@ -15,9 +15,12 @@ import e.gongfurui.digitallearnerlogbook.Roles.Competency;
 import e.gongfurui.digitallearnerlogbook.Roles.Learner;
 
 public class CompetencyActivity extends AppCompatActivity {
-    private TextView tv_performance, tv_title, tv_condition, tv_requirements;
-    private EditText et_feedback;
-    private String competencyJson, learnerJson;
+    TextView tvPerformance;
+    TextView tvTitle;
+    TextView tvCondition;
+    TextView tvRequirements;
+    EditText etFeedback;
+    String competencyJson, learnerJson;
     private Competency competency;
     private Learner learner;
 
@@ -29,10 +32,11 @@ public class CompetencyActivity extends AppCompatActivity {
         getPrevData();
         initView();
     }
+
     /**
      * Get the parameter from the intent passed from the last activity
      * */
-    public void getPrevData(){
+    public void getPrevData() {
         competencyJson = getIntent().getStringExtra("competency");
         learnerJson = getIntent().getStringExtra("learner");
         competency = new Gson().fromJson(competencyJson, Competency.class);
@@ -42,18 +46,18 @@ public class CompetencyActivity extends AppCompatActivity {
     /**
      * Initial the UI parameter involved in this activity
      * */
-    public void initView(){
-        tv_title = findViewById(R.id.tv_title);
-        tv_performance = findViewById(R.id.tv_performance);
-        tv_condition = findViewById(R.id.tv_condition);
-        tv_requirements = findViewById(R.id.tv_requirements);
-        et_feedback = findViewById(R.id.et_feedback);
+    public void initView() {
+        tvTitle = findViewById(R.id.tv_title);
+        tvPerformance = findViewById(R.id.tv_performance);
+        tvCondition = findViewById(R.id.tv_condition);
+        tvRequirements = findViewById(R.id.tv_requirements);
+        etFeedback = findViewById(R.id.et_feedback);
        /* toolbar = findViewById(R.id);*/
-        tv_title.setText(competency.title);
-        tv_performance.setText(competency.performance);
-        tv_condition.setText(competency.conditions);
-        tv_requirements.setText(competency.requirements);
-        et_feedback.setText(competency.comment);
+        tvTitle.setText(competency.title);
+        tvPerformance.setText(competency.performance);
+        tvCondition.setText(competency.conditions);
+        tvRequirements.setText(competency.requirements);
+        etFeedback.setText(competency.comment);
     }
 
     public void learningPressed(View view) {

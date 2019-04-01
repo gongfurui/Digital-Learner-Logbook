@@ -18,7 +18,9 @@ public class SupervisorHomePageActivityV1 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_supervisor_home_page_v1);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         String supervisorMail = getIntent().getStringExtra("supervisorMail");
         supervisor = SQLQueryHelper.searchSupervisorTable(this,
                 "SELECT * FROM supervisor" +
@@ -29,7 +31,7 @@ public class SupervisorHomePageActivityV1 extends AppCompatActivity {
     /**
      * Initial the UI parameter involved in this activity
      * */
-    public void initView(){
+    public void initView() {
         tv_supervisorName = findViewById(R.id.tv_supervisorName);
         tv_supervisorEmail = findViewById(R.id.tv_supervisorEmail);
         tv_supervisorName.setText(supervisor.name);

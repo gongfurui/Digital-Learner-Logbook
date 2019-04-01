@@ -33,7 +33,7 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
     private Handler timer;
     private TextView tv_timeCovered;
     private EditText et_ADI, et_verify, et_feedback;
-    private String learnerJson, competencyJson;
+    String learnerJson, competencyJson;
     private Learner learner;
     private Instructor instructor;
     private Competency competency;
@@ -151,9 +151,8 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
                 }
             }
         });
-        /**
-         * The action involved with functions for sending the verify code based on the ADI number
-         * */
+
+        //The action involved with functions for sending the verify code based on the ADI number
         alert.getWindow().findViewById(R.id.btn_verify).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

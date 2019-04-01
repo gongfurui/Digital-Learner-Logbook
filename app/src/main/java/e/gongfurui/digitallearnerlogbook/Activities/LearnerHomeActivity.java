@@ -10,10 +10,10 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-import e.gongfurui.digitallearnerlogbook.Adapters.MyFragmentPagerAdapter;
+import e.gongfurui.digitallearnerlogbook.Adapters.LearnerHomeFgPagerAdapter;
 import e.gongfurui.digitallearnerlogbook.R;
 
-public class LearnerHomeActivity extends AppCompatActivity   implements RadioGroup.OnCheckedChangeListener,
+public class LearnerHomeActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener,
         ViewPager.OnPageChangeListener {
 
     //UI Objects
@@ -25,7 +25,7 @@ public class LearnerHomeActivity extends AppCompatActivity   implements RadioGro
     private RadioButton rb_setting;
     private ViewPager vpager;
 
-    private MyFragmentPagerAdapter mAdapter;
+    private LearnerHomeFgPagerAdapter mAdapter;
 
     //Parameters stands for the pages
     public static final int PAGE_ONE = 0;
@@ -41,7 +41,7 @@ public class LearnerHomeActivity extends AppCompatActivity   implements RadioGro
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learner_home);
         learnerID=getIntent().getIntExtra("learnerID", 0);
-        mAdapter = new MyFragmentPagerAdapter(getSupportFragmentManager());
+        mAdapter = new LearnerHomeFgPagerAdapter(getSupportFragmentManager());
         initViews();
     }
 

@@ -11,18 +11,16 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import e.gongfurui.digitallearnerlogbook.Adapters.SupervisorHomeFgPagerAdapter;
-import e.gongfurui.digitallearnerlogbook.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbook.R;
-import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
 
 public class SupervisorHomeActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener,
         ViewPager.OnPageChangeListener {
 
     //UI Objects
-    private TextView txt_topbar;
-    RadioGroup rg_tab_bar;
-    private RadioButton rb_channel;
-    private RadioButton rb_message;
+    private TextView txtTopbar;
+    RadioGroup rgTabBar;
+    private RadioButton rbChannel;
+    private RadioButton rbMessage;
     private ViewPager vpager;
 
     private SupervisorHomeFgPagerAdapter mAdapter;
@@ -47,18 +45,18 @@ public class SupervisorHomeActivity extends AppCompatActivity implements RadioGr
      * Initial the UI parameter involved in this activity
      * */
     private void initViews() {
-        txt_topbar = findViewById(R.id.txt_topbar);
-        rg_tab_bar = findViewById(R.id.rg_tab_bar);
-        rb_channel = findViewById(R.id.rb_channel);
-        rb_message = findViewById(R.id.rb_message);
-        rg_tab_bar.setOnCheckedChangeListener(this);
+        txtTopbar = findViewById(R.id.txt_topbar);
+        rgTabBar = findViewById(R.id.rg_tab_bar);
+        rbChannel = findViewById(R.id.rb_channel);
+        rbMessage = findViewById(R.id.rb_message);
+        rgTabBar.setOnCheckedChangeListener(this);
 
         vpager = findViewById(R.id.vpager);
         vpager.setAdapter(mAdapter);
         vpager.addOnPageChangeListener(this);
         vpager.setCurrentItem(0);
-        rb_channel.setChecked(true);
-        txt_topbar.setText("Information");
+        rbChannel.setChecked(true);
+        txtTopbar.setText("Information");
 
     }
 
@@ -104,8 +102,8 @@ public class SupervisorHomeActivity extends AppCompatActivity implements RadioGr
 
     @Override
     public void onPageSelected(int position) {
-        if(position == 0) txt_topbar.setText("Information");
-        else if(position == 1) txt_topbar.setText("Learners");
+        if(position == 0) txtTopbar.setText("Information");
+        else if(position == 1) txtTopbar.setText("Learners");
     }
 
     @Override
@@ -117,10 +115,10 @@ public class SupervisorHomeActivity extends AppCompatActivity implements RadioGr
         if (state == 2) {
             switch (vpager.getCurrentItem()) {
                 case PAGE_ONE:
-                    rb_channel.setChecked(true);
+                    rbChannel.setChecked(true);
                     break;
                 case PAGE_TWO:
-                    rb_message.setChecked(true);
+                    rbMessage.setChecked(true);
                     break;
             }
         }

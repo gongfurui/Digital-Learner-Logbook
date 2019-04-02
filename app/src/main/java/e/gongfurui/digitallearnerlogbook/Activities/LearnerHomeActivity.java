@@ -17,13 +17,13 @@ public class LearnerHomeActivity extends AppCompatActivity implements RadioGroup
         ViewPager.OnPageChangeListener {
 
     //UI Objects
-    private TextView txt_topbar;
-    RadioGroup rg_tab_bar;
-    private RadioButton rb_channel;
-    private RadioButton rb_message;
-    private RadioButton rb_better;
-    private RadioButton rb_setting;
-    private ViewPager vpager;
+    private TextView txtTopbar;
+    RadioGroup rgTabBar;
+    private RadioButton rbChannel;
+    private RadioButton rbMessage;
+    private RadioButton rbBetter;
+    private RadioButton rbSetting;
+    private ViewPager vPager;
 
     private LearnerHomeFgPagerAdapter mAdapter;
 
@@ -49,20 +49,20 @@ public class LearnerHomeActivity extends AppCompatActivity implements RadioGroup
      * Initial the UI parameter involved in this activity
      * */
     private void initViews() {
-        txt_topbar = findViewById(R.id.txt_topbar);
-        rg_tab_bar = findViewById(R.id.rg_tab_bar);
-        rb_channel = findViewById(R.id.rb_channel);
-        rb_message = findViewById(R.id.rb_message);
-        rb_better = findViewById(R.id.rb_better);
-        rb_setting = findViewById(R.id.rb_setting);
-        rg_tab_bar.setOnCheckedChangeListener(this);
+        txtTopbar = findViewById(R.id.txt_topbar);
+        rgTabBar = findViewById(R.id.rg_tab_bar);
+        rbChannel = findViewById(R.id.rb_channel);
+        rbMessage = findViewById(R.id.rb_message);
+        rbBetter = findViewById(R.id.rb_better);
+        rbSetting = findViewById(R.id.rb_setting);
+        rgTabBar.setOnCheckedChangeListener(this);
 
-        vpager = findViewById(R.id.vpager);
-        vpager.setAdapter(mAdapter);
-        vpager.addOnPageChangeListener(this);
-        vpager.setCurrentItem(0);
-        rb_channel.setChecked(true);
-        txt_topbar.setText("Information");
+        vPager = findViewById(R.id.vpager);
+        vPager.setAdapter(mAdapter);
+        vPager.addOnPageChangeListener(this);
+        vPager.setCurrentItem(0);
+        rbChannel.setChecked(true);
+        txtTopbar.setText("Information");
 
     }
 
@@ -93,16 +93,16 @@ public class LearnerHomeActivity extends AppCompatActivity implements RadioGroup
     public void onCheckedChanged(RadioGroup group, int checkedId) {
         switch (checkedId) {
             case R.id.rb_channel:
-                vpager.setCurrentItem(PAGE_ONE);
+                vPager.setCurrentItem(PAGE_ONE);
                 break;
             case R.id.rb_message:
-                vpager.setCurrentItem(PAGE_TWO);
+                vPager.setCurrentItem(PAGE_TWO);
                 break;
             case R.id.rb_better:
-                vpager.setCurrentItem(PAGE_THREE);
+                vPager.setCurrentItem(PAGE_THREE);
                 break;
             case R.id.rb_setting:
-                vpager.setCurrentItem(PAGE_FOUR);
+                vPager.setCurrentItem(PAGE_FOUR);
                 break;
         }
     }
@@ -114,10 +114,10 @@ public class LearnerHomeActivity extends AppCompatActivity implements RadioGroup
 
     @Override
     public void onPageSelected(int position) {
-        if(position == 0) txt_topbar.setText("Information");
-        else if(position == 1) txt_topbar.setText("Competency");
-        else if(position == 2) txt_topbar.setText("2");
-        else if(position == 3) txt_topbar.setText("Progress");
+        if(position == 0) txtTopbar.setText("Information");
+        else if(position == 1) txtTopbar.setText("Competency");
+        else if(position == 2) txtTopbar.setText("2");
+        else if(position == 3) txtTopbar.setText("Progress");
     }
 
     @Override
@@ -127,18 +127,18 @@ public class LearnerHomeActivity extends AppCompatActivity implements RadioGroup
         // 1 stands for sliding，
         // 2 stands for slided.
         if (state == 2) {
-            switch (vpager.getCurrentItem()) {
+            switch (vPager.getCurrentItem()) {
                 case PAGE_ONE:
-                    rb_channel.setChecked(true);
+                    rbChannel.setChecked(true);
                     break;
                 case PAGE_TWO:
-                    rb_message.setChecked(true);
+                    rbMessage.setChecked(true);
                     break;
                 case PAGE_THREE:
-                    rb_better.setChecked(true);
+                    rbBetter.setChecked(true);
                     break;
                 case PAGE_FOUR:
-                    rb_setting.setChecked(true);
+                    rbSetting.setChecked(true);
                     break;
             }
         }

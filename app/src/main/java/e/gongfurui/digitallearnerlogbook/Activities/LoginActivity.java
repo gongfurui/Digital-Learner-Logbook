@@ -19,7 +19,8 @@ import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
 
 public class LoginActivity extends AppCompatActivity{
 
-    private EditText etUserName, etPsw;
+    private EditText etUserName;
+    private EditText etPsw;
     private CheckBox cbRemember;
     Learner learner;
     Instructor instructor;

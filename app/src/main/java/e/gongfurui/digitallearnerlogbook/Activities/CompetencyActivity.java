@@ -20,7 +20,8 @@ public class CompetencyActivity extends AppCompatActivity {
     TextView tvCondition;
     TextView tvRequirements;
     EditText etFeedback;
-    String competencyJson, learnerJson;
+    String competencyJson;
+    String learnerJson;
     private Competency competency;
     private Learner learner;
 

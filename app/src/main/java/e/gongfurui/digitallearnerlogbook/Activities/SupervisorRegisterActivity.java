@@ -17,7 +17,10 @@ import e.gongfurui.digitallearnerlogbook.Roles.Role;
 import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
 
 public class SupervisorRegisterActivity extends AppCompatActivity {
-    private EditText et_s_name, et_s_email, et_s_psw, et_s_verifyCode;
+    private EditText etSName;
+    private EditText etSEmail;
+    private EditText etSPsw;
+    private EditText etSVerifyCode;
     private boolean existAccount = false;
     private int verifyCode;
     private String email;
@@ -36,10 +39,10 @@ public class SupervisorRegisterActivity extends AppCompatActivity {
      * Initial the UI parameter involved in this activity
      * */
     private void initViews(){
-        et_s_email = findViewById(R.id.et_s_email);
-        et_s_name = findViewById(R.id.et_s_name);
-        et_s_psw = findViewById(R.id.et_s_psw);
-        et_s_verifyCode = findViewById(R.id.et_s_verifyCode);
+        etSEmail = findViewById(R.id.et_s_email);
+        etSName = findViewById(R.id.et_s_name);
+        etSPsw = findViewById(R.id.et_s_psw);
+        etSVerifyCode = findViewById(R.id.et_s_verifyCode);
     }
 
 
@@ -48,11 +51,11 @@ public class SupervisorRegisterActivity extends AppCompatActivity {
      * */
     public void getCodeSPressed(View view) {
         /*check if the email is empty*/
-        if(et_s_email.getText().toString().isEmpty()){
+        if(etSEmail.getText().toString().isEmpty()){
             Toast.makeText(this, "Please enter an email", Toast.LENGTH_LONG).show();
         }
         else {
-            email = et_s_email.getText().toString();
+            email = etSEmail.getText().toString();
             Learner learner = SQLQueryHelper.searchLearnerTable(this, "SELECT * FROM learner" +
                     " WHERE email = '" + email + "'");
             Instructor instructor = SQLQueryHelper.searchInstructorTable(this, "SELECT * FROM instructor" +
@@ -91,20 +94,20 @@ public class SupervisorRegisterActivity extends AppCompatActivity {
      * */
     public void submitSupervisorPressed(View view) {
         /*Check all mandatory part of the field that has been filled*/
-        if(et_s_name.getText().toString().isEmpty()||et_s_email.getText().toString().isEmpty()||
-                et_s_verifyCode.getText().toString().isEmpty()||et_s_psw.getText().toString().isEmpty()){
+        if(etSName.getText().toString().isEmpty()|| etSEmail.getText().toString().isEmpty()||
+                etSVerifyCode.getText().toString().isEmpty()|| etSPsw.getText().toString().isEmpty()){
             Toast.makeText(this,"You should fill all field!", Toast.LENGTH_LONG).show();
         }
         else {
-            String name = et_s_name.getText().toString();
-            String psw = et_s_psw.getText().toString();
+            String name = etSName.getText().toString();
+            String psw = etSPsw.getText().toString();
             /*Check if the learner has validated the email before*/
             if (!existAccount) {
                 Toast.makeText(this, "You haven't validate your email",
                         Toast.LENGTH_LONG).show();
             } else {
                 /*Check if the verify code is correct*/
-                if(verifyCode != Integer.parseInt(et_s_verifyCode.getText().toString())) {
+                if(verifyCode != Integer.parseInt(etSVerifyCode.getText().toString())) {
                     Toast.makeText(this, "The verify code is not correct! Please check it!",
                             Toast.LENGTH_LONG).show();
                 }

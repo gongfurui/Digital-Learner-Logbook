@@ -21,8 +21,13 @@ import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
 import e.gongfurui.wheelviewlibrary.listener.SelectInterface;
 
 public class LearnerRegisterActivity extends AppCompatActivity implements SelectInterface {
-    private EditText et_l_name, et_l_dob, et_l_email, et_l_licenceID, et_l_superEmail,
-            et_l_psw, et_l_verifyCode;
+    private EditText et_l_name;
+    private EditText et_l_dob;
+    private EditText et_l_email;
+    private EditText et_l_licenceID;
+    private EditText et_l_superEmail;
+    private EditText et_l_psw;
+    private EditText et_l_verifyCode;
     private SelectDateDialog dateDialog;
     private boolean existAccount = false;
     private boolean haveAdded = false;

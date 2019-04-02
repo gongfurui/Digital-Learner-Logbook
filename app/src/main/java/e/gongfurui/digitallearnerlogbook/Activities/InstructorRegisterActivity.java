@@ -18,7 +18,11 @@ import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
 
 public class InstructorRegisterActivity extends AppCompatActivity {
 
-    private EditText et_i_name, et_i_email, et_i_adi, et_i_psw, et_i_verifyCode;
+    private EditText et_i_name;
+    private EditText et_i_email;
+    private EditText et_i_adi;
+    private EditText et_i_psw;
+    private EditText et_i_verifyCode;
     private boolean existAccount = false;
     private int verifyCode;
     private String email;

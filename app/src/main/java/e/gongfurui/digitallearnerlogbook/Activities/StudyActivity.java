@@ -28,15 +28,18 @@ import e.gongfurui.digitallearnerlogbook.Roles.Learner;
 
 public class StudyActivity extends AppCompatActivity implements Runnable {
 
-    private double sec, min, hour;
+    private double sec;
+    private double min;
+    private double hour;
     int verifyCode;
     private Handler timer;
-    private TextView tv_timeCovered;
+    private TextView tvTimeCovered;
     private EditText etADI;
     private EditText etVerify;
     private EditText etFeedback;
     private Switch switchIApprove;
-    String learnerJson, competencyJson;
+    String learnerJson;
+    String competencyJson;
     private boolean isApproved;
     private Learner learner;
     private Instructor instructor;
@@ -63,7 +66,7 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
      * Initial the UI parameter involved in this activity
      * */
     private void initViews(){
-        tv_timeCovered = findViewById(R.id.tv_timeCovered);
+        tvTimeCovered = findViewById(R.id.tv_timeCovered);
     }
 
     @Override
@@ -79,7 +82,7 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
             hour ++;
             min = 0;
         }
-        tv_timeCovered.setText((int) hour + "h " +(int) min + "m " +(int) sec + "s");
+        tvTimeCovered.setText((int) hour + "h " +(int) min + "m " +(int) sec + "s");
         timer.postDelayed(this,1000);
     }
 

@@ -19,8 +19,7 @@
             android:parentActivityName=".Activities.SelectRoleActivity">
 
         </activity>
-        <activity android:name=".Activities.SupervisorHomeActivity"
-            android:parentActivityName=".Activities.LoginActivity">
+        <activity android:name=".Activities.SupervisorHomeActivity">
 
         </activity>
         <activity

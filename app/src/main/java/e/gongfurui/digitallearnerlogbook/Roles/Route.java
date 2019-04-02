@@ -10,7 +10,7 @@ public class Route {
     double avgSpeed;
     Learner learner;
     boolean isApproved;
-    
+
     public Route(int routeID, ArrayList<String> traceList, double distance, double time,
                  double avgSpeed, Learner learner, boolean isApproved){
         this.routeID = routeID;

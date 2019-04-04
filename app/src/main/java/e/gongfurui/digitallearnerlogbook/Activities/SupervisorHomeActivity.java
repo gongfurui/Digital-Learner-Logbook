@@ -29,6 +29,10 @@ public class SupervisorHomeActivity extends AppCompatActivity implements RadioGr
     public static final int PAGE_ONE = 0;
     public static final int PAGE_TWO = 1;
 
+    //Parameters stands for the page title
+    private final String PAGE_INFORMATION = "Information";
+    private final String PAGE_LEARNERS = "Learners";
+
     public static String supervisorMail;
 
 
@@ -56,7 +60,7 @@ public class SupervisorHomeActivity extends AppCompatActivity implements RadioGr
         vpager.addOnPageChangeListener(this);
         vpager.setCurrentItem(0);
         rbChannel.setChecked(true);
-        txtTopbar.setText("Information");
+        txtTopbar.setText(PAGE_INFORMATION);
 
     }
 
@@ -102,8 +106,8 @@ public class SupervisorHomeActivity extends AppCompatActivity implements RadioGr
 
     @Override
     public void onPageSelected(int position) {
-        if(position == 0) txtTopbar.setText("Information");
-        else if(position == 1) txtTopbar.setText("Learners");
+        if(position == 0) txtTopbar.setText(PAGE_INFORMATION);
+        else if(position == 1) txtTopbar.setText(PAGE_LEARNERS);
     }
 
     @Override

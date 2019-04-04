@@ -33,6 +33,12 @@ public class LearnerHomeActivity extends AppCompatActivity implements RadioGroup
     public static final int PAGE_THREE = 2;
     public static final int PAGE_FOUR = 3;
 
+    //Parameters stands for the page title
+    private final String PAGE_INFORMATION = "Information";
+    private final String PAGE_COMPETENCY = "Competency";
+    private final String PAGE_PRACTICE = "Practice";
+    private final String PAGE_PROGRESS = "Progress";
+
     public static int learnerID;
 
 
@@ -62,7 +68,7 @@ public class LearnerHomeActivity extends AppCompatActivity implements RadioGroup
         vPager.addOnPageChangeListener(this);
         vPager.setCurrentItem(0);
         rbChannel.setChecked(true);
-        txtTopbar.setText("Information");
+        txtTopbar.setText(PAGE_INFORMATION);
 
     }
 
@@ -114,10 +120,10 @@ public class LearnerHomeActivity extends AppCompatActivity implements RadioGroup
 
     @Override
     public void onPageSelected(int position) {
-        if(position == 0) txtTopbar.setText("Information");
-        else if(position == 1) txtTopbar.setText("Competency");
-        else if(position == 2) txtTopbar.setText("2");
-        else if(position == 3) txtTopbar.setText("Progress");
+        if(position == 0) txtTopbar.setText(PAGE_INFORMATION);
+        else if(position == 1) txtTopbar.setText(PAGE_COMPETENCY);
+        else if(position == 2) txtTopbar.setText(PAGE_PRACTICE);
+        else if(position == 3) txtTopbar.setText(PAGE_PROGRESS);
     }
 
     @Override

@@ -1,20 +1,21 @@
 package e.gongfurui.digitallearnerlogbook.Roles;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Route {
-    int routeID;
-    ArrayList<String> traceList;
-    double distance;
-    double time;
-    double avgSpeed;
-    Learner learner;
-    boolean isApproved;
+    public int routeID;
+    public HashSet<String> traceMap;
+    public double distance;
+    public double time;
+    public double avgSpeed;
+    public Learner learner;
+    public boolean isApproved;
 
-    public Route(int routeID, ArrayList<String> traceList, double distance, double time,
+    public Route(int routeID, HashSet<String> traceMap, double distance, double time,
                  double avgSpeed, Learner learner, boolean isApproved){
         this.routeID = routeID;
-        this.traceList = traceList;
+        this.traceMap = traceMap;
         this.distance = distance;
         this.time = time;
         this.avgSpeed = avgSpeed;

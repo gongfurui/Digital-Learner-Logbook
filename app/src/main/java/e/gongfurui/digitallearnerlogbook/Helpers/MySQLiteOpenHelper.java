@@ -41,7 +41,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
       public void onCreate(SQLiteDatabase db) {
         System.out.println("Creating database:");
 
-        /*The table for the learner*/
+        //The table for the learner
         String sql_learner = "create table learner(" +
                 "id int primary key NOT NULL, " +
                 "email varchar(200), " +
@@ -97,18 +97,19 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 "c23 int DEFAULT 0," +
                 "c23c varchar(200) DEFAULT '')";
 
-        /*The table for the instructor*/
+        //The table for the instructor
         String sql_instructor = "create table instructor(" +
                 "ADI int primary key, "+
                 "email varchar(200), " +
                 "name varchar(200), " +
                 "psw varchar)";
 
-        /*The table for the supervisor*/
+        //The table for the supervisor
         String sql_supervisor = "create table supervisor(" +
                 "email varchar(200) primary key, " +
                 "name varchar(200), " +
                 "psw varchar)";
+
 
         /*String sql_instructor_learner = "create table instructor_learner(" +
                 "ADI int, " +
@@ -116,7 +117,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 "feedback varchar(200) DEFAULT ''," +
                 "primary key (ADI, learner_id))";*/
 
-        /*The table for the course feedback, which includes the relationship between learner and instructor*/
+        //The table for the course feedback, which includes the relationship between learner and instructor
         String sql_courseFeedback = "create table courseFeedback(" +
                 "course_id int," +
                 "learner_id int," +
@@ -124,22 +125,37 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 "feedback varchar(200) DEFAULT ''," +
                 "primary key(course_id, learner_id))";
 
-        /*The table for building the relationship between learner and instructor*/
+        //The table for building the relationship between learner and instructor
         String sql_supervisor_learner = "create table supervisor_learner(" +
                 "email varchar(200), " +
                 "learner_id int, "+
                 "primary key (email, learner_id))";
 
-        /*the table for the current licence holder, including the types of learner and full*/
+        //the table for the current licence holder, including the types of learner and full
         String sql_licence = "create table licence(" +
                 "driver_id int primary key, " +
                 "type varchar(40))";
 
 
-        /*table for the current instructor list who has got the qualification to become an instructor*/
+        //table for the current instructor list who has got the qualification to become an instructor
         String sql_adiList = "create table ADIList (adi int primary key)";
 
-        /*execute the sql query to establish the schema of the database*/
+        //table for the route of the learner
+        String sql_route = "create table route(" +
+                "id int primary key, " +
+                "distance REAL, " +
+                "time REAL, " +
+                "avgSpeed REAL, " +
+                "learnerID int, " +
+                "isApproved int DEFAULT 0)";
+
+        //table for the route trace addresses
+        String sql_route_address = "create table route_address(" +
+                "id int, " +
+                "address varchar(400), " +
+                "primary key (id, address))";
+
+        //execute the sql query to establish the schema of the database
         db.execSQL(sql_learner);
         db.execSQL(sql_instructor);
         db.execSQL(sql_supervisor);
@@ -147,6 +163,8 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         db.execSQL(sql_licence);
         db.execSQL(sql_adiList);
         db.execSQL(sql_courseFeedback);
+        db.execSQL(sql_route);
+        db.execSQL(sql_route_address);
 
       }
 

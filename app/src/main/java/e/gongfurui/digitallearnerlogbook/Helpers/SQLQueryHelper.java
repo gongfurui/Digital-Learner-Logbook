@@ -7,10 +7,12 @@ import android.support.v4.util.LogWriter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import e.gongfurui.digitallearnerlogbook.Roles.Instructor;
 import e.gongfurui.digitallearnerlogbook.Roles.Learner;
 import e.gongfurui.digitallearnerlogbook.Roles.Role;
+import e.gongfurui.digitallearnerlogbook.Roles.Route;
 import e.gongfurui.digitallearnerlogbook.Roles.Supervisor;
 
 
@@ -297,6 +299,58 @@ public class SQLQueryHelper {
         return commentMap;
     }
 
+    /**
+     * Search throw the route table to get the route map
+     * */
+    static public HashMap<Integer, Route>  getRouteMapFromRouteTable(Context context, String query){
+        System.out.println("Search the database");
+        // Create DatabaseHelper Object
+        MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
+        SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
+        // Return a Cursor object：
+        Cursor cursor = sqliteDatabase.rawQuery(query,null);
+        HashMap<Integer, Route> routeMap = new HashMap<>();
+        //Move the cursor to the next line and decide whether it has the next data
+        while (cursor.moveToNext()) {
+            int routeID = -1;
+            HashSet<String> traceSet = new HashSet<>();
+            double distance = 0;
+            double time = 0;
+            double avgSpeed = 0;
+            int learnerID = 0;
+            boolean isApproved = false;
+
+            routeID  = Integer.parseInt(cursor.getString(cursor.getColumnIndex("id")));
+            traceSet = searchTraceSetFromRouteAddressTable(context, "select address from " +
+                    "route_address where id = " + routeID);
+            distance = Double.parseDouble(cursor.getString(cursor.getColumnIndex("distance")));
+            time = Double.parseDouble(cursor.getString(cursor.getColumnIndex("time")));
+            avgSpeed = Double.parseDouble(cursor.getString(cursor.getColumnIndex("avgSpeed")));
+            learnerID = Integer.parseInt(cursor.getString(cursor.getColumnIndex("learnerID")));
+            isApproved = Integer.parseInt(cursor.getString(cursor.getColumnIndex("isApproved"))) != 0;
+            routeMap.put(routeID, new Route(routeID, traceSet, distance, time, avgSpeed, learnerID,
+                    isApproved));
+
+        }
+        //Close db
+        sqliteDatabase.close();
+        return routeMap;
+    }
+
+    static public HashSet<String> searchTraceSetFromRouteAddressTable(Context context, String query){
+        System.out.println("Search the database");
+        MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
+        SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqliteDatabase.rawQuery(query,null);
+        HashSet<String> addressSet = new HashSet<>();
+        while (cursor.moveToNext()) {
+            HashSet<String> traceSet = new HashSet<>();
+            String address = "";
+            address = cursor.getString(cursor.getColumnIndex("address"));
+            addressSet.add(address);
+        }
+        return addressSet;
+    }
 
     /**
      * Search throw the instructor table to get the instructor email

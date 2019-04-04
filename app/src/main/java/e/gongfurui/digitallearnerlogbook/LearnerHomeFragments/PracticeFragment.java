@@ -57,6 +57,9 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
             learner = SQLQueryHelper.searchLearnerTable(this.getContext(),
                     "SELECT * FROM learner" +
                             " WHERE id = "+ learnerID);
+            routeMap = SQLQueryHelper.getRouteMapFromRouteTable(this.getContext(),
+                    "SELECT * FROM route " +
+                            "WHERE LearnerID = " + learnerID);
         }
     }
 

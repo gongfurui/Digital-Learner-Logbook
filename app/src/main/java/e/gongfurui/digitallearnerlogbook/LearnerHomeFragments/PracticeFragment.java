@@ -22,6 +22,7 @@ import java.util.Map;
 import e.gongfurui.digitallearnerlogbook.Activities.CompetencyActivity;
 import e.gongfurui.digitallearnerlogbook.Adapters.CompetencyAdapter;
 import e.gongfurui.digitallearnerlogbook.Adapters.PracticeAdapter;
+import e.gongfurui.digitallearnerlogbook.GPSActivities.MainActivity;
 import e.gongfurui.digitallearnerlogbook.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbook.R;
 import e.gongfurui.digitallearnerlogbook.Roles.Competency;
@@ -87,7 +88,8 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
         btn_practicing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Hi, hahah", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mContext, MainActivity.class);
+                startActivity(intent);
             }
         });
         return view;

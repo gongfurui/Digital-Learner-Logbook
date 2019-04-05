@@ -11,7 +11,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import e.gongfurui.digitallearnerlogbook.Dialog.SelectDateDialog;
-import e.gongfurui.digitallearnerlogbook.Helpers.EmailUtil;
+import e.gongfurui.digitallearnerlogbook.Utils.EmailUtil;
 import e.gongfurui.digitallearnerlogbook.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbook.R;
 import e.gongfurui.digitallearnerlogbook.Roles.Instructor;

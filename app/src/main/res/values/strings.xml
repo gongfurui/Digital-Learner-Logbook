@@ -8,4 +8,12 @@
     <string name="tab_supervisor_information">Information</string>
     <string name="tab_supervisor_learnerList">Learners</string>
 
+    <string name="distance_covered">Distance Covered :</string>
+    <string name="time_covered">Time Covered :</string>
+    <string name="address_covered">Address Covered: </string>
+    <string name="need_location">Enable GPS SERVICE</string>
+    <string name="location_content">This app wants to change your device settings use GPS,Wi-Fi and cell networks for
+        your location
+    </string>
+
 </resources>

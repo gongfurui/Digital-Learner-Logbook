@@ -34,6 +34,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 
+import e.gongfurui.digitallearnerlogbook.Activities.LearnerHomeActivity;
 import e.gongfurui.digitallearnerlogbook.Helpers.GoogleMapHelper;
 import e.gongfurui.digitallearnerlogbook.Helpers.MarkerAnimationHelper;
 import e.gongfurui.digitallearnerlogbook.Helpers.SQLQueryHelper;
@@ -247,7 +248,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                 "\nLearnerID is: " + learnerID +
                 "\nAddresses are: " + addressStr, Toast.LENGTH_LONG).show();
 
-        /*for (String address : traceSet) {
+        for (String address : traceSet) {
             SQLQueryHelper.insertDatabase(this,"INSERT into route_address " +
                     "(id, address)" +
                     " VALUES (" + routeID + ", '"+address+"')");
@@ -255,7 +256,9 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         SQLQueryHelper.insertDatabase(this, "INSERT into route" +
                 "(id, distance, time, avgSpeed, learnerID)" +
                 " VALUES ("+ routeID +", "+ distance +", "+ total_time +", "+ avgSpeed +", "+ learnerID +")");
-*/
 
+        Intent intent = new Intent(this, LearnerHomeActivity.class);
+        intent.putExtra("learnerID", learnerID);
+        startActivity(intent);
     }
 }

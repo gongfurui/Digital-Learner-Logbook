@@ -110,12 +110,13 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(position != 0){
+            String addressStr = "";
 
+            for (String address : mData.get(position - 1).traceSet) {
+                addressStr += address + " ";
+            }
+
+            Toast.makeText(mContext, "Address is: " + addressStr, Toast.LENGTH_LONG).show();
         }
     }
-
-
-
-
-
 }

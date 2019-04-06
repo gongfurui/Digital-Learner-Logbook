@@ -60,7 +60,7 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
                             " WHERE id = "+ learnerID);
             routeMap = SQLQueryHelper.getRouteMapFromRouteTable(this.getContext(),
                     "SELECT * FROM route " +
-                            "WHERE LearnerID = " + learnerID);
+                            "WHERE learnerID = " + learnerID);
         }
     }
 
@@ -89,6 +89,7 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, MainActivity.class);
+                intent.putExtra("learnerID", learnerID);
                 startActivity(intent);
             }
         });

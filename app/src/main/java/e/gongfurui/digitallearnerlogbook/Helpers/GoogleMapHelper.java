@@ -97,8 +97,8 @@ public class GoogleMapHelper {
     public String getDistanceInKm(double totalDistance) {
         if (totalDistance == 0.0 || totalDistance < -1)
             return "0 Km";
-        else if (totalDistance > 0 && totalDistance < 1000)
-            return String.valueOf(totalDistance) + " meters";
+        /*else if (totalDistance > 0 && totalDistance < 1000)
+            return String.valueOf(totalDistance) + " meters";*/
         DecimalFormat df = new DecimalFormat("#.##");
         return df.format(totalDistance / 1000) + " Km";
     }

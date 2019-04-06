@@ -46,7 +46,7 @@ public class LearnerHomeActivity extends AppCompatActivity implements RadioGroup
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_learner_home);
-        learnerID=getIntent().getIntExtra("learnerID", 0);
+        learnerID = getIntent().getIntExtra("learnerID", 0);
         mAdapter = new LearnerHomeFgPagerAdapter(getSupportFragmentManager());
         initViews();
     }

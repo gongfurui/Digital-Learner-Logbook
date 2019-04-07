@@ -146,11 +146,13 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                   "learnerID int, " +
                   "isApproved int DEFAULT 0)";
 
-          //table for the route trace addresses
-          String sql_route_address = "create table route_address(" +
+          //table for the route trace
+          String sql_route_location = "create table route_location(" +
                   "id int, " +
-                  "address varchar(400), " +
-                  "primary key (id, address))";
+                  "latitude REAL, " +
+                  "longitude REAL," +
+                  "primary key (id, latitude, longitude))";
+
           //execute the sql query to establish the schema of the database
           db.execSQL(sql_learner);
           db.execSQL(sql_instructor);
@@ -160,7 +162,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
           db.execSQL(sql_adiList);
           db.execSQL(sql_courseFeedback);
           db.execSQL(sql_route);
-          db.execSQL(sql_route_address);
+          db.execSQL(sql_route_location);
       }
 
       /**

@@ -23,6 +23,7 @@ import e.gongfurui.digitallearnerlogbook.Activities.CompetencyActivity;
 import e.gongfurui.digitallearnerlogbook.Adapters.CompetencyAdapter;
 import e.gongfurui.digitallearnerlogbook.Adapters.PracticeAdapter;
 import e.gongfurui.digitallearnerlogbook.GPSActivities.MainActivity;
+import e.gongfurui.digitallearnerlogbook.GPSActivities.MapsActivity;
 import e.gongfurui.digitallearnerlogbook.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbook.R;
 import e.gongfurui.digitallearnerlogbook.Roles.Competency;
@@ -110,13 +111,10 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if(position != 0){
-            String addressStr = "";
+            Intent intent = new Intent(mContext, MapsActivity.class);
+            intent.putExtra("route", new Gson().toJson(mData.get(position - 1)));
+            startActivity(intent);
 
-            for (String address : mData.get(position - 1).traceSet) {
-                addressStr += address + " ";
-            }
-
-            Toast.makeText(mContext, "Address is: " + addressStr, Toast.LENGTH_LONG).show();
         }
     }
 }

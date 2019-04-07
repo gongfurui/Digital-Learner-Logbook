@@ -2,6 +2,7 @@ package e.gongfurui.digitallearnerlogbook.GPSActivities;
 
 import android.Manifest;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -9,6 +10,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -56,7 +58,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
     private TextView distanceCoveredTextView;
     private TextView timeCoveredTextView;
-    private TextView addressCoveredTextView;
     private TextView speedCoveredTextView;
 
     private double sec;
@@ -71,8 +72,12 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
     private Marker marker;
 
-    private HashSet<String> traceSet = new HashSet<>();
+    private HashSet<LatLng> traceSet = new HashSet<>();
     private ArrayList<Double> speedList = new ArrayList<>();
+
+    /*private PowerManager pm;
+    private PowerManager.WakeLock wakeLock;*/
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -107,13 +112,27 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         sec = 0;
         timer.postDelayed(this,1000);
         initViews();
-
     }
+
+    /*@Override
+    protected void onStart() {
+        super.onStart();
+        //Create PowerManager obj
+        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        //保持cpu一直运行，不管屏幕是否黑屏
+        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "DLL:CPUKeepRunning");
+        wakeLock.acquire();
+    }
+
+    @Override
+    protected void onDestroy() {
+        wakeLock.release();
+        super.onDestroy();
+    }*/
 
     private void initViews() {
         distanceCoveredTextView = findViewById(R.id.distanceCoveredTextView);
         timeCoveredTextView = findViewById(R.id.timeCoveredTextView);
-        addressCoveredTextView = findViewById(R.id.addressCoveredTextView);
         speedCoveredTextView = findViewById(R.id.speedCoveredTextView);
     }
 
@@ -132,13 +151,9 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         viewModel.currentLocation()
                 .observe(this, location -> {
                     assert location != null;
-                    Log.e("Location Received -> ", location.getLatitude() + " , " + location.getLongitude());
-                    // Add by Furui Gong in 2019/4/5
-                    Log.e("Address Received -> ", getAddressName(new LatLng(location.getLatitude(), location.getLongitude())));
-                    addressCoveredTextView.setText(getAddressName(new LatLng(location.getLatitude(), location.getLongitude())));
-                    speedCoveredTextView.setText((double) location.getSpeed() + " km/h");
-                    traceSet.add(getAddressName(new LatLng(location.getLatitude(), location.getLongitude())));
-                    speedList.add((double) location.getSpeed());
+                    speedCoveredTextView.setText((double) location.getSpeed()*3.6 + " km/h");
+                    traceSet.add(new LatLng(location.getLatitude(), location.getLongitude()));
+                    speedList.add((double) location.getSpeed()*3.6);
                     if (firstTimeFlag) {
                         firstTimeFlag = false;
                         googleMapHelper.animateCamera(new LatLng(location.getLatitude(), location.getLongitude()), googleMap);
@@ -188,23 +203,10 @@ public class MainActivity extends AppCompatActivity implements Runnable {
             hour ++;
             min = 0;
         }
-        timeCoveredTextView.setText(hour + "h " + min + "m " + sec + "s");
+        timeCoveredTextView.setText((int) hour + "h " + (int) min + "m " + (int) sec + "s");
         timer.postDelayed(this,1000);
     }
 
-    //Add by Furui Gong in 2019/4/5
-    private String getAddressName(LatLng myCoordinate){
-        String myAddress = "";
-        Geocoder geocoder = new Geocoder(MainActivity.this, Locale.getDefault());
-        try {
-            List<Address> addresses = geocoder.getFromLocation(myCoordinate.latitude, myCoordinate.longitude, 1);
-            String address = addresses.get(0).getAddressLine(0);
-            myAddress = address;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return myAddress;
-    }
 
     // Add by Furui Gong in 2019/4/6
     /**
@@ -235,24 +237,19 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         }
 
 
-        String addressStr = "";
-
-        for (String address : traceSet) {
-            addressStr += address + " ";
-        }
 
         Toast.makeText(this, "The route ID is: " + routeID +
                 "\nThe avg speed is: " + avgSpeed +
                 "\nThe total distance is: " + distance +
                 "\nThe total time is: " + total_time +
-                "\nLearnerID is: " + learnerID +
-                "\nAddresses are: " + addressStr, Toast.LENGTH_LONG).show();
+                "\nLearnerID is: " + learnerID, Toast.LENGTH_LONG).show();
 
-        for (String address : traceSet) {
-            SQLQueryHelper.insertDatabase(this,"INSERT into route_address " +
-                    "(id, address)" +
-                    " VALUES (" + routeID + ", '"+address+"')");
+        for (LatLng ll : traceSet) {
+            SQLQueryHelper.insertDatabase(this,"INSERT into route_location " +
+                    "(id, latitude, longitude)" +
+                    " VALUES (" + routeID + ", " + ll.latitude + ", " + ll.longitude + ")");
         }
+
         SQLQueryHelper.insertDatabase(this, "INSERT into route" +
                 "(id, distance, time, avgSpeed, learnerID)" +
                 " VALUES ("+ routeID +", "+ distance +", "+ total_time +", "+ avgSpeed +", "+ learnerID +")");

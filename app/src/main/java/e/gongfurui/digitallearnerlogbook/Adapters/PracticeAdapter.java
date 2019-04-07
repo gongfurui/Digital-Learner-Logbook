@@ -48,8 +48,8 @@ public class PracticeAdapter extends BaseAdapter {
         TextView tv_time = convertView.findViewById(R.id.tv_routeTime);
 
         tv_routeID.setText(String.valueOf(mData.get(position).routeID));
-        tv_distance.setText(String.valueOf(mData.get(position).distance));
-        tv_time.setText(String.valueOf(mData.get(position).time));
+        tv_distance.setText(String.valueOf(mData.get(position).distance + " km"));
+        tv_time.setText(String.valueOf(mData.get(position).time + " h"));
         return convertView;
     }
 

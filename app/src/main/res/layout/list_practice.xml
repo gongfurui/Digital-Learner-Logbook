@@ -7,7 +7,7 @@
         android:id="@+id/tv_routeID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="1.3"
         android:text="TextView"
         android:textSize="20sp"/>
 

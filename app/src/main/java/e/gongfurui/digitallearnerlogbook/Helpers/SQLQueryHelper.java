@@ -5,6 +5,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v4.util.LogWriter;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -313,7 +315,7 @@ public class SQLQueryHelper {
         //Move the cursor to the next line and decide whether it has the next data
         while (cursor.moveToNext()) {
             int routeID = -1;
-            HashSet<String> traceSet = new HashSet<>();
+            HashSet<LatLng> traceSet = new HashSet<>();
             double distance = 0;
             double time = 0;
             double avgSpeed = 0;
@@ -321,8 +323,8 @@ public class SQLQueryHelper {
             boolean isApproved = false;
 
             routeID  = Integer.parseInt(cursor.getString(cursor.getColumnIndex("id")));
-            traceSet = searchTraceSetFromRouteAddressTable(context, "select address from " +
-                    "route_address where id = " + routeID);
+            traceSet = searchTraceSetFromRouteAddressTable(context, "select latitude, longitude from " +
+                    "route_location where id = " + routeID);
             distance = Double.parseDouble(cursor.getString(cursor.getColumnIndex("distance")));
             time = Double.parseDouble(cursor.getString(cursor.getColumnIndex("time")));
             avgSpeed = Double.parseDouble(cursor.getString(cursor.getColumnIndex("avgSpeed")));
@@ -337,19 +339,18 @@ public class SQLQueryHelper {
         return routeMap;
     }
 
-    static public HashSet<String> searchTraceSetFromRouteAddressTable(Context context, String query){
+    static public HashSet<LatLng> searchTraceSetFromRouteAddressTable(Context context, String query){
         System.out.println("Search the database");
         MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
         SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
-        HashSet<String> addressSet = new HashSet<>();
+        HashSet<LatLng> locationSet = new HashSet<>();
         while (cursor.moveToNext()) {
-            HashSet<String> traceSet = new HashSet<>();
-            String address = "";
-            address = cursor.getString(cursor.getColumnIndex("address"));
-            addressSet.add(address);
+            double latitude = cursor.getDouble(cursor.getColumnIndex("latitude"));
+            double longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
+            locationSet.add(new LatLng(latitude, longitude));
         }
-        return addressSet;
+        return locationSet;
     }
 
     /**

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GPSActivities.MainActivity">
+    tools:context=".GPSActivities.MapsActivity">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -29,7 +31,7 @@
                 android:textSize="15sp"/>
 
             <TextView
-                android:id="@+id/timeCoveredTextView"
+                android:id="@+id/timeCoveredTextViewShow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -63,7 +65,7 @@
                 android:textSize="15sp"/>
 
             <TextView
-                android:id="@+id/distanceCoveredTextView"
+                android:id="@+id/distanceCoveredTextViewShow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -98,7 +100,7 @@
                 android:textSize="15sp"/>
 
             <TextView
-                android:id="@+id/speedCoveredTextView"
+                android:id="@+id/speedCoveredTextViewShow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -114,24 +116,6 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".activity.main.ui.MainActivity"/>
-
-    <ImageButton
-        android:id="@+id/currentLocationImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="40dp"
-        android:contentDescription="@null"
-        android:src="@drawable/current_location_image_vector" android:layout_marginRight="20dp"/>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:onClick="practiceEndPressed"
-        android:text="@string/terminate_practice"/>
+     />
 
 </FrameLayout>

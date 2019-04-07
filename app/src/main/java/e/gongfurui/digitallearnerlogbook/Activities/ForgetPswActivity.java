@@ -94,7 +94,7 @@ public class ForgetPswActivity extends AppCompatActivity {
                 supervisor = SQLQueryHelper.searchSupervisorTable(this, "SELECT * FROM supervisor" +
                         " WHERE email = '"+ String.valueOf(etEmail.getText()) + "'");
                 Intent intent = new Intent(this, LoginActivity.class);
-                if(learner != null){
+                if(learner != null) {
                     SQLQueryHelper.updateDatabase(this, "UPDATE learner SET psw ='" +
                             String.valueOf(etConfirmPsw.getText()) +
                             "' WHERE email = '" +
@@ -129,7 +129,6 @@ public class ForgetPswActivity extends AppCompatActivity {
                             "You don't have the account yet. Please register one!",
                             Toast.LENGTH_LONG).show();
                 }
-
             }
             else {
                 Toast.makeText(ForgetPswActivity.this,

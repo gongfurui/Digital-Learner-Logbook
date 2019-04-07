@@ -17,5 +17,6 @@
     <string name="location_content">This app wants to change your device settings use GPS,Wi-Fi and cell networks for
         your location
     </string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>

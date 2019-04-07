@@ -24,7 +24,7 @@ public class SupervisorHomeFgPagerAdapter extends FragmentPagerAdapter {
     public SupervisorHomeFgPagerAdapter(FragmentManager fm) {
         super(fm);
         informationFg = InformationFragment.newInstance(SupervisorHomeActivity.supervisorMail);
-        learnerListFragment = new LearnerListFragment();
+        learnerListFragment = LearnerListFragment.newInstance(SupervisorHomeActivity.supervisorMail);
         fragments.add(informationFg) ;
         fragments.add(learnerListFragment);
     }

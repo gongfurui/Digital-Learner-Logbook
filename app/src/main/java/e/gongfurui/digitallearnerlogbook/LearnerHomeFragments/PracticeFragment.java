@@ -103,7 +103,7 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
     public void addToList() {
         if(routeMap != null) {
             for (Map.Entry<Integer, Route> entry : routeMap.entrySet()) {
-                mData.add(entry.getValue());
+                if(!entry.getValue().isApproved) mData.add(entry.getValue());
             }
         }
     }

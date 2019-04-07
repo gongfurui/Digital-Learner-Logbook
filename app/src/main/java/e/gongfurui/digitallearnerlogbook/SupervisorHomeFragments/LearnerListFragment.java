@@ -7,12 +7,36 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
+import e.gongfurui.digitallearnerlogbook.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbook.R;
+import e.gongfurui.digitallearnerlogbook.Roles.Learner;
 
 public class LearnerListFragment extends Fragment {
 
-    public LearnerListFragment(){
+    private static final String ARG_PARAM1 = "supervisorMail";
 
+    String supervisorMail;
+
+    ArrayList<Learner> learnerList = new ArrayList<>();
+
+
+    public static LearnerListFragment newInstance(String email) {
+        LearnerListFragment fragment = new LearnerListFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, email);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            supervisorMail = getArguments().getString(ARG_PARAM1);
+
+        }
     }
 
     @Override

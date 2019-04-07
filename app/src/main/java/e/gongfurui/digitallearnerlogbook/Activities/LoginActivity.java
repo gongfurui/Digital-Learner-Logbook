@@ -28,6 +28,7 @@ public class LoginActivity extends AppCompatActivity{
     SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private final String ACCOUNTKEY = "MyAccount";
+    private final String PSWKEY = "MyPassword";
     private final String CHECKKEY = "MyCheck";
     private boolean isAutoStore;// the parameter decides whether we store the account after logout
 
@@ -44,6 +45,7 @@ public class LoginActivity extends AppCompatActivity{
         if (isAutoStore) {
             cbRemember.setChecked(true);
             etUserName.setText(sharedPreferences.getString(ACCOUNTKEY, ""));
+            etPsw.setText(sharedPreferences.getString(PSWKEY, ""));
         }
     }
 
@@ -89,9 +91,11 @@ public class LoginActivity extends AppCompatActivity{
             intent.putExtra("learnerID", learner.driver_id);
             if(isAutoStore) {
                 editor.putString(ACCOUNTKEY, account);
+                editor.putString(PSWKEY, password);
             }
             else {
                 editor.putString(ACCOUNTKEY, "");
+                editor.putString(PSWKEY, "");
             }
             editor.putBoolean(CHECKKEY, isAutoStore);
             editor.commit();
@@ -104,9 +108,11 @@ public class LoginActivity extends AppCompatActivity{
             intent.putExtra("instructorADI", instructor.ADI);
             if(isAutoStore) {
                 editor.putString(ACCOUNTKEY, account);
+                editor.putString(PSWKEY, password);
             }
             else {
                 editor.putString(ACCOUNTKEY, "");
+                editor.putString(PSWKEY, "");
             }
             editor.putBoolean(CHECKKEY, isAutoStore);
             editor.commit();
@@ -119,9 +125,11 @@ public class LoginActivity extends AppCompatActivity{
             intent.putExtra("supervisorMail", supervisor.email);
             if(isAutoStore) {
                 editor.putString(ACCOUNTKEY, account);
+                editor.putString(PSWKEY, password);
             }
             else {
                 editor.putString(ACCOUNTKEY, "");
+                editor.putString(PSWKEY, "");
             }
             editor.putBoolean(CHECKKEY, isAutoStore);
             editor.commit();

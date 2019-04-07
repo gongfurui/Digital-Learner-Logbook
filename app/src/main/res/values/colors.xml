@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="colorAccessCanberra">#6B238E</color>
-    <color name="colorAccessCanberraDark">#4F2F4F</color>
+    <color name="colorAccent">#FF5722</color>
+    <color name="colorAccessCanberra"> #42426F</color>
+    <color name="colorAccessCanberraDark">#1F1C3D</color>
 </resources>

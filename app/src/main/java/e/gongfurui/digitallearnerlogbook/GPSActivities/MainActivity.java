@@ -75,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     private HashSet<LatLng> traceSet = new HashSet<>();
     private ArrayList<Double> speedList = new ArrayList<>();
 
-    /*private PowerManager pm;
-    private PowerManager.WakeLock wakeLock;*/
+    private PowerManager pm;
+    private PowerManager.WakeLock wakeLock;
 
 
     @Override
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         initViews();
     }
 
-    /*@Override
+    @Override
     protected void onStart() {
         super.onStart();
         //Create PowerManager obj
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     protected void onDestroy() {
         wakeLock.release();
         super.onDestroy();
-    }*/
+    }
 
     private void initViews() {
         distanceCoveredTextView = findViewById(R.id.distanceCoveredTextView);
@@ -167,7 +167,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         viewModel.startLocationTracking();
         viewModel.distanceTracker()
                 .observe(this, distance -> {
-                    Log.e("Total distance -> ", distance);
                     distanceCoveredTextView.setText(distance);
                 });
     }

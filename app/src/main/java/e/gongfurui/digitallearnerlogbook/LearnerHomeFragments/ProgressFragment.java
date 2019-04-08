@@ -8,8 +8,6 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
-
 import e.gongfurui.digitallearnerlogbook.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbook.R;
 import e.gongfurui.digitallearnerlogbook.Roles.Learner;
@@ -17,10 +15,13 @@ import e.gongfurui.digitallearnerlogbook.Roles.Learner;
 public class ProgressFragment extends Fragment{
 
     private static final String ARG_PARAM1 = "learnerID";
-    int learnerID;
-    Learner learner;
-    ProgressBar timeBar, courseBar;
-    TextView tv_timeProgress, tv_courseProgress;
+    private int learnerID;
+    private Learner learner;
+    private ProgressBar timeBar;
+    private ProgressBar courseBar;
+    private TextView tvTimeProgress;
+    private TextView tvCourseProgress;
+    private TextView tvDistanceProgress;
     int finishedCourse;
 
 
@@ -51,9 +52,9 @@ public class ProgressFragment extends Fragment{
         View view = inflater.inflate(R.layout.fg_progress, container, false);
         initViews(view);
         timeBar.setProgress((int) (learner.time*100));
-        tv_timeProgress.setText(learner.time + "/120 hours");
+        tvTimeProgress.setText(learner.time + "/120 hours");
         courseBar.setProgress(finishedCourse);
-        tv_courseProgress.setText(finishedCourse + "/23 competencies");
+        tvCourseProgress.setText(finishedCourse + "/23 competencies");
         return view;
     }
 
@@ -64,9 +65,11 @@ public class ProgressFragment extends Fragment{
      * */
     public void initViews(View view) {
         timeBar = view.findViewById(R.id.timeBar);
-        tv_timeProgress = view.findViewById(R.id.tv_timeProgress);
+        tvTimeProgress = view.findViewById(R.id.tv_timeProgress);
         courseBar = view.findViewById(R.id.courseBar);
-        tv_courseProgress = view.findViewById(R.id.tv_courseProgress);
+        tvCourseProgress = view.findViewById(R.id.tv_courseProgress);
+        tvDistanceProgress = view.findViewById(R.id.tv_distanceProgress);
+        tvDistanceProgress.setText("Distance: " + learner.distance + " km");
     }
 
 

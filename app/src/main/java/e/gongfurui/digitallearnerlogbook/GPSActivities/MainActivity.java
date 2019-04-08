@@ -165,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         viewModel.startLocationTracking();
         viewModel.distanceTracker()
                 .observe(this, distance -> {
+                    Log.e("Total distance -> ", distance);
                     distanceCoveredTextView.setText(distance);
                 });
     }

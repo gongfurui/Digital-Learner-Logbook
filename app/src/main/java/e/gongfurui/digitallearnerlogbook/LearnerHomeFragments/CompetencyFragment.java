@@ -25,7 +25,11 @@ import e.gongfurui.digitallearnerlogbook.Roles.Learner;
 
 public class CompetencyFragment extends Fragment implements AdapterView.OnItemClickListener {
     private static final String ARG_PARAM1 = "learnerID";
-    int learnerID;
+    private static final String ARG_PARAM2 = "supervisorMail";
+
+    private int learnerID;
+    private String supervisorMail;
+
     Learner learner;
     private List<Competency> mData = null;
     private Context mContext;
@@ -43,12 +47,23 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
         return fragment;
     }
 
+    public static CompetencyFragment newInstanceS(int id, String mail) {
+        CompetencyFragment fragment = new CompetencyFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_PARAM1, id);
+        args.putString(ARG_PARAM2, mail);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            /*Retrieve the required data from the SQLite database*/
+            //Retrieve the required data from the SQLite database
             learnerID = getArguments().getInt(ARG_PARAM1);
+            supervisorMail = getArguments().getString(ARG_PARAM2);
+
             learner = SQLQueryHelper.searchLearnerTable(this.getContext(),
                     "SELECT * FROM learner" +
                             " WHERE id = "+ learnerID);
@@ -260,6 +275,7 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
                 Intent intent = new Intent(this.mContext, CompetencyActivity.class);
                 intent.putExtra("competency", new Gson().toJson(mData.get(position - 1)));
                 intent.putExtra("learner", new Gson().toJson(learner));
+                intent.putExtra("supervisorMail", supervisorMail);
                 startActivity(intent);
             }
         }

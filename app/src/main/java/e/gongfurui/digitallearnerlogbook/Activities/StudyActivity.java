@@ -162,8 +162,9 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
                                             "(course_id, learner_id, instructor_name, feedback)" +
                                             " VALUES ("+competency.cID+","+learner.driver_id+"," +
                                             " '"+instructor.name+"', '"+ etFeedback.getText().toString()+"')");
-                            SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE " +
-                                    "learner SET c" + competency.cID + " =" + 1 + " WHERE id = " +
+                            SQLQueryHelper.updateDatabase(StudyActivity.this,
+                                    "UPDATE " + "learner SET c" + competency.cID + " =" + 1 +
+                                            " WHERE id = " +
                                     learner.driver_id);
                         }
                         SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE " +

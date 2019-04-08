@@ -142,7 +142,7 @@ public class LearnerRegisterActivity extends AppCompatActivity implements Select
                         }
                         else {
                             Learner learner = new Learner(new Role(name, email, psw),
-                                    licenceID, dob,0, courseProgressList, courseCommentList);
+                                    licenceID, dob,0, 0, courseProgressList, courseCommentList);
                             SQLQueryHelper.insertDatabase(this, "INSERT into learner " +
                                     "(id, email, name, psw, date_of_birth)" +
                                     " VALUES ("+learner.driver_id+", '"+learner.email+"', '"+learner.name+

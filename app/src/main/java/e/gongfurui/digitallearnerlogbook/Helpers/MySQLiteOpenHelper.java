@@ -48,6 +48,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                   "super_email varchar(200), " +
                   "date_of_birth TEXT," +
                   "time REAL DEFAULT 0.0, " +
+                  "distance REAL DEFAULT 0.0, " +
                   "c1 int DEFAULT 0, " +
                   "c1c varchar(200) DEFAULT '', " +
                   "c2 int DEFAULT 0, " +

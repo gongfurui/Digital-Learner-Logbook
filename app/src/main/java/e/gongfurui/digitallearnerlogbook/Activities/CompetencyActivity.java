@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,8 +23,10 @@ public class CompetencyActivity extends AppCompatActivity {
     EditText etFeedback;
     String competencyJson;
     String learnerJson;
+    Button btnStartLearn;
     private Competency competency;
     private Learner learner;
+    private String supervisorMail;
 
 
     @Override
@@ -40,6 +43,7 @@ public class CompetencyActivity extends AppCompatActivity {
     public void getPrevData() {
         competencyJson = getIntent().getStringExtra("competency");
         learnerJson = getIntent().getStringExtra("learner");
+        supervisorMail = getIntent().getStringExtra("supervisorMail");
         competency = new Gson().fromJson(competencyJson, Competency.class);
         learner = new Gson().fromJson(learnerJson, Learner.class);
     }
@@ -53,12 +57,16 @@ public class CompetencyActivity extends AppCompatActivity {
         tvCondition = findViewById(R.id.tv_condition);
         tvRequirements = findViewById(R.id.tv_requirements);
         etFeedback = findViewById(R.id.et_feedback);
-       /* toolbar = findViewById(R.id);*/
+        btnStartLearn = findViewById(R.id.btn_startLearn);
+
         tvTitle.setText(competency.title);
         tvPerformance.setText(competency.performance);
         tvCondition.setText(competency.conditions);
         tvRequirements.setText(competency.requirements);
         etFeedback.setText(learner.courseCommentList.get(competency.cID - 1));
+        if(supervisorMail != null) {
+            btnStartLearn.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void learningPressed(View view) {
@@ -66,10 +74,12 @@ public class CompetencyActivity extends AppCompatActivity {
             Toast.makeText(this,"You have finished this competency. Please move to next course", Toast.LENGTH_LONG).show();
         }
         else {
-            Intent intent = new Intent(this, StudyActivity.class);
-            intent.putExtra("learner", new Gson().toJson(learner));
-            intent.putExtra("competency", new Gson().toJson(competency));
-            startActivity(intent);
+            if(supervisorMail == null) {
+                Intent intent = new Intent(this, StudyActivity.class);
+                intent.putExtra("learner", new Gson().toJson(learner));
+                intent.putExtra("competency", new Gson().toJson(competency));
+                startActivity(intent);
+            }
         }
     }
 }

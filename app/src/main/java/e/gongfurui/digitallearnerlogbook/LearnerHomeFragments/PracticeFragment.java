@@ -34,8 +34,12 @@ import e.gongfurui.digitallearnerlogbook.Roles.Route;
 public class PracticeFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private static final String ARG_PARAM1 = "learnerID";
+    private static final String ARG_PARAM2 = "supervisorMail";
+
     int learnerID;
+    String supervisorMail;
     Learner learner;
+
     private List<Route> mData = null;
     private Context mContext;
     PracticeAdapter mAdapter = null;
@@ -50,12 +54,23 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
         return fragment;
     }
 
+    public static PracticeFragment newInstanceS(int id, String supervisorMail) {
+        PracticeFragment fragment = new PracticeFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_PARAM1, id);
+        args.putString(ARG_PARAM2, supervisorMail);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             /*Retrieve the required data from the SQLite database*/
             learnerID = getArguments().getInt(ARG_PARAM1);
+            supervisorMail =getArguments().getString(ARG_PARAM2);
+
             learner = SQLQueryHelper.searchLearnerTable(this.getContext(),
                     "SELECT * FROM learner" +
                             " WHERE id = "+ learnerID);
@@ -80,20 +95,21 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
         addToList();
         mAdapter = new PracticeAdapter((LinkedList<Route>) mData, mContext);
         list_route.addHeaderView(headView);
-        list_route.addFooterView(footView);
+        if(supervisorMail == null) list_route.addFooterView(footView);
         list_route.setAdapter(mAdapter);
         list_route.setOnItemClickListener(this);
+        if(supervisorMail == null) {
+            Button btn_practicing = view.findViewById(R.id.btn_practicing);
 
-        Button btn_practicing = view.findViewById(R.id.btn_practicing);
-
-        btn_practicing.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, MainActivity.class);
-                intent.putExtra("learnerID", learnerID);
-                startActivity(intent);
-            }
-        });
+            btn_practicing.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(mContext, MainActivity.class);
+                    intent.putExtra("learnerID", learnerID);
+                    startActivity(intent);
+                }
+            });
+        }
         return view;
     }
 
@@ -113,6 +129,8 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
         if(position != 0){
             Intent intent = new Intent(mContext, MapsActivity.class);
             intent.putExtra("route", new Gson().toJson(mData.get(position - 1)));
+            intent.putExtra("supervisorMail", supervisorMail);
+            intent.putExtra("learnerID", learnerID);
             startActivity(intent);
 
         }

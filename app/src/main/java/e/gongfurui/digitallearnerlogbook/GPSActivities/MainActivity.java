@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     private Marker marker;
 
     private HashSet<LatLng> traceSet = new HashSet<>();
-    private ArrayList<Double> speedList = new ArrayList<>();
 
     private PowerManager pm;
     private PowerManager.WakeLock wakeLock;
@@ -119,7 +118,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         super.onStart();
         //Create PowerManager obj
         pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        //保持cpu一直运行，不管屏幕是否黑屏
         wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "DLL:CPUKeepRunning");
         wakeLock.acquire();
     }
@@ -153,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements Runnable {
                     assert location != null;
                     speedCoveredTextView.setText((double) location.getSpeed()*3.6 + " km/h");
                     traceSet.add(new LatLng(location.getLatitude(), location.getLongitude()));
-                    speedList.add((double) location.getSpeed()*3.6);
+
                     if (firstTimeFlag) {
                         firstTimeFlag = false;
                         googleMapHelper.animateCamera(new LatLng(location.getLatitude(), location.getLongitude()), googleMap);
@@ -224,24 +222,16 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         double distance = 0;
         if(!str.isEmpty()) distance = Double.valueOf(str);
 
-        for (Double e : speedList) {
-            avgSpeed += e;
+        if(total_time != 0) {
+            avgSpeed = distance / total_time;
         }
-        avgSpeed = avgSpeed / speedList.size();
+
 
         HashMap<Integer, Route> routeMap = SQLQueryHelper.getRouteMapFromRouteTable(this,
                 "SELECT * FROM route");
         if(routeMap != null){
             routeID = routeMap.size();
         }
-
-
-
-        Toast.makeText(this, "The route ID is: " + routeID +
-                "\nThe avg speed is: " + avgSpeed +
-                "\nThe total distance is: " + distance +
-                "\nThe total time is: " + total_time +
-                "\nLearnerID is: " + learnerID, Toast.LENGTH_LONG).show();
 
         for (LatLng ll : traceSet) {
             SQLQueryHelper.insertDatabase(this,"INSERT into route_location " +

@@ -83,11 +83,13 @@ public class SQLQueryHelper {
         String name;
         String email;
         String psw;
-        String date_of_birth, time;
-
+        String date_of_birth;
+        String time;
+        double distance;
         ArrayList<Boolean> courseProgressList = new ArrayList<>();
         ArrayList<String> courseCommentList = new ArrayList<>();
         Learner learner = null;
+
         //Move the cursor to the next line and decide whether it has the next data
         while (cursor.moveToNext()) {
             id = cursor.getString(cursor.getColumnIndex("id"));
@@ -96,57 +98,19 @@ public class SQLQueryHelper {
             psw = cursor.getString(cursor.getColumnIndex("psw"));
             date_of_birth = cursor.getString(cursor.getColumnIndex("date_of_birth"));
             time = cursor.getString(cursor.getColumnIndex("time"));
+            distance = cursor.getDouble(cursor.getColumnIndex("distance"));
             for(int i = 1; i <= 23; i++){
                 courseProgressList.add(cursor.getString(cursor.getColumnIndex("c" + i)).equals("0") ? false : true);
                 courseCommentList.add(cursor.getString(cursor.getColumnIndex("c" + i+"c")));
             }
             learner = new Learner(new Role(name, email, psw), Integer.parseInt(id), date_of_birth,
-                    Double.parseDouble(time), courseProgressList, courseCommentList);
+                    Double.parseDouble(time), distance, courseProgressList, courseCommentList);
         }
         //Close db
         sqliteDatabase.close();
         return learner;
     }
 
-    /**
-     * Search the lists of learner which instructor/supervisor in charge of
-     * */
-    static public HashMap<Integer, Learner> searchLearnersTable(Context context, String query){
-        System.out.println("Search the database");
-        // Create DatabaseHelper Object
-        MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
-        // Open a readable database
-        SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
-        // Return a Cursor object
-        Cursor cursor = sqliteDatabase.rawQuery(query,null);
-        String id;
-        String name;
-        String email;
-        String psw;
-        String date_of_birth, time;
-        ArrayList<Boolean> courseProgressList = new ArrayList<>();
-        ArrayList<String> courseCommentList = new ArrayList<>();
-        HashMap<Integer, Learner> learnerMap = null;
-        //Move the cursor to the next line and decide whether it has the next data
-        while (cursor.moveToNext()) {
-            id = cursor.getString(cursor.getColumnIndex("id"));
-            name = cursor.getString(cursor.getColumnIndex("name"));
-            email = cursor.getString(cursor.getColumnIndex("email"));
-            psw = cursor.getString(cursor.getColumnIndex("psw"));
-            date_of_birth = cursor.getString(cursor.getColumnIndex("date_of_birth"));
-            time = cursor.getString(cursor.getColumnIndex("time"));
-            for(int i = 1; i <= 23; i++){
-                courseProgressList.add(cursor.getString(cursor.getColumnIndex("c" + i)).equals("0") ? false : true);
-                courseCommentList.add(cursor.getString(cursor.getColumnIndex("c" + i+"c")));
-            }
-            Learner learner = new Learner(new Role(name, email, psw), Integer.parseInt(id),
-                    date_of_birth, Integer.parseInt(time), courseProgressList, courseCommentList);
-            learnerMap.put(learner.driver_id, learner);
-        }
-        //Close db
-        sqliteDatabase.close();
-        return learnerMap;
-    }
 
     /**
      * Search the instructor table through SQLite database
@@ -155,10 +119,7 @@ public class SQLQueryHelper {
         System.out.println("Search the database");
         // Create DatabaseHelper Object
         MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
-        // 调用getWritableDatabase()方法创建或打开一个可以读的数据库
         SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
-        // 调用SQLiteDatabase对象的query方法进行查询
-        // Return a Cursor object：由数据库查询返回的结果集对象
         Cursor cursor = sqliteDatabase.rawQuery(query,null);
         String ADI;
         String name;
@@ -354,10 +315,25 @@ public class SQLQueryHelper {
     }
 
     /**
+     * Search throw the supervisor_learner table to get the list of learners' ID
+     * */
+    static public ArrayList<Integer> searchIDsFromSupervisorLearnerTable(Context context, String query){
+        MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
+        SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();
+        Cursor cursor = sqliteDatabase.rawQuery(query,null);
+        ArrayList<Integer> learnerIDList = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            int learnerID = 0;
+            learnerID  = Integer.parseInt(cursor.getString(cursor.getColumnIndex("learner_id")));
+            learnerIDList.add(learnerID);
+        }
+        return learnerIDList;
+    }
+
+    /**
      * Search throw the instructor table to get the instructor email
      * */
     static public String searchInstructorEmailTable(Context context, String query){
-        System.out.println("Search the database");
         // Create DatabaseHelper Object
         MySQLiteOpenHelper dbHelper = new MySQLiteOpenHelper(context,"test_carson",2);
         SQLiteDatabase sqliteDatabase = dbHelper.getReadableDatabase();

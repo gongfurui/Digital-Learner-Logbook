@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 
 import e.gongfurui.digitallearnerlogbook.Activities.LearnerHomeActivity;
+import e.gongfurui.digitallearnerlogbook.Activities.SupervisorLearnersActivity;
 import e.gongfurui.digitallearnerlogbook.LearnerHomeFragments.CompetencyFragment;
 import e.gongfurui.digitallearnerlogbook.LearnerHomeFragments.InformationFragment;
 import e.gongfurui.digitallearnerlogbook.LearnerHomeFragments.PracticeFragment;

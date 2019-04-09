@@ -149,10 +149,7 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
                     } else {
                         //this the updated time after certification
                         double certified_time = learner.time + total_time;
-                        if(certified_time >= 120){
-                            certified_time = 120;
-                        }
-                        /*Update the student progress, and course comment list*/
+                        //Update the student progress, and course comment list
                         SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE " +
                                 "learner SET time =" + certified_time + " WHERE id = " +
                                 learner.driver_id);

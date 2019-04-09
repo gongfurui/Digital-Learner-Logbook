@@ -48,6 +48,12 @@
             android:drawableTop="@drawable/tab_menu_message"
             android:text="@string/tab_learner_practice" />
 
+        <RadioButton
+            android:id="@+id/rb_setting"
+            style="@style/tab_menu_item"
+            android:drawableTop="@drawable/tab_menu_setting"
+            android:text="@string/tab_learner_progress" />
+
     </RadioGroup>
 
     <View

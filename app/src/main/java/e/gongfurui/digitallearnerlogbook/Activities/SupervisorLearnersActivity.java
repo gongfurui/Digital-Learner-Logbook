@@ -19,6 +19,7 @@ public class SupervisorLearnersActivity extends AppCompatActivity implements Rad
     RadioGroup rgTabBar;
     private RadioButton rbChannel;
     private RadioButton rbMessage;
+    private RadioButton rbSetting;
     private ViewPager vpager;
 
     private SupervisorLearnerFgPagerAdapter mAdapter;
@@ -26,10 +27,12 @@ public class SupervisorLearnersActivity extends AppCompatActivity implements Rad
     //Parameters stands for the pages
     public static final int PAGE_ONE = 0;
     public static final int PAGE_TWO = 1;
+    public static final int PAGE_THREE = 2;
 
     //Parameters stands for the page title
     private final String PAGE_FINISHED_COMPETENCY = "Finished Competency";
     private final String PAGE_PRACTICE_TRACE = "Practice Trace";
+    private final String PAGE_PROGRESS = "Progress";
 
     public static int learnerID;
     public static String supervisorMail;
@@ -52,6 +55,8 @@ public class SupervisorLearnersActivity extends AppCompatActivity implements Rad
         rgTabBar = findViewById(R.id.rg_tab_bar);
         rbChannel = findViewById(R.id.rb_channel);
         rbMessage = findViewById(R.id.rb_message);
+        rbSetting = findViewById(R.id.rb_setting);
+
         rgTabBar.setOnCheckedChangeListener(this);
 
         vpager = findViewById(R.id.vpager);
@@ -72,6 +77,9 @@ public class SupervisorLearnersActivity extends AppCompatActivity implements Rad
             case R.id.rb_message:
                 vpager.setCurrentItem(PAGE_TWO);
                 break;
+            case R.id.rb_setting:
+                vpager.setCurrentItem(PAGE_THREE);
+                break;
         }
     }
 
@@ -84,6 +92,7 @@ public class SupervisorLearnersActivity extends AppCompatActivity implements Rad
     public void onPageSelected(int position) {
         if(position == 0) txtTopbar.setText(PAGE_FINISHED_COMPETENCY);
         else if(position == 1) txtTopbar.setText(PAGE_PRACTICE_TRACE);
+        else if(position == 2) txtTopbar.setText(PAGE_PROGRESS);
     }
 
     @Override
@@ -99,6 +108,9 @@ public class SupervisorLearnersActivity extends AppCompatActivity implements Rad
                     break;
                 case PAGE_TWO:
                     rbMessage.setChecked(true);
+                    break;
+                case PAGE_THREE:
+                    rbSetting.setChecked(true);
                     break;
             }
         }

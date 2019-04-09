@@ -311,6 +311,8 @@ public class SQLQueryHelper {
             double longitude = cursor.getDouble(cursor.getColumnIndex("longitude"));
             locationSet.add(new LatLng(latitude, longitude));
         }
+        //Close db
+        sqliteDatabase.close();
         return locationSet;
     }
 
@@ -327,6 +329,8 @@ public class SQLQueryHelper {
             learnerID  = Integer.parseInt(cursor.getString(cursor.getColumnIndex("learner_id")));
             learnerIDList.add(learnerID);
         }
+        //Close db
+        sqliteDatabase.close();
         return learnerIDList;
     }
 

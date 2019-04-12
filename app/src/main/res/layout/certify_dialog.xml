@@ -45,12 +45,25 @@
         android:hint="Leave any feedbacks (Area needs to improve)"
         android:inputType="text" />
 
-    <Switch
-        android:id="@+id/switch_insApprove"
+    <RadioGroup
+        android:id="@+id/radio_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Approve/Disapprove ?"
-        android:textOff="Disapprove"
-        android:textOn="Approve"
-        android:textSize="18sp" />
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rbApprove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Approve" />
+
+        <RadioButton
+            android:id="@+id/rbDisapprove"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Disapprove" />
+    </RadioGroup>
+
 </LinearLayout>

@@ -40,13 +40,15 @@
             android:id="@+id/rb_channel"
             style="@style/tab_menu_item"
             android:drawableTop="@drawable/tab_menu_channel"
-            android:text="@string/tab_supervisor_information" />
+            android:text="@string/tab_supervisor_information"
+            android:textSize="14sp" />
 
         <RadioButton
             android:id="@+id/rb_message"
             style="@style/tab_menu_item"
             android:drawableTop="@drawable/tab_menu_message"
-            android:text="@string/tab_supervisor_learnerList" />
+            android:text="@string/tab_supervisor_learnerList"
+            android:textSize="14sp" />
 
     </RadioGroup>
 

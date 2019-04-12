@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +28,7 @@ import e.gongfurui.digitallearnerlogbook.Roles.Competency;
 import e.gongfurui.digitallearnerlogbook.Roles.Instructor;
 import e.gongfurui.digitallearnerlogbook.Roles.Learner;
 
-public class StudyActivity extends AppCompatActivity implements Runnable {
+public class StudyActivity extends AppCompatActivity implements Runnable{
 
     private double sec;
     private double min;
@@ -37,7 +39,6 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
     private EditText etADI;
     private EditText etVerify;
     private EditText etFeedback;
-    private Switch switchIApprove;
     String learnerJson;
     String competencyJson;
     private boolean isApproved;
@@ -45,6 +46,9 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
     private Instructor instructor;
     private Competency competency;
     private AlertDialog alert = null;
+    private RadioButton rbApprove;
+    private RadioButton rbDisapprove;
+    private RadioGroup radioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -116,18 +120,24 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
         etADI = alert.getWindow().findViewById(R.id.et_ADI);
         etVerify = alert.getWindow().findViewById(R.id.et_verify);
         etFeedback = alert.getWindow().findViewById(R.id.et_feedback);
-        switchIApprove = alert.getWindow().findViewById(R.id.switch_insApprove);
+        radioGroup = alert.getWindow().findViewById(R.id.radio_group);
+        rbApprove = alert.getWindow().findViewById(R.id.rbApprove);
+        rbDisapprove = alert.getWindow().findViewById(R.id.rbDisapprove);
 
-        switchIApprove.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    isApproved = true;
-                } else {
-                    isApproved = false;
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId) {
+                    case R.id.rbApprove:
+                        isApproved = true;
+                        break;
+                    case R.id.rbDisapprove:
+                        isApproved = false;
+                        break;
                 }
-                System.out.println("Result is: " + isApproved);
             }
         });
+
 
         alert.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
         {
@@ -147,32 +157,39 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
                                 "The verify code is wrong. Please check!",
                                 Toast.LENGTH_LONG).show();
                     } else {
-                        //this the updated time after certification
-                        double certified_time = learner.time + total_time;
-                        //Update the student progress, and course comment list
-                        SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE " +
-                                "learner SET time =" + certified_time + " WHERE id = " +
-                                learner.driver_id);
-                        if(isApproved) {
-                            SQLQueryHelper.insertDatabase(StudyActivity.this,
-                                    "INSERT into courseFeedback " +
-                                            "(course_id, learner_id, instructor_name, feedback)" +
-                                            " VALUES ("+competency.cID+","+learner.driver_id+"," +
-                                            " '"+instructor.name+"', '"+ etFeedback.getText().toString()+"')");
-                            SQLQueryHelper.updateDatabase(StudyActivity.this,
-                                    "UPDATE " + "learner SET c" + competency.cID + " =" + 1 +
-                                            " WHERE id = " +
-                                    learner.driver_id);
+                        if(!rbApprove.isChecked() && !rbDisapprove.isChecked()){
+                            Toast.makeText(StudyActivity.this,
+                                    "You should select approve or disapprove at least",
+                                    Toast.LENGTH_LONG).show();
                         }
-                        SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE " +
-                                "learner SET c" + competency.cID + "c = '" +
-                                etFeedback.getText().toString() + "' WHERE id = " +
-                                learner.driver_id);
-                        Intent intent = new Intent(StudyActivity.this,
-                                LearnerHomeActivity.class);
-                        intent.putExtra("learnerID", learner.driver_id);
-                        startActivity(intent);
-                        alert.dismiss();
+                        else {
+                            //this the updated time after certification
+                            double certified_time = learner.time + total_time;
+                            //Update the student progress, and course comment list
+                            SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE " +
+                                    "learner SET time =" + certified_time + " WHERE id = " +
+                                    learner.driver_id);
+                            if (isApproved) {
+                                SQLQueryHelper.insertDatabase(StudyActivity.this,
+                                        "INSERT into courseFeedback " +
+                                                "(course_id, learner_id, instructor_name, feedback)" +
+                                                " VALUES (" + competency.cID + "," + learner.driver_id + "," +
+                                                " '" + instructor.name + "', '" + etFeedback.getText().toString() + "')");
+                                SQLQueryHelper.updateDatabase(StudyActivity.this,
+                                        "UPDATE " + "learner SET c" + competency.cID + " =" + 1 +
+                                                " WHERE id = " +
+                                                learner.driver_id);
+                            }
+                            SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE " +
+                                    "learner SET c" + competency.cID + "c = '" +
+                                    etFeedback.getText().toString() + "' WHERE id = " +
+                                    learner.driver_id);
+                            Intent intent = new Intent(StudyActivity.this,
+                                    LearnerHomeActivity.class);
+                            intent.putExtra("learnerID", learner.driver_id);
+                            startActivity(intent);
+                            alert.dismiss();
+                        }
                     }
                 }
             }
@@ -215,7 +232,5 @@ public class StudyActivity extends AppCompatActivity implements Runnable {
 
 
     }
-
-
 
 }

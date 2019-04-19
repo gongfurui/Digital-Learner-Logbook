@@ -116,10 +116,8 @@ public class SupervisorRegisterActivity extends AppCompatActivity {
                 }
                 else {
                     Supervisor supervisor = new Supervisor(new Role(name, email, psw));
-                    SQLQueryHelper.insertDatabase(this, "INSERT into supervisor " +
-                            "(email, name, psw)" +
-                            " VALUES ('" + supervisor.email +
-                            "', '" + supervisor.name + "', '" + supervisor.psw + "')");
+                    OnlineDBHelper.insertTable(LOCAL_IP + "/drive/insertSupervisor/" +
+                            supervisor.email + "&" + supervisor.name + "&" + supervisor.psw);
 
                     Intent intent = new Intent(this, SupervisorHomeActivity.class);
                     intent.putExtra("supervisorMail", supervisor.email);

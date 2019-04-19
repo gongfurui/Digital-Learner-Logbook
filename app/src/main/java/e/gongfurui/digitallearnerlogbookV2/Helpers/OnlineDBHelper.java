@@ -8,7 +8,9 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import e.gongfurui.digitallearnerlogbookV2.Roles.CourseFeedback;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Instructor;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Learner;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Role;
@@ -135,6 +137,39 @@ public class OnlineDBHelper {
             e.printStackTrace();
         }
         return isIn[0];
+    }
+
+    public static HashMap<Integer, CourseFeedback> searchCourseFeebacksTable(String url){
+        HashMap<Integer, CourseFeedback> courseFeebackMap = new HashMap<>();
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                MyHTTPUtil util = new MyHTTPUtil();
+                String res = util.get(url);
+                JSONArray jarr = JSON.parseArray(res.substring(9, res.length()-1));
+                if(jarr.size() > 0){
+                    for(int i = 0; i < jarr.size(); i++){
+                        JSONObject jsonObj = jarr.getJSONObject(i);
+                        String learnerMail, instructorName, feedback;
+                        int cID;
+                        cID = jsonObj.getInteger("course_id");
+                        learnerMail = jsonObj.getString("learnerMail");
+                        instructorName = jsonObj.getString("instructor_name");
+                        feedback = jsonObj.getString("feedback");
+                        CourseFeedback courseFeedback = new CourseFeedback(cID, learnerMail,
+                                instructorName, feedback);
+                        courseFeebackMap.put(cID, courseFeedback);
+                    }
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return courseFeebackMap;
     }
 
     public static boolean isInADIListTable(String url){

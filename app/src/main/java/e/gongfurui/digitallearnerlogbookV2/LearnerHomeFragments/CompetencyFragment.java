@@ -15,13 +15,14 @@ import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import e.gongfurui.digitallearnerlogbookV2.Activities.CompetencyActivity;
 import e.gongfurui.digitallearnerlogbookV2.Adapters.CompetencyAdapter;
 import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
-import e.gongfurui.digitallearnerlogbookV2.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Competency;
+import e.gongfurui.digitallearnerlogbookV2.Roles.CourseFeedback;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Learner;
 
 import static e.gongfurui.digitallearnerlogbookV2.Helpers.ValuesHelper.LOCAL_IP;
@@ -69,6 +70,13 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
 
             learner = OnlineDBHelper.searchLearnerTable(LOCAL_IP +
                     "/drive/searchLearnerByMail/" + learnerMail);
+            HashMap<Integer, CourseFeedback> courseFeedbackMap;
+            courseFeedbackMap = OnlineDBHelper.searchCourseFeebacksTable(LOCAL_IP +
+                    "/drive/searchCourseFeedback/" + learnerMail);
+            for (Map.Entry<Integer, CourseFeedback> entry : courseFeedbackMap.entrySet()){
+                nameMap.put(entry.getKey(), entry.getValue().instructorName);
+                commentMap.put(entry.getKey(), entry.getValue().feedback);
+            }
             /*nameMap = SQLQueryHelper.getNameListFromCourseFeedbackTable(this.getContext(),
                     "SELECT course_id, instructor_name FROM courseFeedback" +
                             " WHERE learner_id = "+ learner.driver_id);

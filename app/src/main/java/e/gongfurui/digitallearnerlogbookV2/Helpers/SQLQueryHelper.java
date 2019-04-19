@@ -263,7 +263,7 @@ public class SQLQueryHelper {
 
     /**
      * Search throw the route table to get the route map
-     * */
+     * *//*
     static public HashMap<Integer, Route>  getRouteMapFromRouteTable(Context context, String query){
         System.out.println("Search the database");
         // Create DatabaseHelper Object
@@ -297,7 +297,7 @@ public class SQLQueryHelper {
         //Close db
         sqliteDatabase.close();
         return routeMap;
-    }
+    }*/
 
     static public HashSet<LatLng> searchTraceSetFromRouteAddressTable(Context context, String query){
         System.out.println("Search the database");

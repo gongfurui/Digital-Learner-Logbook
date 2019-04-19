@@ -71,7 +71,7 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
             learner = OnlineDBHelper.searchLearnerTable(LOCAL_IP +
                     "/drive/searchLearnerByMail/" + learnerMail);
             HashMap<Integer, CourseFeedback> courseFeedbackMap;
-            courseFeedbackMap = OnlineDBHelper.searchCourseFeebacksTable(LOCAL_IP +
+            courseFeedbackMap = OnlineDBHelper.searchCourseFeedbacksTable(LOCAL_IP +
                     "/drive/searchCourseFeedback/" + learnerMail);
             for (Map.Entry<Integer, CourseFeedback> entry : courseFeedbackMap.entrySet()){
                 nameMap.put(entry.getKey(), entry.getValue().instructorName);

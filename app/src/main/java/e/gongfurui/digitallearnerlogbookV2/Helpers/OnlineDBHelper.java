@@ -6,16 +6,21 @@ import android.util.Log;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import e.gongfurui.digitallearnerlogbookV2.Roles.CourseFeedback;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Instructor;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Learner;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Role;
+import e.gongfurui.digitallearnerlogbookV2.Roles.Route;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Supervisor;
 import e.gongfurui.digitallearnerlogbookV2.Utils.MyHTTPUtil;
+
+import static e.gongfurui.digitallearnerlogbookV2.Helpers.ValuesHelper.LOCAL_IP;
 
 
 public class OnlineDBHelper {
@@ -139,7 +144,7 @@ public class OnlineDBHelper {
         return isIn[0];
     }
 
-    public static HashMap<Integer, CourseFeedback> searchCourseFeebacksTable(String url){
+    public static HashMap<Integer, CourseFeedback> searchCourseFeedbacksTable(String url){
         HashMap<Integer, CourseFeedback> courseFeebackMap = new HashMap<>();
         Thread thread = new Thread(){
             @Override
@@ -170,6 +175,74 @@ public class OnlineDBHelper {
             e.printStackTrace();
         }
         return courseFeebackMap;
+    }
+
+    public static HashMap<Integer, Route> searchRoutesTable(String url){
+        HashMap<Integer, Route> routeMap = new HashMap<>();
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                MyHTTPUtil util = new MyHTTPUtil();
+                String res = util.get(url);
+                JSONArray jarr = JSON.parseArray(res.substring(9, res.length()-1));
+                if(jarr.size() > 0){
+                    for(int i = 0; i < jarr.size(); i++){
+                        JSONObject jsonObj = jarr.getJSONObject(i);
+                        String learnerMail;
+                        double distance, time, avgSpeed;
+                        boolean isApprove;
+                        int rID;
+                        HashSet<LatLng> traceSet;
+                        rID = jsonObj.getInteger("id");
+                        learnerMail = jsonObj.getString("learnerMail");
+                        distance = jsonObj.getDouble("distance");
+                        time = jsonObj.getDouble("time");
+                        avgSpeed = jsonObj.getDouble("avgSpeed");
+                        isApprove = jsonObj.getBoolean("isApproved");
+                        traceSet = searchRouteLocationTable(LOCAL_IP +
+                                "/drive/searchRouteLocation/" + rID);
+                        Route route = new Route(rID, traceSet, distance, time, avgSpeed,
+                                learnerMail, isApprove);
+                        routeMap.put(rID, route);
+                    }
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return routeMap;
+    }
+
+    public static HashSet<LatLng> searchRouteLocationTable(String url){
+        HashSet<LatLng> traceSet = new HashSet<>();
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                MyHTTPUtil util = new MyHTTPUtil();
+                String res = util.get(url);
+                JSONArray jarr = JSON.parseArray(res.substring(9, res.length()-1));
+                if(jarr.size() > 0){
+                    for(int i = 0; i < jarr.size(); i++){
+                        JSONObject jsonObj = jarr.getJSONObject(i);
+                        double latitude, longitude;
+                        latitude = jsonObj.getDouble("latitude");
+                        longitude = jsonObj.getDouble("longitude");
+                        traceSet.add(new LatLng(latitude, longitude));
+                    }
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return traceSet;
     }
 
     public static boolean isInADIListTable(String url){

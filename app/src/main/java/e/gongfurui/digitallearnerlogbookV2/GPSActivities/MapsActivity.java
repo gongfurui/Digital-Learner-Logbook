@@ -18,12 +18,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.gson.Gson;
 
 import e.gongfurui.digitallearnerlogbookV2.Activities.SupervisorLearnersActivity;
+import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
 import e.gongfurui.digitallearnerlogbookV2.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Learner;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Route;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Supervisor;
 import e.gongfurui.digitallearnerlogbookV2.Utils.EmailUtil;
+
+import static e.gongfurui.digitallearnerlogbookV2.Helpers.ValuesHelper.LOCAL_IP;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -34,7 +37,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Learner learner;
 
     private String supervisorMail;
-    private int learnerID;
+    private String learnerMail;
 
 
     private Route route;
@@ -50,11 +53,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         String routeJson = getIntent().getStringExtra("route");
         route = new Gson().fromJson(routeJson, Route.class);
         supervisorMail = getIntent().getStringExtra("supervisorMail");
-        learnerID = getIntent().getIntExtra("learnerID", 0);
-        supervisor = SQLQueryHelper.searchSupervisorTable(this,
-                "SELECT * FROM supervisor WHERE email = '"+ supervisorMail + "'");
-        learner = SQLQueryHelper.searchLearnerTable(this,
-                "SELECT * FROM learner WHERE id = "+ learnerID);
+        learnerMail = getIntent().getStringExtra("learnerMail");
+        supervisor = OnlineDBHelper.searchSupervisorTable(LOCAL_IP +
+                "/drive/searchSupervisorByMail/" + supervisorMail);
+        learner = OnlineDBHelper.searchLearnerTable(LOCAL_IP +
+                "/drive/searchLearnerByMail/" + learnerMail);
         initViews();
     }
 
@@ -113,11 +116,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             double updated_distance = learner.distance + route.distance;
             SQLQueryHelper.updateDatabase(this,
                     "UPDATE learner SET distance =" + updated_distance + " WHERE id = " +
-                            learnerID);
+                            learnerMail);
             double updated_time = learner.time + route.time;
             SQLQueryHelper.updateDatabase(this,
                     "UPDATE learner SET time =" + updated_time + " WHERE id = " +
-                            learnerID);
+                            learnerMail);
             SQLQueryHelper.updateDatabase(this,
                     "UPDATE route SET isApproved = " + 1 + " WHERE id = " +
                             route.routeID);
@@ -126,7 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(MapsActivity.this,"Approved the practicing route", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, SupervisorLearnersActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putInt("learnerID", learnerID);
+            bundle.putString("learnerMail", learnerMail);
             bundle.putString("supervisorMail", supervisorMail);
             intent.putExtras(bundle);
             startActivity(intent);
@@ -145,7 +148,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(MapsActivity.this,"Disapproved the practicing route", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, SupervisorLearnersActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putInt("learnerID", learnerID);
+            bundle.putString("learnerMail", learnerMail);
             bundle.putString("supervisorMail", supervisorMail);
             intent.putExtras(bundle);
             startActivity(intent);

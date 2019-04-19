@@ -10,17 +10,17 @@ public class Route {
     public double distance;
     public double time;
     public double avgSpeed;
-    public int learnerID;
+    public String learnerMail;
     public boolean isApproved;
 
     public Route(int routeID, HashSet<LatLng> traceSet, double distance, double time,
-                 double avgSpeed, int learnerID, boolean isApproved){
+                 double avgSpeed, String learnerMail, boolean isApproved){
         this.routeID = routeID;
         this.traceSet = traceSet;
         this.distance = distance;
         this.time = time;
         this.avgSpeed = avgSpeed;
-        this.learnerID = learnerID;
+        this.learnerMail = learnerMail;
         this.isApproved = isApproved;
     }
 

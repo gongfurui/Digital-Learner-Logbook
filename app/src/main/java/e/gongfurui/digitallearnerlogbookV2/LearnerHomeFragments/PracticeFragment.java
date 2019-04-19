@@ -71,9 +71,8 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
 
             learner = OnlineDBHelper.searchLearnerTable(LOCAL_IP +
                     "/drive/searchLearnerByMail/" + learnerMail);
-            /*routeMap = SQLQueryHelper.getRouteMapFromRouteTable(this.getContext(),
-                    "SELECT * FROM route " +
-                            "WHERE learnerMail = " + learnerMail);*/
+            routeMap = OnlineDBHelper.searchRoutesTable(LOCAL_IP +
+                    "/drive/searchRoute/" + learnerMail);
         }
     }
 
@@ -98,13 +97,11 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
         if(supervisorMail == null) {
             Button btn_practicing = view.findViewById(R.id.btn_practicing);
 
-            btn_practicing.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(mContext, MainActivity.class);
-                    intent.putExtra("learnerMail", learnerMail);
-                    startActivity(intent);
-                }
+            btn_practicing.setOnClickListener(v -> {
+                Intent intent = new Intent(mContext, MainActivity.class);
+                intent.putExtra("learnerMail", learnerMail);
+                if(routeMap != null) intent.putExtra("newRouteID", routeMap.size() + 1);
+                startActivity(intent);
             });
         }
         return view;

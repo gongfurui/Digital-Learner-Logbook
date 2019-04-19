@@ -56,7 +56,8 @@ public class MainActivity extends AppCompatActivity implements Runnable {
     private double min;
     private double hour;
 
-    private int learnerID;
+    private String learnerMail;
+    private int newRouteID;
 
     private Handler timer;
 
@@ -66,15 +67,12 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
     private HashSet<LatLng> traceSet = new HashSet<>();
 
-    /*private PowerManager pm;
-    private PowerManager.WakeLock wakeLock;*/
-
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        learnerID = getIntent().getIntExtra("learnerID", 0);
+        learnerMail = getIntent().getStringExtra("learnerMail");
+        newRouteID = getIntent().getIntExtra("newRouteID", 1);
         FusedLocationProviderClient providerClient = LocationServices.getFusedLocationProviderClient(this);
         googleMapHelper = new GoogleMapHelper(getResources());
         uiHelper = new UiHelper(this);
@@ -104,21 +102,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         timer.postDelayed(this,1000);
         initViews();
     }
-
-    /*@Override
-    protected void onStart() {
-        super.onStart();
-        //Create PowerManager obj
-        pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-        wakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "DLL:CPUKeepRunning");
-        wakeLock.acquire();
-    }
-
-    @Override
-    protected void onDestroy() {
-        wakeLock.release();
-        super.onDestroy();
-    }*/
 
     private void initViews() {
         distanceCoveredTextView = findViewById(R.id.distanceCoveredTextView);
@@ -203,7 +186,6 @@ public class MainActivity extends AppCompatActivity implements Runnable {
      * The action after press the end practice button
      * */
     public void practiceEndPressed(View view) {
-        int routeID = 0;
         double avgSpeed = 0;
         double total_time1 = sec / 3600 + min / 60 + hour;
         BigDecimal bd = new BigDecimal(total_time1);
@@ -220,24 +202,18 @@ public class MainActivity extends AppCompatActivity implements Runnable {
         }
 
 
-        HashMap<Integer, Route> routeMap = SQLQueryHelper.getRouteMapFromRouteTable(this,
-                "SELECT * FROM route");
-        if(routeMap != null){
-            routeID = routeMap.size();
-        }
-
         for (LatLng ll : traceSet) {
             SQLQueryHelper.insertDatabase(this,"INSERT into route_location " +
                     "(id, latitude, longitude)" +
-                    " VALUES (" + routeID + ", " + ll.latitude + ", " + ll.longitude + ")");
+                    " VALUES (" + newRouteID + ", " + ll.latitude + ", " + ll.longitude + ")");
         }
 
         SQLQueryHelper.insertDatabase(this, "INSERT into route" +
-                "(id, distance, time, avgSpeed, learnerID)" +
-                " VALUES ("+ routeID +", "+ distance +", "+ total_time +", "+ avgSpeed +", "+ learnerID +")");
+                "(id, distance, time, avgSpeed, learnerMail)" +
+                " VALUES ("+ newRouteID +", "+ distance +", "+ total_time +", "+ avgSpeed +", "+ learnerMail +")");
 
         Intent intent = new Intent(this, LearnerHomeActivity.class);
-        intent.putExtra("learnerID", learnerID);
+        intent.putExtra("learnerMail", learnerMail);
         startActivity(intent);
     }
 }

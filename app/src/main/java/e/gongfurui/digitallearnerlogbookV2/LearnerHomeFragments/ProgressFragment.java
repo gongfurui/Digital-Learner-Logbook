@@ -18,13 +18,11 @@ import static e.gongfurui.digitallearnerlogbookV2.Helpers.ValuesHelper.LOCAL_IP;
 public class ProgressFragment extends Fragment{
 
     private static final String ARG_PARAM1 = "learnerMail";
-    private String learnerMail;
     private Learner learner;
     private ProgressBar timeBar;
     private ProgressBar courseBar;
     private TextView tvTimeProgress;
     private TextView tvCourseProgress;
-    private TextView tvDistanceProgress;
     int finishedCourse;
 
 
@@ -40,6 +38,7 @@ public class ProgressFragment extends Fragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            String learnerMail;
             learnerMail = getArguments().getString(ARG_PARAM1);
             learner = OnlineDBHelper.searchLearnerTable(LOCAL_IP +
                     "/drive/searchLearnerByMail/" + learnerMail);
@@ -66,6 +65,7 @@ public class ProgressFragment extends Fragment{
      * @param view  the view from the information fragment
      * */
     public void initViews(View view) {
+        TextView tvDistanceProgress;
         timeBar = view.findViewById(R.id.timeBar);
         tvTimeProgress = view.findViewById(R.id.tv_timeProgress);
         courseBar = view.findViewById(R.id.courseBar);

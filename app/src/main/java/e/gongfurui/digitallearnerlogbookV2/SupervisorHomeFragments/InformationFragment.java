@@ -7,9 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
 import e.gongfurui.digitallearnerlogbookV2.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Supervisor;
+
+import static e.gongfurui.digitallearnerlogbookV2.Helpers.ValuesHelper.LOCAL_IP;
 
 public class InformationFragment extends Fragment {
 
@@ -33,9 +36,8 @@ public class InformationFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             supervisorMail = getArguments().getString(ARG_PARAM1);
-            supervisor = SQLQueryHelper.searchSupervisorTable(this.getContext(),
-                    "SELECT * FROM supervisor" +
-                            " WHERE email = '" + supervisorMail + "'");
+            supervisor = OnlineDBHelper.searchSupervisorTable(LOCAL_IP +
+                    "/drive/searchSupervisorByMail/" + supervisorMail);
         }
     }
 

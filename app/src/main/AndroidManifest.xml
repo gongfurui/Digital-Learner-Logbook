@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="e.gongfurui.digitallearnerlogbook">
+    package="e.gongfurui.digitallearnerlogbookV2">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
          Google Maps Android API v2, but you must specify either coarse or fine
@@ -13,7 +13,7 @@
         android:required="true" />
 
     <permission
-        android:name="e.gongfurui.digitallearnerlogbook.permission.MAPS_RECEIVE"
+        android:name="e.gongfurui.digitallearnerlogbookV2.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,8 +26,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".Activities.SupervisorLearnersActivity"></activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name="e.gongfurui.digitallearnerlogbookV2.Activities.SupervisorLearnersActivity"></activity>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -41,31 +42,31 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".GPSActivities.MapsActivity"
+            android:name="e.gongfurui.digitallearnerlogbookV2.GPSActivities.MapsActivity"
             android:label="@string/title_activity_maps" />
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".Activities.LearnerHomeActivity" />
+        <activity android:name="e.gongfurui.digitallearnerlogbookV2.Activities.LearnerHomeActivity" />
         <activity
-            android:name=".Activities.SupervisorRegisterActivity"
-            android:parentActivityName=".Activities.SelectRoleActivity" />
-        <activity android:name=".Activities.SupervisorHomeActivity" />
+            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.SupervisorRegisterActivity"
+            android:parentActivityName="e.gongfurui.digitallearnerlogbookV2.Activities.SelectRoleActivity" />
+        <activity android:name="e.gongfurui.digitallearnerlogbookV2.Activities.SupervisorHomeActivity" />
         <activity
-            android:name=".Activities.InstructorRegisterActivity"
-            android:parentActivityName=".Activities.SelectRoleActivity" />
+            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.InstructorRegisterActivity"
+            android:parentActivityName="e.gongfurui.digitallearnerlogbookV2.Activities.SelectRoleActivity" />
         <activity
-            android:name=".Activities.SelectRoleActivity"
-            android:parentActivityName=".Activities.LoginActivity" />
+            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.SelectRoleActivity"
+            android:parentActivityName="e.gongfurui.digitallearnerlogbookV2.Activities.LoginActivity" />
         <activity
-            android:name=".Activities.ForgetPswActivity"
-            android:parentActivityName=".Activities.LoginActivity" />
+            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.ForgetPswActivity"
+            android:parentActivityName="e.gongfurui.digitallearnerlogbookV2.Activities.LoginActivity" />
         <activity
-            android:name=".Activities.InstructorHomePageActivityV1"
-            android:parentActivityName=".Activities.LoginActivity" />
-        <activity android:name=".Activities.LoginActivity">
+            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.InstructorHomePageActivityV1"
+            android:parentActivityName="e.gongfurui.digitallearnerlogbookV2.Activities.LoginActivity" />
+        <activity android:name="e.gongfurui.digitallearnerlogbookV2.Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -73,15 +74,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.LearnerRegisterActivity"
-            android:parentActivityName=".Activities.SelectRoleActivity" />
+            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.LearnerRegisterActivity"
+            android:parentActivityName="e.gongfurui.digitallearnerlogbookV2.Activities.SelectRoleActivity" />
         <activity
-            android:name=".Activities.CompetencyActivity"
+            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.CompetencyActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".Activities.StudyActivity"
+            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.StudyActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".GPSActivities.MainActivity" />
+        <activity android:name="e.gongfurui.digitallearnerlogbookV2.GPSActivities.MainActivity" />
 
         <meta-data
             android:name="com.google.android.gms.version"

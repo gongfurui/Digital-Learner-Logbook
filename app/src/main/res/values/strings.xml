@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Digital Learner LogBook</string>
+    <string name="app_name">Digital Learner LogBookv2</string>
     <string name="title_activity_register">RegisterActivity</string>
     <string name="tab_learner_information">Information</string>
     <string name="tab_learner_competency">Competency</string>

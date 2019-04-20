@@ -96,7 +96,7 @@ public class LearnerListFragment extends Fragment implements AdapterView.OnItemC
         if(position != 0){
             Intent intent = new Intent(mContext, SupervisorLearnersActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putInt("learnerID", mData.get(position - 1).driver_id);
+            bundle.putString("learnerMail", mData.get(position - 1).email);
             bundle.putString("supervisorMail", supervisorMail);
             intent.putExtras(bundle);
             startActivity(intent);

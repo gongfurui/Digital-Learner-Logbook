@@ -7,6 +7,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import java.util.Objects;
+
 import e.gongfurui.digitallearnerlogbookV2.Adapters.SupervisorLearnerFgPagerAdapter;
 import e.gongfurui.digitallearnerlogbookV2.R;
 
@@ -40,7 +42,7 @@ public class SupervisorLearnersActivity extends AppCompatActivity implements Rad
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_supervisor_learners);
-        learnerMail = getIntent().getExtras().getString("learnerMail");
+        learnerMail = Objects.requireNonNull(getIntent().getExtras()).getString("learnerMail");
         supervisorMail = getIntent().getExtras().getString("supervisorMail");
         mAdapter = new SupervisorLearnerFgPagerAdapter(getSupportFragmentManager());
         initViews();

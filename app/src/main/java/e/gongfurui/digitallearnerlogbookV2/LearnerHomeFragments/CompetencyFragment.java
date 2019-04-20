@@ -77,12 +77,6 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
                 nameMap.put(entry.getKey(), entry.getValue().instructorName);
                 commentMap.put(entry.getKey(), entry.getValue().feedback);
             }
-            /*nameMap = SQLQueryHelper.getNameListFromCourseFeedbackTable(this.getContext(),
-                    "SELECT course_id, instructor_name FROM courseFeedback" +
-                            " WHERE learner_id = "+ learner.driver_id);
-            commentMap = SQLQueryHelper.getCommentListFromCourseFeedbackTable(this.getContext(),
-                    "SELECT course_id, feedback FROM courseFeedback" +
-                            " WHERE learner_id = "+ learner.driver_id);*/
         }
     }
 

@@ -21,7 +21,6 @@ import java.math.BigDecimal;
 
 import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
 import e.gongfurui.digitallearnerlogbookV2.Utils.EmailUtil;
-import e.gongfurui.digitallearnerlogbookV2.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Competency;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Instructor;
@@ -169,32 +168,16 @@ public class StudyActivity extends AppCompatActivity implements Runnable{
                             //Update the student progress, and course comment list
                             OnlineDBHelper.updateTable(LOCAL_IP + "/drive/updateLearnerTime/" +
                                     learner.email + "&" + certified_time);
-                            /*SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE " +
-                                    "learner SET time =" + certified_time + " WHERE id = " +
-                                    learner.driver_id);*/
                             if (isApproved) {
                                 OnlineDBHelper.insertTable(LOCAL_IP + "/drive/insertCourseFeedback/" +
                                         competency.cID + "&" + learner.email + "&" + instructor.name +
                                         "&" + etFeedback.getText().toString());
-                                /*SQLQueryHelper.insertDatabase(StudyActivity.this,
-                                        "INSERT into courseFeedback " +
-                                                "(course_id, learner_id, instructor_name, feedback)" +
-                                                " VALUES (" + competency.cID + "," + learner.driver_id + "," +
-                                                " '" + instructor.name + "', '" + etFeedback.getText().toString() + "')");*/
                                 OnlineDBHelper.updateTable(LOCAL_IP + "/drive/updateLearnerC" +
                                         competency.cID + "/" + learner.email + "&" + 1);
-                                /*SQLQueryHelper.updateDatabase(StudyActivity.this,
-                                        "UPDATE " + "learner SET c" + competency.cID + " =" + 1 +
-                                                " WHERE id = " +
-                                                learner.driver_id);*/
                             }
                             OnlineDBHelper.updateTable(LOCAL_IP + "/drive/updateLearnerC" +
                                     competency.cID + "C/" + learner.email + "&" +
                                     etFeedback.getText().toString());
-                            /*SQLQueryHelper.updateDatabase(StudyActivity.this, "UPDATE " +
-                                    "learner SET c" + competency.cID + "c = '" +
-                                    etFeedback.getText().toString() + "' WHERE id = " +
-                                    learner.driver_id);*/
                             Intent intent = new Intent(StudyActivity.this,
                                     LearnerHomeActivity.class);
                             intent.putExtra("learnerMail", learner.email);
@@ -214,8 +197,6 @@ public class StudyActivity extends AppCompatActivity implements Runnable{
                 if(!etADI.getText().toString().isEmpty()) ADI = Integer.parseInt(etADI.getText().toString());
                 instructor = OnlineDBHelper.searchInstructorTable(LOCAL_IP + "/drive/searchInstructorByADI/"
                         + ADI);
-                /*instructor = SQLQueryHelper.searchInstructorTable(StudyActivity.this, "SELECT * FROM instructor" +
-                        " WHERE ADI = "+ ADI);*/
                 String emailTo = "";
                 if(instructor != null) emailTo = instructor.email;
                 if(emailTo.isEmpty()){

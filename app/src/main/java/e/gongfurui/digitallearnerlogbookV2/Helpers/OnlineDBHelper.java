@@ -193,7 +193,7 @@ public class OnlineDBHelper {
                         boolean isApprove;
                         int rID;
                         HashSet<LatLng> traceSet;
-                        rID = jsonObj.getInteger("id");
+                        rID = jsonObj.getInteger("rid");
                         learnerMail = jsonObj.getString("learnerMail");
                         distance = jsonObj.getDouble("distance");
                         time = jsonObj.getDouble("time");
@@ -297,5 +297,32 @@ public class OnlineDBHelper {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public static ArrayList<Integer> searchIDsFromSupervisorLearnerTable(String url) {
+        ArrayList<Integer> IDList = new ArrayList<>();
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                MyHTTPUtil util = new MyHTTPUtil();
+                String res = util.get(url);
+                JSONArray jarr = JSON.parseArray(res.substring(9, res.length()-1));
+                if(jarr.size() > 0){
+                    for(int i = 0; i < jarr.size(); i++){
+                        JSONObject jsonObj = jarr.getJSONObject(i);
+                        int id;
+                        id = jsonObj.getInteger("learner_id");
+                        IDList.add(id);
+                    }
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return IDList;
     }
 }

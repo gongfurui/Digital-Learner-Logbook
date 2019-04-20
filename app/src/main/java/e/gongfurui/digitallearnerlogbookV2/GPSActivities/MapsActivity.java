@@ -19,7 +19,6 @@ import com.google.gson.Gson;
 
 import e.gongfurui.digitallearnerlogbookV2.Activities.SupervisorLearnersActivity;
 import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
-import e.gongfurui.digitallearnerlogbookV2.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Learner;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Route;
@@ -114,19 +113,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void approvePressed(View view) {
         if(supervisorMail != null){
             double updated_distance = learner.distance + route.distance;
-            SQLQueryHelper.updateDatabase(this,
-                    "UPDATE learner SET distance =" + updated_distance + " WHERE id = " +
-                            learnerMail);
+            OnlineDBHelper.updateTable(LOCAL_IP + "drive/updateLearnerDistance/" + learnerMail +
+                    "&" + updated_distance);
             double updated_time = learner.time + route.time;
-            SQLQueryHelper.updateDatabase(this,
-                    "UPDATE learner SET time =" + updated_time + " WHERE id = " +
-                            learnerMail);
-            SQLQueryHelper.updateDatabase(this,
-                    "UPDATE route SET isApproved = " + 1 + " WHERE id = " +
-                            route.routeID);
+            OnlineDBHelper.updateTable(LOCAL_IP + "/drive/updateLearnerTime/" +
+                    learner.email + "&" + updated_time);
+            OnlineDBHelper.updateTable(LOCAL_IP + "/drive/updateRoute/" + route.routeID + "&" + 1);
 
             notifyTheApprovement(learner.email, supervisor.name, route.routeID, true);
-            Toast.makeText(MapsActivity.this,"Approved the practicing route", Toast.LENGTH_LONG).show();
+            Toast.makeText(MapsActivity.this,
+                    "Approved the practicing route", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, SupervisorLearnersActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("learnerMail", learnerMail);
@@ -141,11 +137,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * */
     public void disapprovePressed(View view) {
         if(supervisorMail != null){
-            SQLQueryHelper.updateDatabase(this,
-                    "UPDATE route SET isApproved = " + 1 + " WHERE id = " +
-                            route.routeID);
+            OnlineDBHelper.updateTable(LOCAL_IP + "/drive/updateRoute/" + route.routeID + "&" + 1);
             notifyTheApprovement(learner.email, supervisor.name, route.routeID, false);
-            Toast.makeText(MapsActivity.this,"Disapproved the practicing route", Toast.LENGTH_LONG).show();
+            Toast.makeText(MapsActivity.this,
+                    "Disapproved the practicing route", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(this, SupervisorLearnersActivity.class);
             Bundle bundle = new Bundle();
             bundle.putString("learnerMail", learnerMail);

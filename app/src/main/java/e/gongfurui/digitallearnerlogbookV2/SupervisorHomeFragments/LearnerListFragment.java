@@ -18,9 +18,11 @@ import java.util.Map;
 
 import e.gongfurui.digitallearnerlogbookV2.Activities.SupervisorLearnersActivity;
 import e.gongfurui.digitallearnerlogbookV2.Adapters.LearnerListAdapter;
-import e.gongfurui.digitallearnerlogbookV2.Helpers.SQLQueryHelper;
+import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Learner;
+
+import static e.gongfurui.digitallearnerlogbookV2.Helpers.ValuesHelper.LOCAL_IP;
 
 public class LearnerListFragment extends Fragment implements AdapterView.OnItemClickListener  {
 
@@ -50,14 +52,12 @@ public class LearnerListFragment extends Fragment implements AdapterView.OnItemC
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             supervisorMail = getArguments().getString(ARG_PARAM1);
-            //Retrieve the required data from the SQLite database
-            learnerIDList = SQLQueryHelper.searchIDsFromSupervisorLearnerTable(this.getContext(),
-                    "SELECT learner_id FROM supervisor_learner " +
-                            "WHERE email = '" + supervisorMail + "'");
+            //Retrieve the required data from online database
+            learnerIDList = OnlineDBHelper.searchIDsFromSupervisorLearnerTable(LOCAL_IP +
+                    "/drive/searchIDsInSupervisorLearner/" + supervisorMail);
             for (Integer learnerID : learnerIDList) {
-                learner = SQLQueryHelper.searchLearnerTable(this.getContext(),
-                        "SELECT * FROM learner" +
-                                " WHERE id = "+ learnerID);
+                learner = OnlineDBHelper.searchLearnerTable(LOCAL_IP + "/drive/searchLearnerByID/"
+                        + learnerID);
                 learnerMap.put(learner.driver_id, learner);
             }
 

@@ -31,12 +31,15 @@ import java.util.HashSet;
 import e.gongfurui.digitallearnerlogbookV2.Activities.LearnerHomeActivity;
 import e.gongfurui.digitallearnerlogbookV2.Helpers.GoogleMapHelper;
 import e.gongfurui.digitallearnerlogbookV2.Helpers.MarkerAnimationHelper;
+import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
 import e.gongfurui.digitallearnerlogbookV2.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbookV2.Helpers.UiHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Route;
 import e.gongfurui.digitallearnerlogbookV2.Utils.AppRxSchedulers;
 import e.gongfurui.digitallearnerlogbookV2.Utils.LatLngInterpolator;
+
+import static e.gongfurui.digitallearnerlogbookV2.Helpers.ValuesHelper.LOCAL_IP;
 
 public class MainActivity extends AppCompatActivity implements Runnable {
 
@@ -203,14 +206,11 @@ public class MainActivity extends AppCompatActivity implements Runnable {
 
 
         for (LatLng ll : traceSet) {
-            SQLQueryHelper.insertDatabase(this,"INSERT into route_location " +
-                    "(id, latitude, longitude)" +
-                    " VALUES (" + newRouteID + ", " + ll.latitude + ", " + ll.longitude + ")");
+            OnlineDBHelper.insertTable(LOCAL_IP + "/drive/insertRouteLocation/" + newRouteID + "&" +
+                    ll.latitude + "&" + ll.longitude);
         }
-
-        SQLQueryHelper.insertDatabase(this, "INSERT into route" +
-                "(id, distance, time, avgSpeed, learnerMail)" +
-                " VALUES ("+ newRouteID +", "+ distance +", "+ total_time +", "+ avgSpeed +", "+ learnerMail +")");
+        OnlineDBHelper.insertTable(LOCAL_IP + "/drive/insertRoute/" + newRouteID + "&" +
+                distance + "&" + total_time + "&" + avgSpeed + "&" + learnerMail);
 
         Intent intent = new Intent(this, LearnerHomeActivity.class);
         intent.putExtra("learnerMail", learnerMail);

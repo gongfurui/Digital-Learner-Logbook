@@ -1,6 +1,7 @@
 package e.gongfurui.digitallearnerlogbookV2.LearnerHomeFragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
-import e.gongfurui.digitallearnerlogbookV2.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Learner;
 
@@ -41,7 +41,7 @@ public class InformationFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fg_l_information, container, false);
         initView(view);
         tv_learnerName.setText(learner.name);

@@ -10,7 +10,6 @@ import android.widget.Toast;
 
 import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
 import e.gongfurui.digitallearnerlogbookV2.Utils.EmailUtil;
-import e.gongfurui.digitallearnerlogbookV2.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Instructor;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Learner;

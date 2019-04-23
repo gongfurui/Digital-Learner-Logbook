@@ -9,7 +9,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
-import e.gongfurui.digitallearnerlogbookV2.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Learner;
 

@@ -217,7 +217,7 @@ public class OnlineDBHelper {
         return routeMap;
     }
 
-    public static HashSet<LatLng> searchRouteLocationTable(String url){
+    private static HashSet<LatLng> searchRouteLocationTable(String url){
         HashSet<LatLng> traceSet = new HashSet<>();
         Thread thread = new Thread(){
             @Override

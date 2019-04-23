@@ -25,17 +25,14 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.HashSet;
 
 import e.gongfurui.digitallearnerlogbookV2.Activities.LearnerHomeActivity;
 import e.gongfurui.digitallearnerlogbookV2.Helpers.GoogleMapHelper;
 import e.gongfurui.digitallearnerlogbookV2.Helpers.MarkerAnimationHelper;
 import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
-import e.gongfurui.digitallearnerlogbookV2.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbookV2.Helpers.UiHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
-import e.gongfurui.digitallearnerlogbookV2.Roles.Route;
 import e.gongfurui.digitallearnerlogbookV2.Utils.AppRxSchedulers;
 import e.gongfurui.digitallearnerlogbookV2.Utils.LatLngInterpolator;
 

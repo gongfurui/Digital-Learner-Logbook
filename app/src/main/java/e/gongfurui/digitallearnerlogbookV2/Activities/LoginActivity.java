@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
-import e.gongfurui.digitallearnerlogbookV2.Helpers.SQLQueryHelper;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Instructor;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Learner;
 import e.gongfurui.digitallearnerlogbookV2.Roles.Supervisor;
@@ -157,75 +156,4 @@ public class LoginActivity extends AppCompatActivity{
         Intent intent = new Intent(this, ForgetPswActivity.class);
         startActivity(intent);
     }
-
-
-    /**
-     *Initialize the data in the licence table in DB
-     * */
-    private void initialLicenceDB() {
-        /*SQLQueryHelper.insertDatabase(this , "INSERT into licence (driver_id, type)" +
-                " VALUES (6284816, 'full')");
-        SQLQueryHelper.insertDatabase(this , "INSERT into licence (driver_id, type)" +
-                " VALUES (6274816, 'full')");
-        SQLQueryHelper.insertDatabase(this , "INSERT into licence (driver_id, type)" +
-                " VALUES (9876543, 'full')");
-        SQLQueryHelper.insertDatabase(this , "INSERT into licence (driver_id, type)" +
-                " VALUES (8765432, 'full')");*/
-        SQLQueryHelper.insertDatabase(this , "INSERT into licence (driver_id, type)" +
-                " VALUES (1234567, 'learner')");
-        SQLQueryHelper.insertDatabase(this , "INSERT into licence (driver_id, type)" +
-                " VALUES (1995101, 'learner')");
-    }
-
-    /**
-     *Initialize the data in the learner table in DB
-     * */
-    private void initialLearnerDB() {
-        SQLQueryHelper.insertDatabase(this, "INSERT into learner (id, email, name, psw, date_of_birth)" +
-                " VALUES (1234567, 'gongfurui0452424857@gmail.com', 'Furui Gong', 'gfr199510', '1995-10-17')");
-    }
-
-    /**
-     *Initialize the data in the instructor table in DB
-     * */
-    private void initialInstructorDB() {
-        SQLQueryHelper.insertDatabase(this, "INSERT into instructor (ADI, email, name, psw)" +
-                " VALUES (123, 'u6284816@anu.edu.au', 'Frank Free', 'gfr199510')");
-    }
-
-    /**
-     *Initialize the data in the supervisor table in DB
-     * */
-    private void initialSupervisorDB() {
-        SQLQueryHelper.insertDatabase(this, "INSERT into supervisor (email, name, psw)" +
-                " VALUES ('13810997948@163.com', 'Yanwen Gong', 'gfr199510')");
-    }
-
-    /*
-    private void initialInstructor_LearnerDB(){
-        SQLQueryHelper.insertDatabase(this, "INSERT into instructor_learner (ADI, learner_id)" +
-                " VALUES (123, 1234567)");
-    }*/
-
-    /**
-     *Initialize the data in the supervisor_learner table in DB
-     * */
-    private void initialSupervisor_LearnerDB() {
-        SQLQueryHelper.insertDatabase(this, "INSERT into supervisor_learner (email, learner_id)" +
-                " VALUES ('13810997948@163.com', 1234567)");
-    }
-
-    /**
-     *Initialize the data in the ADIList table in DB
-     * */
-    private void initialADIDB() {
-        SQLQueryHelper.insertDatabase(this , "INSERT into ADIList (adi)" +
-                " VALUES (123)");
-        SQLQueryHelper.insertDatabase(this , "INSERT into ADIList (adi)" +
-                " VALUES (111)");
-        SQLQueryHelper.insertDatabase(this , "INSERT into ADIList (adi)" +
-                " VALUES (234)");
-    }
-
-
 }

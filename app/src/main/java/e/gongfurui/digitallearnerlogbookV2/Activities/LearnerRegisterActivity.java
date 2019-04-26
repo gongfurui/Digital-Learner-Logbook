@@ -2,11 +2,18 @@ package e.gongfurui.digitallearnerlogbookV2.Activities;
 
 import android.content.Intent;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import java.util.ArrayList;
 
@@ -151,9 +158,27 @@ public class LearnerRegisterActivity extends AppCompatActivity implements Select
                                     "&" + learner.psw + "&" + learner.date_of_birth);
                             OnlineDBHelper.insertTable(LOCAL_IP + "/drive/insertSupervisorLearner/" +
                                     superEmail + "&" + learner.driver_id);
+
+                            FirebaseInstanceId.getInstance().getInstanceId()
+                                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                            if (!task.isSuccessful()) {
+                                                Log.w("fail", "getInstanceId failed", task.getException());
+                                                return;
+                                            }
+
+                                            // Get new Instance ID token
+                                            String token = task.getResult().getToken();
+                                            OnlineDBHelper.insertTable(LOCAL_IP +
+                                                    "/drive/insertLearnerToken/" + learner.email +
+                                                    "&" + token);
+                                        }
+                                    });
+
                             Intent intent= new Intent(this, LearnerHomeActivity.class);
                             intent.putExtra("learnerMail", learner.email);
-                            //startActivity(intent);
+                            startActivity(intent);
                         }
                     }
                 }

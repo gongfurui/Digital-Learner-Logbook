@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="e.gongfurui.digitallearnerlogbookV2">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -27,8 +28,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name="e.gongfurui.digitallearnerlogbookV2.Activities.SupervisorLearnersActivity"></activity>
+        android:usesCleartextTraffic="true"
+        tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Activities.ResponseActivity"></activity>
+        <activity android:name=".Activities.SupervisorLearnersActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -42,31 +45,31 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name="e.gongfurui.digitallearnerlogbookV2.GPSActivities.MapsActivity"
+            android:name=".GPSActivities.MapsActivity"
             android:label="@string/title_activity_maps" />
 
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name="e.gongfurui.digitallearnerlogbookV2.Activities.LearnerHomeActivity" />
+        <activity android:name=".Activities.LearnerHomeActivity" />
         <activity
-            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.SupervisorRegisterActivity"
-            android:parentActivityName="e.gongfurui.digitallearnerlogbookV2.Activities.SelectRoleActivity" />
-        <activity android:name="e.gongfurui.digitallearnerlogbookV2.Activities.SupervisorHomeActivity" />
+            android:name=".Activities.SupervisorRegisterActivity"
+            android:parentActivityName=".Activities.SelectRoleActivity" />
+        <activity android:name=".Activities.SupervisorHomeActivity" />
         <activity
-            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.InstructorRegisterActivity"
-            android:parentActivityName="e.gongfurui.digitallearnerlogbookV2.Activities.SelectRoleActivity" />
+            android:name=".Activities.InstructorRegisterActivity"
+            android:parentActivityName=".Activities.SelectRoleActivity" />
         <activity
-            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.SelectRoleActivity"
-            android:parentActivityName="e.gongfurui.digitallearnerlogbookV2.Activities.LoginActivity" />
+            android:name=".Activities.SelectRoleActivity"
+            android:parentActivityName=".Activities.LoginActivity" />
         <activity
-            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.ForgetPswActivity"
-            android:parentActivityName="e.gongfurui.digitallearnerlogbookV2.Activities.LoginActivity" />
+            android:name=".Activities.ForgetPswActivity"
+            android:parentActivityName=".Activities.LoginActivity" />
         <activity
-            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.InstructorHomePageActivityV1"
-            android:parentActivityName="e.gongfurui.digitallearnerlogbookV2.Activities.LoginActivity" />
-        <activity android:name="e.gongfurui.digitallearnerlogbookV2.Activities.LoginActivity">
+            android:name=".Activities.InstructorHomeActivity"
+            android:parentActivityName=".Activities.LoginActivity" />
+        <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -74,19 +77,41 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.LearnerRegisterActivity"
-            android:parentActivityName="e.gongfurui.digitallearnerlogbookV2.Activities.SelectRoleActivity" />
+            android:name=".Activities.LearnerRegisterActivity"
+            android:parentActivityName=".Activities.SelectRoleActivity" />
         <activity
-            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.CompetencyActivity"
+            android:name=".Activities.CompetencyActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name="e.gongfurui.digitallearnerlogbookV2.Activities.StudyActivity"
+            android:name=".Activities.StudyActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name="e.gongfurui.digitallearnerlogbookV2.GPSActivities.MainActivity" />
+        <activity android:name=".GPSActivities.MainActivity" />
+
+        <service
+            android:name=".Service.MyFirebaseMessagingService"
+            android:permission="e.gongfurui.digitallearnerlogbookV2">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <!--
+ Set custom default icon. This is used when no icon is set for incoming notification messages.
+        See README(https://goo.gl/l4GJaQ) for more.
+        -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_launcher_foreground" />
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
     </application>
 
 </manifest>

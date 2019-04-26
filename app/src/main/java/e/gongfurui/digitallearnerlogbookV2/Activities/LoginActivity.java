@@ -3,13 +3,20 @@ package e.gongfurui.digitallearnerlogbookV2.Activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
@@ -91,6 +98,22 @@ public class LoginActivity extends AppCompatActivity{
                 + account + "&" + password);
 
         if(learner != null){
+            FirebaseInstanceId.getInstance().getInstanceId()
+                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                            if (!task.isSuccessful()) {
+                                Log.w("fail", "getInstanceId failed", task.getException());
+                                return;
+                            }
+
+                            // Get new Instance ID token
+                            String token = task.getResult().getToken();
+                            OnlineDBHelper.insertTable(LOCAL_IP + "/drive/insertLearnerToken/" +
+                                    learner.email + "&" + token);
+                        }
+                    });
+
             Intent intent = new Intent(this, LearnerHomeActivity.class);
             Toast.makeText(this, "Successfully login as a learner", Toast.LENGTH_LONG).show();
             /*pass the learner data to the next Activity*/
@@ -109,7 +132,7 @@ public class LoginActivity extends AppCompatActivity{
         }
         //If the user is an instructor, jump to the instructor homepage
         else if(instructor != null){
-            Intent intent = new Intent(this, InstructorHomePageActivityV1.class);
+            Intent intent = new Intent(this, InstructorHomeActivity.class);
             Toast.makeText(this, "Successfully login as a instructor", Toast.LENGTH_LONG).show();
             intent.putExtra("instructorMail", instructor.email);
             if(isAutoStore) {

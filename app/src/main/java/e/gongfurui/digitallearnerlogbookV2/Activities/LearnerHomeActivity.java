@@ -1,17 +1,29 @@
 package e.gongfurui.digitallearnerlogbookV2.Activities;
 
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 import e.gongfurui.digitallearnerlogbookV2.Adapters.LearnerHomeFgPagerAdapter;
+import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
+import e.gongfurui.digitallearnerlogbookV2.Roles.Learner;
+
+import static e.gongfurui.digitallearnerlogbookV2.Helpers.ValuesHelper.LOCAL_IP;
 
 public class LearnerHomeActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener,
         ViewPager.OnPageChangeListener {
@@ -86,6 +98,21 @@ public class LearnerHomeActivity extends AppCompatActivity implements RadioGroup
 
         switch (item.getItemId()) {
             case R.id.id_add_item:
+                FirebaseInstanceId.getInstance().getInstanceId()
+                        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                                if (!task.isSuccessful()) {
+                                    Log.w("fail", "getInstanceId failed", task.getException());
+                                    return;
+                                }
+
+                                // Get new Instance ID token
+                                String token = task.getResult().getToken();
+                                OnlineDBHelper.insertTable(LOCAL_IP +
+                                        "/drive/deleteLearnerToken/" + learnerMail + "&" + token);
+                            }
+                        });
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);
             default:

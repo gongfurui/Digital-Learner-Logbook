@@ -1,0 +1,69 @@
+{
+  "project_info": {
+    "project_number": "1050621537092",
+    "firebase_url": "https://mapheml-204105.firebaseio.com",
+    "project_id": "mapheml-204105",
+    "storage_bucket": "mapheml-204105.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050621537092:android:00d9ae17e701a836",
+        "android_client_info": {
+          "package_name": "com.example.gcm"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1050621537092-uplnjmjlh5rmnpv9r9b1i9e9e2b66op6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB17rDevU2VvQEE6NzL-vmKIXsuc8PuAls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1050621537092-uplnjmjlh5rmnpv9r9b1i9e9e2b66op6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050621537092:android:7823bf131d137f95",
+        "android_client_info": {
+          "package_name": "e.gongfurui.digitallearnerlogbookV2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1050621537092-uplnjmjlh5rmnpv9r9b1i9e9e2b66op6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB17rDevU2VvQEE6NzL-vmKIXsuc8PuAls"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1050621537092-uplnjmjlh5rmnpv9r9b1i9e9e2b66op6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

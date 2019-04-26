@@ -128,7 +128,7 @@ public class InstructorRegisterActivity extends AppCompatActivity {
                         OnlineDBHelper.insertTable(LOCAL_IP + "/drive/insertInstructor/" +
                                 instructor.ADI + "&" + instructor.email + "&" + instructor.name +
                                 "&" + instructor.psw);
-                        Intent intent = new Intent(this, InstructorHomePageActivityV1.class);
+                        Intent intent = new Intent(this, InstructorHomeActivity.class);
                         intent.putExtra("instructorMail", instructor.email);
                         startActivity(intent);
                     }

@@ -325,4 +325,45 @@ public class OnlineDBHelper {
         }
         return IDList;
     }
+
+    public static String searchLeanerTokenTable(String url){
+        final String[] token = {null};
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                MyHTTPUtil util = new MyHTTPUtil();
+                String res = util.get(url);
+                JSONArray jarr = JSON.parseArray(res.substring(9, res.length()-1));
+                if(jarr.size() > 0){
+                    JSONObject jsonObj = jarr.getJSONObject(0);
+                    String token1;
+                    token1 = jsonObj.getString("token");
+                    token[0] = token1;
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return token[0];
+    }
+
+    public static void sendFCMRequest(String url){
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                MyHTTPUtil util = new MyHTTPUtil();
+                String res = util.get(url);
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 }

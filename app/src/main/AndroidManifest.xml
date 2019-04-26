@@ -30,7 +30,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".Activities.ResponseActivity"></activity>
+        <activity android:name=".Activities.ResponseActivity">
+            <intent-filter>
+                <action android:name="NOTIFICATION_ACTION">
+
+                </action>
+                <category android:name="android.intent.category.DEFAULT">
+                </category>
+            </intent-filter>
+        </activity>
         <activity android:name=".Activities.SupervisorLearnersActivity" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

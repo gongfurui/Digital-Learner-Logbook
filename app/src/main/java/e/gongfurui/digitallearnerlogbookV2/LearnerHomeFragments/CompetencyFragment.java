@@ -30,9 +30,11 @@ import static e.gongfurui.digitallearnerlogbookV2.Helpers.ValuesHelper.LOCAL_IP;
 public class CompetencyFragment extends Fragment implements AdapterView.OnItemClickListener {
     private static final String ARG_PARAM1 = "learnerMail";
     private static final String ARG_PARAM2 = "supervisorMail";
+    private static final String ARG_PARAM3 = "instructorMail";
 
     private String learnerMail;
     private String supervisorMail;
+    private String instructorMail;
 
     Learner learner;
     private List<Competency> mData = null;
@@ -60,6 +62,15 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
         return fragment;
     }
 
+    public static CompetencyFragment newInstanceI(String lMail, String mail) {
+        CompetencyFragment fragment = new CompetencyFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, lMail);
+        args.putString(ARG_PARAM3, mail);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +78,7 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
             //Retrieve the required data from the SQLite database
             learnerMail = getArguments().getString(ARG_PARAM1);
             supervisorMail = getArguments().getString(ARG_PARAM2);
-
+            instructorMail = getArguments().getString(ARG_PARAM3);
             learner = OnlineDBHelper.searchLearnerTable(LOCAL_IP +
                     "/drive/searchLearnerByMail/" + learnerMail);
             HashMap<Integer, CourseFeedback> courseFeedbackMap;
@@ -280,6 +291,7 @@ public class CompetencyFragment extends Fragment implements AdapterView.OnItemCl
                 intent.putExtra("competency", new Gson().toJson(mData.get(position - 1)));
                 intent.putExtra("learner", new Gson().toJson(learner));
                 intent.putExtra("supervisorMail", supervisorMail);
+                intent.putExtra("instructorMail", instructorMail);
                 startActivity(intent);
             }
         }

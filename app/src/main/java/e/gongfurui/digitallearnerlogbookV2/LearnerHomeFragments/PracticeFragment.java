@@ -1,8 +1,10 @@
 package e.gongfurui.digitallearnerlogbookV2.LearnerHomeFragments;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +44,7 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
     private Context mContext;
     PracticeAdapter mAdapter = null;
     ListView list_route;
+    @SuppressLint("UseSparseArrays")
     private HashMap<Integer, Route> routeMap = new HashMap<>();
 
     public static PracticeFragment newInstance(String mail) {
@@ -77,7 +80,7 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fg_practice, container, false);
         mContext = PracticeFragment.this.getContext();
         list_route = view.findViewById(R.id.list_practice);
@@ -85,8 +88,8 @@ public class PracticeFragment extends Fragment implements AdapterView.OnItemClic
 
 
         final LayoutInflater inflater1 = LayoutInflater.from(this.getContext());
-        View headView = inflater1.inflate(R.layout.list_practice_header, null, false);
-        View footView = inflater1.inflate(R.layout.list_practice_footer, null, false);
+        @SuppressLint("InflateParams") View headView = inflater1.inflate(R.layout.list_practice_header, null, false);
+        @SuppressLint("InflateParams") View footView = inflater1.inflate(R.layout.list_practice_footer, null, false);
         mData = new LinkedList<>();
         addToList();
         mAdapter = new PracticeAdapter((LinkedList<Route>) mData, mContext);

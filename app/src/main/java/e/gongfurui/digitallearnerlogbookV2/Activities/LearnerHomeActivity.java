@@ -99,19 +99,16 @@ public class LearnerHomeActivity extends AppCompatActivity implements RadioGroup
         switch (item.getItemId()) {
             case R.id.id_add_item:
                 FirebaseInstanceId.getInstance().getInstanceId()
-                        .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                                if (!task.isSuccessful()) {
-                                    Log.w("fail", "getInstanceId failed", task.getException());
-                                    return;
-                                }
-
-                                // Get new Instance ID token
-                                String token = task.getResult().getToken();
-                                OnlineDBHelper.insertTable(LOCAL_IP +
-                                        "/drive/deleteLearnerToken/" + learnerMail + "&" + token);
+                        .addOnCompleteListener(task -> {
+                            if (!task.isSuccessful()) {
+                                Log.w("fail", "getInstanceId failed", task.getException());
+                                return;
                             }
+
+                            // Get new Instance ID token
+                            String token = task.getResult().getToken();
+                            OnlineDBHelper.insertTable(LOCAL_IP +
+                                    "/drive/deleteLearnerToken/" + learnerMail + "&" + token);
                         });
                 Intent intent = new Intent(this, LoginActivity.class);
                 startActivity(intent);

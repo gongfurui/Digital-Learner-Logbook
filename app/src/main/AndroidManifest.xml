@@ -30,13 +30,17 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".Activities.InstructorLearnersActivity">
+            <intent-filter>
+                <action android:name="NOTIFICATION_AGREE" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Activities.ResponseActivity">
             <intent-filter>
-                <action android:name="NOTIFICATION_ACTION">
+                <action android:name="NOTIFICATION_ACTION" />
 
-                </action>
-                <category android:name="android.intent.category.DEFAULT">
-                </category>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         <activity android:name=".Activities.SupervisorLearnersActivity" />
@@ -60,7 +64,8 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
 
-        <activity android:name=".Activities.LearnerHomeActivity" />
+        <activity android:name=".Activities.LearnerHomeActivity">
+        </activity>
         <activity
             android:name=".Activities.SupervisorRegisterActivity"
             android:parentActivityName=".Activities.SelectRoleActivity" />
@@ -74,9 +79,13 @@
         <activity
             android:name=".Activities.ForgetPswActivity"
             android:parentActivityName=".Activities.LoginActivity" />
-        <activity
-            android:name=".Activities.InstructorHomeActivity"
-            android:parentActivityName=".Activities.LoginActivity" />
+        <activity android:name=".Activities.InstructorHomeActivity">
+            <intent-filter>
+                <action android:name="NOTIFICATION_DISAGREE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

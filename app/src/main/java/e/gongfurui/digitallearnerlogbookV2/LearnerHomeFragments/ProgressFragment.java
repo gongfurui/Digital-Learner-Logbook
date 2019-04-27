@@ -1,6 +1,8 @@
 package e.gongfurui.digitallearnerlogbookV2.LearnerHomeFragments;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,8 +49,9 @@ public class ProgressFragment extends Fragment{
         }
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fg_progress, container, false);
         initViews(view);
         timeBar.setProgress((int) (learner.time*100));
@@ -63,6 +66,7 @@ public class ProgressFragment extends Fragment{
      * Initial the UI parameter involved in this fragment
      * @param view  the view from the information fragment
      * */
+    @SuppressLint("SetTextI18n")
     public void initViews(View view) {
         TextView tvDistanceProgress;
         timeBar = view.findViewById(R.id.timeBar);

@@ -27,6 +27,7 @@ public class CompetencyActivity extends AppCompatActivity {
     private Competency competency;
     private Learner learner;
     private String supervisorMail;
+    private String instructorMail;
 
 
     @Override
@@ -44,6 +45,7 @@ public class CompetencyActivity extends AppCompatActivity {
         competencyJson = getIntent().getStringExtra("competency");
         learnerJson = getIntent().getStringExtra("learner");
         supervisorMail = getIntent().getStringExtra("supervisorMail");
+        instructorMail = getIntent().getStringExtra("instructorMail");
         competency = new Gson().fromJson(competencyJson, Competency.class);
         learner = new Gson().fromJson(learnerJson, Learner.class);
     }
@@ -64,14 +66,15 @@ public class CompetencyActivity extends AppCompatActivity {
         tvCondition.setText(competency.conditions);
         tvRequirements.setText(competency.requirements);
         etFeedback.setText(learner.courseCommentList.get(competency.cID - 1));
-        if(supervisorMail != null) {
+        if(supervisorMail != null || instructorMail != null) {
             btnStartLearn.setVisibility(View.INVISIBLE);
         }
     }
 
     public void learningPressed(View view) {
         if(competency.isFinished){
-            Toast.makeText(this,"You have finished this competency. Please move to next course", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"You have finished this competency." +
+                    " Please move to next course", Toast.LENGTH_LONG).show();
         }
         else {
             if(supervisorMail == null) {

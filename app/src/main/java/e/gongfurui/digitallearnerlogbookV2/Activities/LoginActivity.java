@@ -99,19 +99,16 @@ public class LoginActivity extends AppCompatActivity{
 
         if(learner != null){
             FirebaseInstanceId.getInstance().getInstanceId()
-                    .addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<InstanceIdResult> task) {
-                            if (!task.isSuccessful()) {
-                                Log.w("fail", "getInstanceId failed", task.getException());
-                                return;
-                            }
-
-                            // Get new Instance ID token
-                            String token = task.getResult().getToken();
-                            OnlineDBHelper.insertTable(LOCAL_IP + "/drive/insertLearnerToken/" +
-                                    learner.email + "&" + token);
+                    .addOnCompleteListener(task -> {
+                        if (!task.isSuccessful()) {
+                            Log.w("fail", "getInstanceId failed", task.getException());
+                            return;
                         }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        OnlineDBHelper.insertTable(LOCAL_IP + "/drive/insertLearnerToken/" +
+                                learner.email + "&" + token);
                     });
 
             Intent intent = new Intent(this, LearnerHomeActivity.class);
@@ -132,6 +129,20 @@ public class LoginActivity extends AppCompatActivity{
         }
         //If the user is an instructor, jump to the instructor homepage
         else if(instructor != null){
+
+            FirebaseInstanceId.getInstance().getInstanceId()
+                    .addOnCompleteListener(task -> {
+                        if (!task.isSuccessful()) {
+                            Log.w("fail", "getInstanceId failed", task.getException());
+                            return;
+                        }
+
+                        // Get new Instance ID token
+                        String token = task.getResult().getToken();
+                        OnlineDBHelper.insertTable(LOCAL_IP + "/drive/insertLearnerToken/" +
+                                instructor.email + "&" + token);
+                    });
+
             Intent intent = new Intent(this, InstructorHomeActivity.class);
             Toast.makeText(this, "Successfully login as a instructor", Toast.LENGTH_LONG).show();
             intent.putExtra("instructorMail", instructor.email);

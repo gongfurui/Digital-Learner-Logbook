@@ -38,9 +38,6 @@ public class InstructorHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructor_home);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
         String instructorMail = getIntent().getStringExtra("instructorMail");
         if(instructorMail == null) {
             if (getIntent().getExtras() != null) {

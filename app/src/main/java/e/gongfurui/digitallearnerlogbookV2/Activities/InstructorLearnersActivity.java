@@ -1,5 +1,6 @@
 package e.gongfurui.digitallearnerlogbookV2.Activities;
 
+import android.annotation.SuppressLint;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +11,11 @@ import android.widget.TextView;
 import java.util.Objects;
 
 import e.gongfurui.digitallearnerlogbookV2.Adapters.InstructorLearnerFgPagerAdapter;
+import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
 import e.gongfurui.digitallearnerlogbookV2.R;
+import e.gongfurui.digitallearnerlogbookV2.Roles.Learner;
+
+import static e.gongfurui.digitallearnerlogbookV2.Helpers.ValuesHelper.LOCAL_IP;
 
 public class InstructorLearnersActivity extends AppCompatActivity implements RadioGroup.OnCheckedChangeListener,
         ViewPager.OnPageChangeListener {
@@ -24,13 +29,14 @@ public class InstructorLearnersActivity extends AppCompatActivity implements Rad
 
     private InstructorLearnerFgPagerAdapter mAdapter;
 
+    private Learner learner;
+
     //Parameters stands for the pages
     public static final int PAGE_ONE = 0;
     public static final int PAGE_TWO = 1;
 
     //Parameters stands for the page title
-    private final String PAGE_FINISHED_COMPETENCY = "Finished Competency";
-    private final String PAGE_PROGRESS = "Progress";
+    private final String PAGE_FINISHED_COMPETENCY = "'s Competency";
 
     public static String learnerMail;
     public static String instructorMail;
@@ -40,6 +46,8 @@ public class InstructorLearnersActivity extends AppCompatActivity implements Rad
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_instructor_learners);
         learnerMail = Objects.requireNonNull(getIntent().getExtras()).getString("learner_mail");
+        learner = OnlineDBHelper.searchLearnerTable(LOCAL_IP +
+                "/drive/searchLearnerByMail/" + learnerMail);
         instructorMail = getIntent().getExtras().getString("instructor_mail");
         mAdapter = new InstructorLearnerFgPagerAdapter(getSupportFragmentManager());
         initViews();
@@ -48,6 +56,7 @@ public class InstructorLearnersActivity extends AppCompatActivity implements Rad
     /**
      * Initial the UI parameter involved in this activity
      * */
+    @SuppressLint("SetTextI18n")
     private void initViews() {
         txtTopbar = findViewById(R.id.txt_topbar);
         rgTabBar = findViewById(R.id.rg_tab_bar);
@@ -61,7 +70,7 @@ public class InstructorLearnersActivity extends AppCompatActivity implements Rad
         vpager.addOnPageChangeListener(this);
         vpager.setCurrentItem(0);
         rbChannel.setChecked(true);
-        txtTopbar.setText(PAGE_FINISHED_COMPETENCY);
+        txtTopbar.setText(learner.name + PAGE_FINISHED_COMPETENCY);
 
     }
 
@@ -71,7 +80,7 @@ public class InstructorLearnersActivity extends AppCompatActivity implements Rad
             case R.id.rb_channel:
                 vpager.setCurrentItem(PAGE_ONE);
                 break;
-            case R.id.rb_message:
+            case R.id.rb_setting:
                 vpager.setCurrentItem(PAGE_TWO);
                 break;
         }
@@ -82,10 +91,12 @@ public class InstructorLearnersActivity extends AppCompatActivity implements Rad
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onPageSelected(int position) {
-        if(position == 0) txtTopbar.setText(PAGE_FINISHED_COMPETENCY);
-        else if(position == 1) txtTopbar.setText(PAGE_PROGRESS);
+        String PAGE_PROGRESS = "'s Progress";
+        if(position == 0) txtTopbar.setText(learner.name + PAGE_FINISHED_COMPETENCY);
+        else if(position == 1) txtTopbar.setText(learner.name + PAGE_PROGRESS);
     }
 
     @Override

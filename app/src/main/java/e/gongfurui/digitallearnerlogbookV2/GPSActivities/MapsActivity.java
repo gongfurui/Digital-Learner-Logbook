@@ -113,7 +113,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void approvePressed(View view) {
         if(supervisorMail != null){
             double updated_distance = learner.distance + route.distance;
-            OnlineDBHelper.updateTable(LOCAL_IP + "drive/updateLearnerDistance/" + learnerMail +
+            OnlineDBHelper.updateTable(LOCAL_IP + "/drive/updateLearnerDistance/" + learnerMail +
                     "&" + updated_distance);
             double updated_time = learner.time + route.time;
             OnlineDBHelper.updateTable(LOCAL_IP + "/drive/updateLearnerTime/" +

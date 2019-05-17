@@ -1,5 +1,6 @@
 package e.gongfurui.digitallearnerlogbookV2.Activities;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +19,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 
 import java.math.BigDecimal;
+import java.util.Calendar;
+import java.util.Objects;
 
 import e.gongfurui.digitallearnerlogbookV2.Helpers.OnlineDBHelper;
 import e.gongfurui.digitallearnerlogbookV2.Utils.EmailUtil;
@@ -48,7 +51,6 @@ public class StudyActivity extends AppCompatActivity implements Runnable{
     private AlertDialog alert = null;
     private RadioButton rbApprove;
     private RadioButton rbDisapprove;
-    private RadioGroup radioGroup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class StudyActivity extends AppCompatActivity implements Runnable{
         tvTimeCovered = findViewById(R.id.tv_timeCovered);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void run() {
         //sec++;
@@ -96,7 +99,7 @@ public class StudyActivity extends AppCompatActivity implements Runnable{
      * */
     public void showDialog(Context mContext) {
         LayoutInflater inflater = LayoutInflater.from(mContext);
-        View view = inflater.inflate(R.layout.certify_dialog, null);
+        @SuppressLint("InflateParams") View view = inflater.inflate(R.layout.certify_dialog, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
         alert = builder.setTitle("Certify...")
                 .setView(view)
@@ -117,110 +120,105 @@ public class StudyActivity extends AppCompatActivity implements Runnable{
         final double total_time = bd.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
 
         showDialog(this);
-        etADI = alert.getWindow().findViewById(R.id.et_ADI);
+        etADI = Objects.requireNonNull(alert.getWindow()).findViewById(R.id.et_ADI);
         etVerify = alert.getWindow().findViewById(R.id.et_verify);
         etFeedback = alert.getWindow().findViewById(R.id.et_feedback);
-        radioGroup = alert.getWindow().findViewById(R.id.radio_group);
+        RadioGroup radioGroup = alert.getWindow().findViewById(R.id.radio_group);
         rbApprove = alert.getWindow().findViewById(R.id.rbApprove);
         rbDisapprove = alert.getWindow().findViewById(R.id.rbDisapprove);
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId) {
-                    case R.id.rbApprove:
-                        isApproved = true;
-                        break;
-                    case R.id.rbDisapprove:
-                        isApproved = false;
-                        break;
-                }
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.rbApprove:
+                    isApproved = true;
+                    break;
+                case R.id.rbDisapprove:
+                    isApproved = false;
+                    break;
             }
         });
 
 
-        alert.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                //check whether the user put the verify code
-                if(etVerify.getText().toString().isEmpty()) {
+        alert.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+            //check whether the user put the verify code
+            if(etVerify.getText().toString().isEmpty()) {
+                Toast.makeText(StudyActivity.this,
+                        "The verify code is empty. Please check!",
+                        Toast.LENGTH_LONG).show();
+            }
+            else {
+                //check whether the verify code is correct
+                if (verifyCode != Integer.parseInt(etVerify.getText().toString())) {
                     Toast.makeText(StudyActivity.this,
-                            "The verify code is empty. Please check!",
+                            "The verify code is wrong. Please check!",
                             Toast.LENGTH_LONG).show();
-                }
-                else {
-                    //check whether the verify code is correct
-                    if (verifyCode != Integer.parseInt(etVerify.getText().toString())) {
+                } else {
+                    if(!rbApprove.isChecked() && !rbDisapprove.isChecked()){
                         Toast.makeText(StudyActivity.this,
-                                "The verify code is wrong. Please check!",
+                                "You should select approve or disapprove at least",
                                 Toast.LENGTH_LONG).show();
-                    } else {
-                        if(!rbApprove.isChecked() && !rbDisapprove.isChecked()){
-                            Toast.makeText(StudyActivity.this,
-                                    "You should select approve or disapprove at least",
-                                    Toast.LENGTH_LONG).show();
-                        }
-                        else {
-                            //this the updated time after certification
-                            double certified_time = learner.time + total_time;
-                            //Update the student progress, and course comment list
-                            OnlineDBHelper.updateTable(LOCAL_IP + "/drive/updateLearnerTime/" +
-                                    learner.email + "&" + certified_time);
-                            if (isApproved) {
-                                OnlineDBHelper.insertTable(LOCAL_IP + "/drive/insertCourseFeedback/" +
-                                        competency.cID + "&" + learner.email + "&" + instructor.name +
-                                        "&" + etFeedback.getText().toString());
-                                OnlineDBHelper.updateTable(LOCAL_IP + "/drive/updateLearnerC" +
-                                        competency.cID + "/" + learner.email + "&" + 1);
-                            }
+                    }
+                    else {
+                        //this the updated time after certification
+                        double certified_time = learner.time + total_time;
+                        //Update the student progress, and course comment list
+                        OnlineDBHelper.updateTable(LOCAL_IP + "/drive/updateLearnerTime/" +
+                                learner.email + "&" + certified_time);
+                        if (isApproved) {
+                            Calendar calendar = Calendar.getInstance();
+                            int year = calendar.get(Calendar.YEAR);
+                            int month = calendar.get(Calendar.MONTH)+1;
+                            int day = calendar.get(Calendar.DAY_OF_MONTH);
+                            String date = year + "-" + month + "-" + day;
+                            OnlineDBHelper.insertTable(LOCAL_IP + "/drive/insertCourseFeedback/" +
+                                    competency.cID + "&" + learner.email + "&" + instructor.name +
+                                    "&" + instructor.ADI + "&" + etFeedback.getText().toString() +
+                                    "&" + date);
                             OnlineDBHelper.updateTable(LOCAL_IP + "/drive/updateLearnerC" +
-                                    competency.cID + "C/" + learner.email + "&" +
-                                    etFeedback.getText().toString());
-                            Intent intent = new Intent(StudyActivity.this,
-                                    LearnerHomeActivity.class);
-                            intent.putExtra("learnerMail", learner.email);
-                            startActivity(intent);
-                            alert.dismiss();
+                                    competency.cID + "/" + learner.email + "&" + 1);
                         }
+                        OnlineDBHelper.updateTable(LOCAL_IP + "/drive/updateLearnerC" +
+                                competency.cID + "C/" + learner.email + "&" +
+                                etFeedback.getText().toString());
+                        Intent intent = new Intent(StudyActivity.this,
+                                LearnerHomeActivity.class);
+                        intent.putExtra("learnerMail", learner.email);
+                        startActivity(intent);
+                        alert.dismiss();
                     }
                 }
             }
         });
 
         //The action involved with functions for sending the verify code based on the ADI number
-        alert.getWindow().findViewById(R.id.btn_verify).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int ADI = 0;
-                if(!etADI.getText().toString().isEmpty()) ADI = Integer.parseInt(etADI.getText().toString());
-                instructor = OnlineDBHelper.searchInstructorTable(LOCAL_IP + "/drive/searchInstructorByADI/"
-                        + ADI);
-                String emailTo = "";
-                if(instructor != null) emailTo = instructor.email;
-                if(emailTo.isEmpty()){
-                    Toast.makeText(StudyActivity.this, "The ADI you enter is wrong. Please check!", Toast.LENGTH_LONG).show();
-                }
-                else {
-                    //Generate the random verify code
-                    verifyCode = (int) ((Math.random() * 9 + 1) * 100000);
-                    Toast.makeText(StudyActivity.this, "Sending..... the verify code", Toast.LENGTH_LONG).show();
-                    final String finalEmailTo = emailTo;
-                    Thread thread = new Thread() {
-                        @Override
-                        public void run() {
-                            EmailUtil.getInstance().sendEmail(finalEmailTo, "Verify Code from Digital Learner Logbook",
-                                    "DLL send a verify code: " + verifyCode +
-                                            ", This code is for instructor to certify progress only!");
+        alert.getWindow().findViewById(R.id.btn_verify).setOnClickListener(v -> {
+            int ADI = 0;
+            if(!etADI.getText().toString().isEmpty()) ADI = Integer.parseInt(etADI.getText().toString());
+            instructor = OnlineDBHelper.searchInstructorTable(LOCAL_IP + "/drive/searchInstructorByADI/"
+                    + ADI);
+            String emailTo = "";
+            if(instructor != null) emailTo = instructor.email;
+            if(emailTo.isEmpty()){
+                Toast.makeText(StudyActivity.this, "The ADI you enter is wrong. Please check!", Toast.LENGTH_LONG).show();
+            }
+            else {
+                //Generate the random verify code
+                verifyCode = (int) ((Math.random() * 9 + 1) * 100000);
+                Toast.makeText(StudyActivity.this, "Sending..... the verify code", Toast.LENGTH_LONG).show();
+                final String finalEmailTo = emailTo;
+                Thread thread = new Thread() {
+                    @Override
+                    public void run() {
+                        EmailUtil.getInstance().sendEmail(finalEmailTo, "Verify Code from Digital Learner Logbook",
+                                "DLL send a verify code: " + verifyCode +
+                                        ", This code is for instructor to certify progress only!");
 
-                            Looper.prepare();
-                            Toast.makeText(StudyActivity.this, "Sent the verify code", Toast.LENGTH_LONG).show();
-                            Looper.loop();
-                        }
-                    };
-                    thread.start();
-                }
+                        Looper.prepare();
+                        Toast.makeText(StudyActivity.this, "Sent the verify code", Toast.LENGTH_LONG).show();
+                        Looper.loop();
+                    }
+                };
+                thread.start();
             }
         });
 

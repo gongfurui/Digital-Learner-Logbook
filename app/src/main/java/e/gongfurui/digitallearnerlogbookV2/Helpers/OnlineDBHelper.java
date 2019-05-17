@@ -1,6 +1,7 @@
 package e.gongfurui.digitallearnerlogbookV2.Helpers;
 
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
@@ -25,7 +26,7 @@ import static e.gongfurui.digitallearnerlogbookV2.Helpers.ValuesHelper.LOCAL_IP;
 
 public class OnlineDBHelper {
 
-    public static Learner searchLearnerTable(String url){
+    public static Learner searchLearnerTable(String url) {
         final Learner[] learner = {null};
         Thread thread = new Thread(){
             @Override
@@ -66,7 +67,7 @@ public class OnlineDBHelper {
         return learner[0];
     }
 
-    public static Instructor searchInstructorTable(String url){
+    public static Instructor searchInstructorTable(String url) {
         final Instructor[] instructor = {null};
         Thread thread = new Thread(){
             @Override
@@ -95,7 +96,7 @@ public class OnlineDBHelper {
         return instructor[0];
     }
 
-    public static Supervisor searchSupervisorTable(String url){
+    public static Supervisor searchSupervisorTable(String url) {
         final Supervisor[] supervisor = {null};
         Thread thread = new Thread(){
             @Override
@@ -122,7 +123,7 @@ public class OnlineDBHelper {
         return supervisor[0];
     }
 
-    public static boolean isInLicenceTable(String url){
+    public static boolean isInLicenceTable(String url) {
         final boolean[] isIn = {false};
         Thread thread = new Thread(){
             @Override
@@ -145,7 +146,7 @@ public class OnlineDBHelper {
     }
 
     public static HashMap<Integer, CourseFeedback> searchCourseFeedbacksTable(String url){
-        HashMap<Integer, CourseFeedback> courseFeebackMap = new HashMap<>();
+        @SuppressLint("UseSparseArrays") HashMap<Integer, CourseFeedback> courseFeebackMap = new HashMap<>();
         Thread thread = new Thread(){
             @Override
             public void run() {
@@ -155,14 +156,16 @@ public class OnlineDBHelper {
                 if(jarr.size() > 0){
                     for(int i = 0; i < jarr.size(); i++){
                         JSONObject jsonObj = jarr.getJSONObject(i);
-                        String learnerMail, instructorName, feedback;
-                        int cID;
+                        String learnerMail, instructorName, feedback, date;
+                        int cID, ADI;
                         cID = jsonObj.getInteger("course_id");
                         learnerMail = jsonObj.getString("learnerMail");
                         instructorName = jsonObj.getString("instructor_name");
+                        ADI = jsonObj.getInteger("ADI");
                         feedback = jsonObj.getString("feedback");
+                        date = jsonObj.getString("date");
                         CourseFeedback courseFeedback = new CourseFeedback(cID, learnerMail,
-                                instructorName, feedback);
+                                instructorName, ADI, feedback, date);
                         courseFeebackMap.put(cID, courseFeedback);
                     }
                 }
@@ -177,8 +180,8 @@ public class OnlineDBHelper {
         return courseFeebackMap;
     }
 
-    public static HashMap<Integer, Route> searchRoutesTable(String url){
-        HashMap<Integer, Route> routeMap = new HashMap<>();
+    public static HashMap<Integer, Route> searchRoutesTable(String url) {
+        @SuppressLint("UseSparseArrays") HashMap<Integer, Route> routeMap = new HashMap<>();
         Thread thread = new Thread(){
             @Override
             public void run() {
@@ -217,7 +220,7 @@ public class OnlineDBHelper {
         return routeMap;
     }
 
-    private static HashSet<LatLng> searchRouteLocationTable(String url){
+    private static HashSet<LatLng> searchRouteLocationTable(String url) {
         HashSet<LatLng> traceSet = new HashSet<>();
         Thread thread = new Thread(){
             @Override
@@ -245,7 +248,7 @@ public class OnlineDBHelper {
         return traceSet;
     }
 
-    public static boolean isInADIListTable(String url){
+    public static boolean isInADIListTable(String url) {
         final boolean[] isIn = {false};
         Thread thread = new Thread(){
             @Override
@@ -267,7 +270,7 @@ public class OnlineDBHelper {
         return isIn[0];
     }
 
-    public static void updateTable(String url){
+    public static void updateTable(String url) {
         Thread thread = new Thread(){
             @Override
             public void run() {
@@ -283,7 +286,7 @@ public class OnlineDBHelper {
         }
     }
 
-    public static void insertTable(String url){
+    public static void insertTable(String url) {
         Thread thread = new Thread(){
             @Override
             public void run() {
@@ -326,7 +329,7 @@ public class OnlineDBHelper {
         return IDList;
     }
 
-    public static String searchLeanerTokenTable(String url){
+    public static String searchLeanerTokenTable(String url) {
         final String[] token = {null};
         Thread thread = new Thread(){
             @Override
@@ -351,7 +354,7 @@ public class OnlineDBHelper {
         return token[0];
     }
 
-    public static void sendFCMRequest(String url){
+    public static void sendFCMRequest(String url) {
         Thread thread = new Thread(){
             @Override
             public void run() {
@@ -365,5 +368,49 @@ public class OnlineDBHelper {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean checkApplyList(String url) {
+        final boolean[] isIn = {false};
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                MyHTTPUtil util = new MyHTTPUtil();
+                String res = util.get(url);
+                JSONArray jarr = JSON.parseArray(res.substring(9, res.length()-1));
+                if(jarr.size() > 0){
+                    isIn[0] = true;
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return isIn[0];
+    }
+
+    public static boolean checkIssueList(String url) {
+        final boolean[] isIn = {false};
+        Thread thread = new Thread(){
+            @Override
+            public void run() {
+                MyHTTPUtil util = new MyHTTPUtil();
+                String res = util.get(url);
+                JSONArray jarr = JSON.parseArray(res.substring(9, res.length()-1));
+                if(jarr.size() > 0){
+                    isIn[0] = true;
+                }
+            }
+        };
+        thread.start();
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return isIn[0];
     }
 }
